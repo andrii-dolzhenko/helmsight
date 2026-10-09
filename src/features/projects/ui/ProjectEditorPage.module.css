@@ -1,0 +1,55 @@
+.page {
+  max-width: 64rem;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.backLink {
+  width: fit-content;
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  font-weight: 750;
+  text-decoration: none;
+  margin-bottom: 0.2rem;
+}
+
+.backLink:hover,
+.backLink:focus-visible {
+  color: var(--color-text);
+}
+
+.header {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+}
+
+.copy {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.stateCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: 1.2rem;
+}

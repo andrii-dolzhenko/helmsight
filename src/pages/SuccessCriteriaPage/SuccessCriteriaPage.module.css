@@ -1,0 +1,429 @@
+.root {
+  display: grid;
+  gap: var(--layout-module-gap);
+}
+
+.header {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: var(--ui-badge-font-size);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header h2,
+.emptyState h3 {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.header h2 {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+.header p {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.header p,
+.emptyState p,
+.archiveBanner span {
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.primaryButton,
+.editButton,
+.emptyState a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.primaryButton {
+  flex: 0 0 auto;
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+  padding: 0.75rem 1rem;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.summary > div {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem 1.1rem;
+}
+
+.summary > div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.summary span {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.summary strong {
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+.archiveBanner,
+.stateCard,
+.emptyState,
+.mutationError {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.archiveBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+}
+
+.archiveBanner span {
+  font-size: var(--ui-meta-value-size);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  min-width: 0;
+  min-height: 23rem;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(7.15rem, auto) auto auto 1fr;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  padding: var(--ui-card-padding);
+}
+
+.cardHeader,
+.badges,
+.actions,
+.deleteConfirm,
+.targetRow {
+  display: flex;
+  align-items: center;
+}
+
+.cardHeader,
+.targetRow {
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cardHeader {
+  min-height: 2.1rem;
+  align-items: flex-start;
+}
+
+.badges,
+.actions,
+.deleteConfirm {
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.statusBadge,
+.categoryBadge,
+.metricType {
+  border-radius: 999px;
+  padding: 0.34rem 0.55rem;
+  font-size: var(--ui-badge-font-size);
+  font-weight: 800;
+}
+
+.statusBadge {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 32%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.atRisk {
+  border-color: color-mix(in srgb, #d28b28 45%, var(--color-border));
+  background: color-mix(in srgb, #d28b28 10%, var(--color-surface));
+  color: #b66d11;
+}
+
+.missed {
+  border-color: color-mix(in srgb, var(--color-danger) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 9%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.achieved {
+  background: color-mix(in srgb, var(--color-accent) 16%, var(--color-surface));
+}
+
+.categoryBadge,
+.metricType {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+}
+
+.metricType {
+  white-space: nowrap;
+}
+
+.identity {
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(3.45rem, auto);
+  align-content: start;
+  gap: 0.55rem;
+  overflow: hidden;
+}
+
+.identity h3 {
+  overflow: hidden;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--ui-card-title-size);
+  letter-spacing: -0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.identity p {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: 3.45rem;
+  max-height: 3.45rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.metricStrip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+}
+
+.metricStrip div {
+  min-width: 0;
+  padding: 0.75rem;
+}
+
+.metricStrip div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.metricStrip dt,
+.targetRow span {
+  color: var(--color-text-muted);
+  font-size: var(--ui-meta-label-size);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.metricStrip dd {
+  overflow: hidden;
+  margin: 0.3rem 0 0;
+  font-size: var(--ui-meta-value-size);
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.targetRow {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.9rem;
+}
+
+.targetRow strong {
+  font-size: var(--ui-meta-value-size);
+}
+
+.actions {
+  align-self: end;
+}
+
+.editButton,
+.deleteButton,
+.deleteConfirm button {
+  min-height: 2.35rem;
+  border-radius: 999px;
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+}
+
+.editButton {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, transparent);
+  color: var(--color-accent);
+}
+
+.deleteButton,
+.deleteConfirm button {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.deleteConfirm span {
+  color: var(--color-text-muted);
+  font-size: var(--ui-action-font-size);
+  font-weight: 700;
+}
+
+.deleteConfirm .dangerButton {
+  border-color: color-mix(in srgb, var(--color-danger) 40%, var(--color-border));
+  color: var(--color-danger);
+}
+
+.emptyState,
+.stateCard {
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  padding: 1.4rem;
+}
+
+.emptyState h3 {
+  font-size: 2rem;
+}
+
+.emptyState p {
+  max-width: 44rem;
+  margin: 0;
+}
+
+.emptyState a,
+.stateCard button {
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.stateCard span {
+  color: var(--color-text-muted);
+}
+
+.mutationError {
+  border-color: color-mix(in srgb, var(--color-danger) 40%, var(--color-border));
+  color: var(--color-danger);
+  padding: 0.8rem 1rem;
+}
+
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .titleRow,
+  .archiveBanner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .primaryButton {
+    width: 100%;
+  }
+
+  .summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summary > div + div {
+    border-left: 0;
+  }
+
+  .summary > div:nth-child(even) {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .summary > div:nth-child(n + 3) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metricStrip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metricStrip div:last-child {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+}
+
+.card[id] {
+  scroll-margin-block: 7rem;
+}
+
+.card:target {
+  border-color: color-mix(in srgb, var(--color-accent) 58%, var(--color-border));
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
+}
+
+/* Consistent button states. */
+.primaryButton,.editButton,.deleteButton,.deleteConfirm button,.stateCard button,.emptyState a {
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.primaryButton:hover { border-color:color-mix(in srgb,var(--color-accent) 38%,var(--color-text)); background:color-mix(in srgb,var(--color-accent) 12%,var(--color-text)); transform:translateY(-1px); }
+.editButton:hover { border-color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 13%,var(--color-surface)); transform:translateY(-1px); }
+.deleteButton:hover { border-color:color-mix(in srgb,var(--color-danger) 42%,var(--color-border)); background:color-mix(in srgb,var(--color-danger) 7%,transparent); color:var(--color-danger); transform:translateY(-1px); }
+.primaryButton:active,.editButton:active,.deleteButton:active { transform:translateY(0); }

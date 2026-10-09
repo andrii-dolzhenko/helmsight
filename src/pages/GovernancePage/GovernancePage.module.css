@@ -1,0 +1,741 @@
+.root {
+  display: grid;
+  gap: var(--layout-module-gap);
+}
+
+.header {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.eyebrow,
+.sectionEyebrow {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.titleRow h2,
+.titleRow p,
+.sectionHeader h3,
+.sectionHeader p {
+  margin: 0;
+}
+
+.titleRow h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2.15rem, 4vw, 3.35rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.titleRow p {
+  width: 100%;
+  max-width: none;
+  margin-top: 0.55rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.headerMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+}
+
+.headerMeta span {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  padding: 0.45rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.archiveBanner,
+.mutationError {
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+}
+
+.archiveBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-elevated);
+}
+
+.archiveBanner span {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+}
+
+.sectionTabs {
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding: 0.1rem 0;
+}
+
+.sectionTabs button {
+  flex: 0 0 auto;
+  min-height: 2.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  padding: 0.55rem 0.8rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.sectionTabs button:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  color: var(--color-text);
+}
+
+.sectionCard {
+  display: grid;
+  gap: 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  padding: var(--ui-card-padding);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sectionTitleGroup {
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.sectionTitleGroup > div {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+
+.sectionIcon {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.sectionIcon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sectionHeader h3 {
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  letter-spacing: -0.035em;
+}
+
+.sectionHeader p {
+  width: 100%;
+  max-width: none;
+  margin-top: 0.35rem;
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.primaryAction,
+.secondaryAction {
+  flex: 0 0 auto;
+  min-height: 2.55rem;
+  border-radius: 999px;
+  padding: 0.58rem 0.82rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.primaryAction {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+.secondaryAction {
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.primaryAction:hover,
+.secondaryAction:hover {
+  filter: brightness(1.04) saturate(1.04);
+}
+
+.charterGrid {
+  --charter-grid-gap: 0.8rem;
+  --charter-card-padding: 0.85rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--charter-grid-gap);
+  margin: 0;
+}
+
+.charterField {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--color-surface-elevated) 70%, var(--color-surface));
+  padding: var(--charter-card-padding);
+}
+
+.charterFieldWide {
+  grid-column: span 2;
+}
+
+.charterFieldFull {
+  grid-column: 1 / -1;
+}
+
+.charterField dt {
+  color: var(--color-text-muted);
+  font-size: var(--ui-meta-label-size);
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.charterField dd {
+  margin: 0.45rem 0 0;
+  color: var(--color-text);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.valueList {
+  display: grid;
+  gap: 0.34rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.valueList li {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.valueList li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.columnedValueList {
+  display: block;
+  column-count: 3;
+  column-gap: var(--charter-grid-gap);
+  /*
+   * Bleed the list back through the full-width card's own padding so the
+   * three text columns share the exact outer grid used by the Charter cards
+   * above. Each item then restores the normal card inset locally.
+   */
+  margin-inline: calc(-1 * var(--charter-card-padding));
+}
+
+.columnedValueList li {
+  break-inside: avoid;
+  margin-bottom: 0.34rem;
+  padding-right: var(--charter-card-padding);
+  padding-left: calc(var(--charter-card-padding) + 1rem);
+}
+
+.columnedValueList li::before {
+  left: var(--charter-card-padding);
+}
+
+.emptyValue {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.documentMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem 0.8rem;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.85rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.documentMeta span + span::before {
+  content: '·';
+  margin-right: 0.8rem;
+}
+
+.register {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 0.95rem;
+}
+
+.registerHeader,
+.registerRow {
+  display: grid;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* Fixed action tracks keep every independent CSS grid row aligned with the header. */
+.stakeholderGrid {
+  grid-template-columns:
+    minmax(8rem, 1.05fr)
+    minmax(8.5rem, 1.1fr)
+    minmax(4.7rem, 0.55fr)
+    minmax(4.7rem, 0.55fr)
+    minmax(6.3rem, 0.75fr)
+    minmax(7.5rem, 0.95fr)
+    minmax(9rem, 1.25fr)
+    8.5rem;
+}
+
+.communicationGrid {
+  grid-template-columns:
+    minmax(8rem, 1fr)
+    minmax(9rem, 1.18fr)
+    minmax(6.2rem, 0.72fr)
+    minmax(6.2rem, 0.72fr)
+    minmax(7rem, 0.82fr)
+    minmax(10rem, 1.35fr)
+    8.5rem;
+}
+
+.registerHeader {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  font-size: 0.63rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.registerHeader span,
+.registerRow > div,
+.registerRow > span {
+  min-width: 0;
+  padding: 0.68rem 0.72rem;
+}
+
+.registerHeader span + span,
+.registerRow > div + div,
+.registerRow > div + span,
+.registerRow > span + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.registerRow {
+  min-height: 4.35rem;
+  color: var(--color-text);
+  font-size: 0.76rem;
+}
+
+.registerRow + .registerRow {
+  border-top: 1px solid var(--color-border);
+}
+
+.registerRow > div,
+.registerRow > span {
+  display: flex;
+  align-items: center;
+}
+
+.identityCell,
+.communicationIdentity {
+  display: grid !important;
+  align-content: center;
+  gap: 0.2rem;
+}
+
+.primaryCellText,
+.identityCell strong,
+.communicationIdentity strong {
+  color: var(--color-text);
+  font-weight: 800;
+}
+
+.compactDetail {
+  display: block;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge,
+.frequencyBadge,
+.strategyBadge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.3rem 0.48rem;
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  font-size: 0.66rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.strategyBadge {
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.badge.high,
+.badge.resistant {
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.badge.medium,
+.badge.neutral {
+  background: color-mix(in srgb, #c98d22 12%, var(--color-surface));
+  color: #a76e08;
+}
+
+.badge.low,
+.badge.supportive,
+.badge.leading {
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.badge.unaware {
+  color: var(--color-text-muted);
+}
+
+.notesCell {
+  min-width: 0;
+  display: grid !important;
+  align-content: center;
+  gap: 0.2rem;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  line-height: 1.42;
+}
+
+.notesCell > :first-child,
+.notesCell:not(:has(*)) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rowActions {
+  display: flex !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.registerRow > .rowActions {
+  padding-inline: 0.5rem;
+}
+
+.rowActions button {
+  min-width: 0;
+  flex: 1 1 0;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.42rem 0.42rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.rowActions button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.rowActions .deleteAction {
+  color: var(--color-danger);
+}
+
+.rowActions .deleteAction:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-danger) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+}
+
+.rowActions button:disabled {
+  opacity: 0.5;
+}
+
+.readOnlyLabel {
+  align-self: center;
+  justify-self: stretch;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 750;
+  text-align: right;
+}
+
+.emptyState {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px dashed var(--color-border);
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--color-surface-elevated) 45%, transparent);
+  padding: 1rem;
+}
+
+.emptyState span {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+}
+
+.mutationError {
+  border: 1px solid color-mix(in srgb, var(--color-danger) 40%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+  color: var(--color-danger);
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+@media (max-width: 1320px) {
+  .registerHeader {
+    display: none;
+  }
+
+  .register {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .registerRow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .registerRow {
+    align-content: start;
+    border: 1px solid var(--color-border);
+    border-radius: 0.95rem;
+    background: var(--color-surface-elevated);
+    padding: 0.85rem;
+  }
+
+  .registerRow + .registerRow {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .registerRow > div,
+  .registerRow > span {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+    border-left: 0 !important;
+    padding: 0;
+  }
+
+  .registerRow [data-label]::before {
+    content: attr(data-label);
+    color: var(--color-text-muted);
+    font-size: 0.58rem;
+    font-weight: 850;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .identityCell,
+  .communicationIdentity,
+  .notesCell,
+  .rowActions,
+  .readOnlyLabel {
+    grid-column: 1 / -1;
+  }
+
+  .rowActions {
+    display: flex !important;
+    justify-content: flex-start;
+    padding-inline: 0 !important;
+  }
+
+  .rowActions::before {
+    display: none;
+  }
+
+  .readOnlyLabel {
+    text-align: left;
+  }
+
+  .compactDetail {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 1180px) {
+  .charterGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .charterFieldWide,
+  .charterFieldFull {
+    grid-column: 1 / -1;
+  }
+
+  .columnedValueList {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 780px) {
+  .titleRow,
+  .sectionHeader,
+  .archiveBanner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .titleRow {
+    display: grid;
+  }
+
+  .sectionTabs {
+    justify-content: flex-end;
+  }
+
+  .sectionHeader {
+    display: flex;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
+  }
+
+  .charterGrid,
+  .register {
+    grid-template-columns: 1fr;
+  }
+
+  .charterFieldWide,
+  .charterFieldFull {
+    grid-column: auto;
+  }
+
+  .columnedValueList {
+    column-count: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  .sectionCard {
+    padding: 1rem;
+  }
+
+  .sectionTitleGroup {
+    gap: 0.65rem;
+  }
+
+  .sectionIcon {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .registerRow,
+  .stakeholderGrid,
+  .communicationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .registerRow > div,
+  .registerRow > span {
+    grid-column: 1;
+  }
+
+  .rowActions button {
+    flex: 1 1 0;
+  }
+
+  .documentMeta span + span::before {
+    content: none;
+    margin: 0;
+  }
+
+  .documentMeta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* At phone widths the three section anchors may exceed the title-row width. */
+@media (max-width: 540px) {
+  .sectionTabs {
+    justify-content: flex-start;
+    width: 100%;
+  }
+}
+
+/* Three navigation controls need more room than a single page CTA. */
+@media (max-width: 1100px) {
+  :root .header [data-ui-page-title-row] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sectionTabs {
+    width: 100%;
+    justify-self: end;
+  }
+}

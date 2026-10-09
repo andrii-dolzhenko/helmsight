@@ -1,0 +1,359 @@
+.form {
+  display: grid;
+  gap: var(--layout-module-gap);
+}
+
+.detailsCard,
+.listSection,
+.draftNotice,
+.submitError {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.detailsCard,
+.listSection {
+  padding: 1rem;
+}
+
+.sectionHeader,
+.listHeader,
+.formFooter,
+.draftNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sectionHeader {
+  align-items: flex-start;
+  margin-bottom: 0.9rem;
+}
+
+.sectionHeader > span {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sectionHeader p,
+.listHeader p,
+.hint,
+.draftNotice span,
+.submitError span {
+  color: var(--color-text-muted);
+}
+
+.sectionHeader p,
+.listHeader p {
+  max-width: 44rem;
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.field,
+.listField {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.42rem;
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.field > span:first-child {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.field b,
+.requiredNote b {
+  color: var(--color-danger);
+}
+
+.field input,
+.field textarea,
+.listField input,
+.listField textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-elevated);
+  color: var(--color-text);
+}
+
+.field input,
+.listField input {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.field textarea,
+.listField textarea {
+  padding: 0.75rem 0.8rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.notesArea {
+  min-height: 11rem;
+  field-sizing: content;
+}
+
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'],
+.listField input[aria-invalid='true'],
+.listField textarea[aria-invalid='true'] {
+  border-color: color-mix(in srgb, var(--color-danger) 64%, var(--color-border));
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.hint {
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.listHeader {
+  align-items: flex-start;
+  margin-bottom: 0.8rem;
+}
+
+.listHeader h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: -0.035em;
+}
+
+.listHeader p {
+  margin-top: 0.3rem;
+}
+
+.listRows {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.listRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.55rem;
+}
+
+.listField textarea {
+  min-height: 4.25rem;
+  field-sizing: content;
+}
+
+.removeButton {
+  width: 2.65rem;
+  height: 2.65rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.removeButton svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.removeButton:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-danger) 36%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 7%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.removeButton:disabled {
+  opacity: 0.35;
+}
+
+.primaryButton,
+.secondaryButton,
+.draftNotice button {
+  min-height: 2.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  padding: 0.58rem 0.9rem;
+  font: inherit;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+}
+
+.secondaryButton,
+.draftNotice button {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.primaryButton:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-text));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 14%, transparent), var(--shadow-card);
+}
+
+.secondaryButton:not(:disabled):hover,
+.draftNotice button:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.primaryButton:active:not(:disabled),
+.secondaryButton:active:not(:disabled),
+.removeButton:active:not(:disabled),
+.draftNotice button:active:not(:disabled) {
+  transform: none;
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.removeButton:focus-visible,
+.draftNotice button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.formFooter {
+  justify-content: space-between;
+  padding: 0.15rem 0 0.3rem;
+}
+
+.requiredNote {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.draftNotice,
+.submitError {
+  padding: 0.9rem 1rem;
+}
+
+.draftNotice > div,
+.submitError {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.draftNotice strong,
+.submitError strong {
+  font-size: 0.8rem;
+}
+
+.draftNotice span,
+.submitError span {
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.submitError {
+  border-color: color-mix(in srgb, var(--color-danger) 35%, var(--color-border));
+}
+
+.submitError strong {
+  color: var(--color-danger);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .sectionHeader,
+  .listHeader,
+  .formFooter,
+  .draftNotice {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .listHeader .secondaryButton,
+  .actions,
+  .primaryButton,
+  .secondaryButton,
+  .draftNotice button {
+    width: 100%;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .notesArea {
+    min-height: 11rem;
+    max-height: 55dvh;
+    overflow-y: auto;
+    field-sizing: fixed;
+  }
+
+  .listField textarea {
+    max-height: 32dvh;
+    overflow-y: auto;
+    field-sizing: fixed;
+  }
+}

@@ -1,0 +1,99 @@
+/* HelmSight workspace action button standard.
+ * Opt-in only: navigation tabs, icon controls, inline links, and branded landing
+ * / dashboard hero CTAs keep their own visual language.
+ * See docs/UI_BUTTON_STANDARD.md for roles and sizes.
+ */
+
+:root [data-ui-button][data-ui-button] {
+  display: inline-flex;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.62rem 1.05rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-shadow: none;
+}
+
+:root [data-ui-button='primary'][data-ui-button] {
+  border-color: var(--color-inverse-surface);
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-text);
+}
+
+:root [data-ui-button='secondary'][data-ui-button] {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+:root [data-ui-button='danger'][data-ui-button] {
+  border-color: color-mix(in srgb, var(--color-danger) 36%, var(--color-border));
+  background: var(--color-surface);
+  color: var(--color-danger);
+}
+
+/* Dense row actions are intentionally smaller than page and form actions. */
+:root [data-ui-button][data-ui-size='sm'] {
+  min-height: 2.25rem;
+  padding: 0.45rem 0.78rem;
+  font-size: 0.78rem;
+}
+
+:root [data-ui-button][data-ui-button] svg {
+  flex: 0 0 auto;
+  vertical-align: middle;
+}
+
+:root [data-ui-button='primary']:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-inverse-surface) 88%, var(--color-accent));
+  background: color-mix(in srgb, var(--color-inverse-surface) 88%, var(--color-accent));
+  color: var(--color-inverse-text);
+  filter: none;
+}
+
+:root [data-ui-button='secondary']:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-accent) 38%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  color: var(--color-text);
+  filter: none;
+}
+
+:root [data-ui-button='danger']:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-danger) 56%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 9%, var(--color-surface));
+  color: var(--color-danger);
+  filter: none;
+}
+
+:root [data-ui-button][data-ui-button]:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+:root [data-ui-button][data-ui-button]:disabled {
+  opacity: 0.54;
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+/* Long labels wrap safely on narrow displays; full-width is controlled by layout. */
+@media (max-width: 420px) {
+  :root [data-ui-button][data-ui-button] {
+    white-space: normal;
+  }
+}

@@ -1,0 +1,692 @@
+.root {
+  display: grid;
+  gap: var(--layout-module-gap);
+}
+
+.pageHeader,
+.editorHeader,
+.listHeader,
+.archiveBanner,
+.noteHeader,
+.detailActions,
+.sectionTitle,
+.detailTopline {
+  display: flex;
+  align-items: center;
+}
+
+.pageHeader,
+.listHeader,
+.archiveBanner,
+.noteHeader,
+.sectionTitle {
+  justify-content: space-between;
+}
+
+.pageHeader,
+.editorHeader {
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.editorHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pageHeader > div,
+.editorHeader > div,
+.listHeader > div,
+.noteHeader > div,
+.archiveBanner > div {
+  min-width: 0;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pageHeader h2,
+.editorHeader h2,
+.listHeader h3,
+.noteHeader h2,
+.stateCard strong {
+  font-family: var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.pageHeader h2,
+.editorHeader h2 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1;
+}
+
+.pageHeader p,
+.editorHeader p,
+.noteHeader p,
+.archiveBanner span,
+.emptyState p,
+.updatedCell,
+.emptyCopy,
+.documentMeta span,
+.documentControl,
+.stateCard span {
+  color: var(--color-text-muted);
+}
+
+.pageHeader p,
+.editorHeader p {
+  width: 100%;
+  max-width: 54rem;
+  margin: 0.65rem 0 0;
+  line-height: 1.6;
+}
+
+.actionButton,
+.stateCard button {
+  min-height: 2.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.58rem 0.85rem;
+  font: inherit;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.actionButton svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.actionButton:not(:disabled):hover,
+.stateCard button:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.actionButton:active:not(:disabled),
+.stateCard button:active:not(:disabled) {
+  transform: none;
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.actionButton:focus-visible,
+.meetingRow:focus-visible,
+.backLink:focus-visible,
+.stateCard button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.primaryAction {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+}
+
+.primaryAction:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-text));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 14%, transparent), var(--shadow-card);
+}
+
+.deleteAction {
+  border-color: color-mix(in srgb, var(--color-danger) 32%, var(--color-border));
+  color: var(--color-danger);
+}
+
+.deleteAction:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-danger) 50%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+}
+
+.archiveBanner,
+.listCard,
+.noteDocument,
+.stateCard,
+.emptyState,
+.mutationError {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.archiveBanner {
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+}
+
+.archiveBanner > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.archiveBanner strong {
+  font-size: 0.82rem;
+}
+
+.archiveBanner span {
+  font-size: 0.74rem;
+  line-height: 1.45;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-elevated);
+}
+
+.summaryGrid > div {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem;
+}
+
+.summaryGrid > div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.summaryGrid span {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.summaryGrid strong {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+}
+
+.listCard {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.listHeader {
+  gap: 1rem;
+}
+
+.listHeader h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.35rem;
+}
+
+.historyCount {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.meetingTable {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tableHeader,
+.meetingRow {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.7fr) minmax(15rem, 1.7fr) minmax(6rem, 0.55fr) minmax(5rem, 0.45fr) minmax(9rem, 0.8fr) minmax(8rem, 0.7fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tableHeader {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.tableBody {
+  display: grid;
+}
+
+.meetingRow {
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.8rem 0.85rem;
+  text-decoration: none;
+}
+
+.meetingRow:hover {
+  background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface));
+}
+
+.dateCell,
+.metaCell,
+.updatedCell,
+.viewCell,
+.titleCell small {
+  font-size: 0.72rem;
+}
+
+.dateCell,
+.metaCell {
+  font-weight: 800;
+}
+
+.titleCell {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.titleCell strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
+.titleCell small {
+  color: var(--color-text-muted);
+}
+
+.viewCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  color: var(--color-accent);
+  font-weight: 850;
+}
+
+.viewCell svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.emptyState {
+  display: grid;
+  place-items: start;
+  gap: 0.5rem;
+  padding: 1.2rem;
+}
+
+.emptyState strong {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+}
+
+.emptyState p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.detailTopline {
+  justify-content: flex-start;
+}
+
+.backLink {
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.noteDocument {
+  display: grid;
+  gap: 1rem;
+  padding: 1.1rem;
+}
+
+.printMasthead {
+  display: none;
+}
+
+.noteHeader {
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+}
+
+.noteHeader h2 {
+  margin: 0.3rem 0 0;
+  max-width: 48rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.02;
+}
+
+.noteHeader p {
+  margin: 0.55rem 0 0;
+  line-height: 1.5;
+}
+
+.documentMeta {
+  flex: 0 0 auto;
+  display: grid;
+  justify-items: end;
+  gap: 0.25rem;
+  text-align: right;
+}
+
+.documentMeta strong {
+  font-size: 0.8rem;
+}
+
+.documentMeta span {
+  font-size: 0.68rem;
+}
+
+.detailActions {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.noteSection {
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  padding: 0.95rem 1rem;
+}
+
+.sectionTitle {
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+}
+
+.sectionTitle span {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sectionTitle strong {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+}
+
+.participantGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.participantGrid span {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  padding: 0.38rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.notesCopy {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.7;
+}
+
+.twoColumnSections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.recordList {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.recordList li {
+  padding-left: 0.25rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.recordList li + li {
+  margin-top: 0.55rem;
+}
+
+.emptyCopy {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.documentControl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.stateCard,
+.mutationError {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+}
+
+.stateCard strong {
+  font-size: 1.2rem;
+}
+
+.stateCard a {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.mutationError {
+  border-color: color-mix(in srgb, var(--color-danger) 34%, var(--color-border));
+  color: var(--color-danger);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+@media (max-width: 980px) {
+  .tableHeader {
+    display: none;
+  }
+
+  .meetingTable {
+    border: 0;
+    overflow: visible;
+  }
+
+  .tableBody {
+    gap: 0.7rem;
+  }
+
+  .meetingRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem 0.8rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+  }
+
+  .titleCell {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .dateCell,
+  .metaCell,
+  .updatedCell {
+    padding-top: 0.2rem;
+  }
+
+  .viewCell {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.65rem;
+  }
+
+  .twoColumnSections {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .pageHeader,
+  .editorHeader,
+  .noteHeader,
+  .listHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .pageHeader .actionButton {
+    width: 100%;
+  }
+
+  .editorHeader > :last-child {
+    align-self: flex-end;
+  }
+
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryGrid > div + div {
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+
+  .meetingRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .documentMeta {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .detailActions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .detailActions .actionButton {
+    width: 100%;
+  }
+
+  .noteDocument {
+    padding: 0.85rem;
+  }
+}
+
+@media print {
+  .root {
+    display: block;
+    color: #17201c;
+  }
+
+  .noteDocument {
+    display: block;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .printMasthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #17201c;
+    margin-bottom: 14pt;
+    padding-bottom: 7pt;
+    font-size: 9pt;
+  }
+
+  .printMasthead span {
+    font-family: var(--font-display);
+    font-size: 15pt;
+    font-weight: 800;
+  }
+
+  .noteHeader {
+    margin-bottom: 10pt;
+    border-bottom: 1px solid #ccd2ce;
+    padding-bottom: 8pt;
+  }
+
+  .noteHeader h2 {
+    font-size: 20pt;
+  }
+
+  .noteHeader p,
+  .documentMeta span,
+  .documentControl,
+  .emptyCopy {
+    color: #58625d;
+  }
+
+  .noteSection {
+    break-inside: avoid;
+    margin-bottom: 8pt;
+    border: 1px solid #ccd2ce;
+    background: #fff;
+    padding: 8pt;
+  }
+
+  .twoColumnSections {
+    grid-template-columns: 1fr 1fr;
+    gap: 8pt;
+  }
+
+  .participantGrid span {
+    border-color: #ccd2ce;
+    background: #fff;
+  }
+
+  .notesCopy,
+  .recordList li {
+    color: #17201c;
+  }
+
+  .documentControl {
+    margin-top: 10pt;
+    border-color: #ccd2ce;
+    font-size: 8pt;
+  }
+}

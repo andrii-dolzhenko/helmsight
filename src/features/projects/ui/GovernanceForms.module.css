@@ -1,0 +1,164 @@
+.form {
+  display: grid;
+  gap: 1.1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.1rem;
+}
+
+.twoColumnGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.42rem;
+  color: var(--color-text);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.requiredMark {
+  color: var(--color-danger);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 0.8rem;
+  background-color: var(--color-surface-elevated);
+  color: var(--color-text);
+  padding: 0.72rem 0.82rem;
+}
+
+.field select {
+  min-height: 2.85rem;
+}
+
+.field textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: color-mix(in srgb, var(--color-accent) 55%, var(--color-border));
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-color: color-mix(in srgb, var(--color-danger) 72%, var(--color-border));
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+
+.strategyPreview {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 0.28rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.8rem;
+  background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface-elevated));
+  padding: 0.72rem 0.82rem;
+}
+
+.strategyPreview span {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.strategyPreview strong {
+  color: var(--color-accent);
+  font-size: 0.88rem;
+}
+
+.strategyPreview small {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 2.55rem;
+  border-radius: 999px;
+  padding: 0.58rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.primaryButton {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.primaryButton:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-accent) 88%, white);
+}
+
+.secondaryButton:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.56;
+}
+
+@media (max-width: 720px) {
+  .twoColumnGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}

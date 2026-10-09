@@ -1,0 +1,1661 @@
+.root {
+  display: grid;
+  gap: var(--layout-module-gap);
+}
+
+.pageHeader,
+.reportHeader,
+.toolbar,
+.sectionHeading,
+.footerActions,
+.createActions,
+.archiveBanner,
+.sourceWarning,
+.draftNotice,
+.listHeader,
+.detailTopline {
+  display: flex;
+  align-items: center;
+}
+
+.pageHeader,
+.reportHeader,
+.sectionHeading,
+.footerActions,
+.archiveBanner,
+.sourceWarning,
+.draftNotice,
+.listHeader {
+  justify-content: space-between;
+}
+
+.pageHeader {
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.pageHeader > div,
+.reportHeader > div,
+.sectionHeading > div,
+.sourceWarning > div,
+.draftNotice > div,
+.listHeader > div {
+  min-width: 0;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pageHeader h2,
+.reportHeader h2,
+.createPanel h3,
+.reportSection h3,
+.listHeader h3,
+.emptyState strong {
+  font-family: var(--font-display);
+  letter-spacing: -0.045em;
+}
+
+.pageHeader h2 {
+  margin: 0.35rem 0 0;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1;
+}
+
+.pageHeader p,
+.createPanel p,
+.archiveBanner span,
+.sourceWarning span,
+.draftNotice span,
+.emptyState p,
+.reportHeader p,
+.fieldMeta,
+.emptyList,
+.signalCard p,
+.updatedCell {
+  color: var(--color-text-muted);
+}
+
+.pageHeader p {
+  width: 100%;
+  max-width: none;
+  margin: 0.65rem 0 0;
+  line-height: 1.6;
+}
+
+.actionButton,
+.primaryButton,
+.secondaryButton,
+.sourceWarning button,
+.draftNotice button,
+.emptyState button,
+.reportRow {
+  font: inherit;
+}
+
+.actionButton {
+  min-height: 2.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.58rem 0.85rem;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.actionButton svg,
+.viewCell svg,
+.sectionIcon svg,
+.collapseChevron,
+.dismissSignal svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.actionButton svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  stroke-width: 1.8;
+}
+
+.actionButton:not(:disabled):hover,
+.secondaryButton:not(:disabled):hover,
+.sourceWarning button:hover,
+.draftNotice button:hover,
+.emptyState button:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.actionButton:active:not(:disabled),
+.primaryButton:active:not(:disabled),
+.secondaryButton:active:not(:disabled),
+.sourceWarning button:active:not(:disabled),
+.draftNotice button:active:not(:disabled),
+.emptyState button:active:not(:disabled) {
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.actionButton:focus-visible,
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible,
+.reportRow:focus-visible,
+.collapsibleTrigger:focus-visible,
+.dismissSignal:focus-visible,
+.backToReports:focus-visible,
+.viewReportButton:focus-visible,
+.restoreReportButton:focus-visible,
+.historyTab:focus-visible,
+.restoreHiddenButton:focus-visible,
+.sourceWarning button:focus-visible,
+.draftNotice button:focus-visible,
+.emptyState button:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.actionButton:disabled,
+.primaryButton:disabled,
+.secondaryButton:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.primaryAction,
+.primaryButton {
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+}
+
+.primaryAction:not(:disabled):hover,
+.primaryButton:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-accent) 48%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-text));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 14%, transparent), var(--shadow-card);
+}
+
+.primaryAction:active:not(:disabled),
+.primaryButton:active:not(:disabled) {
+  border-color: color-mix(in srgb, var(--color-accent) 58%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 25%, var(--color-text));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-canvas) 10%, transparent);
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 2.65rem;
+  border-radius: 999px;
+  padding: 0.58rem 0.9rem;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.deleteAction {
+  border-color: color-mix(in srgb, var(--color-danger) 32%, var(--color-border));
+  color: var(--color-danger);
+}
+
+.deleteAction:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-danger) 48%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+}
+
+.archiveBanner,
+.sourceWarning,
+.draftNotice,
+.createPanel,
+.reportsListCard,
+.reportDocument,
+.stateCard,
+.emptyState,
+.mutationError {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.archiveBanner,
+.sourceWarning,
+.draftNotice {
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+}
+
+.archiveBanner span,
+.sourceWarning span,
+.draftNotice span {
+  font-size: var(--ui-list-description-size);
+  line-height: 1.5;
+}
+
+.sourceWarning > div,
+.draftNotice > div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.sourceWarning button,
+.draftNotice button,
+.emptyState button {
+  flex: 0 0 auto;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.55rem 0.8rem;
+  font-size: var(--ui-action-font-size);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.createPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.42fr) auto;
+  align-items: end;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+}
+
+.createPeriodControls {
+  min-width: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.existingReportNotice {
+  display: grid;
+  gap: 0.15rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, var(--color-border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface-elevated));
+  padding: 0.6rem 0.7rem;
+}
+
+.existingReportNotice strong {
+  font-size: 0.72rem;
+}
+
+.existingReportNotice span {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.createPanel h3,
+.listHeader h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.35rem;
+}
+
+.createPanel p {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+}
+
+.dateField,
+.field,
+.ownerField {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.dateField > span,
+.field > span:first-child,
+.ownerField > span:first-child {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.dateField b,
+.field b,
+.documentMetaGrid b {
+  color: var(--color-danger);
+}
+
+.dateField input,
+.field textarea,
+.ownerField input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+}
+
+.dateField input,
+.ownerField input {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.field textarea {
+  min-height: 7.25rem;
+  height: auto;
+  max-height: none;
+  overflow-y: hidden;
+  resize: none;
+  padding: 0.8rem 0.9rem;
+  line-height: 1.55;
+}
+
+.dateField input[aria-invalid='true'],
+.field textarea[aria-invalid='true'],
+.ownerField input[aria-invalid='true'] {
+  border-color: color-mix(in srgb, var(--color-danger) 62%, var(--color-border));
+}
+
+.fieldMeta {
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.fieldError {
+  color: var(--color-danger);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.createActions {
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.reportsListCard {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.listHeader {
+  gap: 1rem;
+}
+
+.historyHeaderActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.historyTabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-elevated);
+  padding: 0.18rem;
+}
+
+.historyTab {
+  min-height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 0.35rem 0.65rem;
+  font: inherit;
+  font-size: 0.7rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.historyTab span {
+  min-width: 1.2rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-border) 50%, transparent);
+  padding: 0.08rem 0.32rem;
+  text-align: center;
+  font-size: 0.62rem;
+}
+
+.historyTab:not(.historyTabActive):hover {
+  background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface));
+  color: var(--color-text);
+}
+
+.historyTab:not(.historyTabActive):active {
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
+}
+
+.historyTabActive {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: var(--shadow-card);
+}
+
+.historyCount {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.reportTable {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.reportTableHeader,
+.reportRow {
+  display: grid;
+  grid-template-columns: minmax(13rem, 1.6fr) minmax(6rem, 0.55fr) minmax(5rem, 0.45fr) minmax(12rem, 1.1fr) minmax(10rem, 0.9fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.reportTableHeader {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.reportTableBody {
+  display: grid;
+}
+
+.reportRow {
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.8rem 0.85rem;
+  text-align: left;
+}
+
+.reportRow:hover {
+  background: color-mix(in srgb, var(--color-accent) 4%, var(--color-surface));
+}
+
+.periodCell {
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.versionCell,
+.updatedCell {
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+
+.viewCell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.viewReportButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  padding: 0.35rem 0;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.viewReportButton:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+}
+
+.viewReportButton:active {
+  color: color-mix(in srgb, var(--color-accent) 72%, var(--color-text));
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.restoreReportButton,
+.restoreHiddenButton {
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.36rem 0.58rem;
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.restoreReportButton:hover,
+.restoreHiddenButton:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.restoreReportButton:active:not(:disabled),
+.restoreHiddenButton:active:not(:disabled) {
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.restoreReportButton:disabled,
+.restoreHiddenButton:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.viewCell svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  stroke-width: 2;
+}
+
+.detailTopline {
+  min-height: 1.75rem;
+}
+
+.backToReports {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.backToReports::before {
+  content: '←';
+  margin-right: 0.35rem;
+}
+
+.backToReports:hover {
+  color: var(--color-text);
+}
+
+.reportDocument {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.printMasthead {
+  display: none;
+}
+
+.reportHeader {
+  align-items: flex-start;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.9rem;
+}
+
+.reportHeader h2 {
+  margin: 0.25rem 0 0;
+  font-size: clamp(1.9rem, 4vw, 2.65rem);
+  line-height: 1;
+}
+
+.reportHeader p {
+  margin: 0.4rem 0 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.reportHeaderMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+
+.reportHelpSlot {
+  display: inline-flex;
+  align-items: center;
+}
+
+.statusBadge,
+.healthBadge,
+.metricState,
+.toneBadge,
+.dateBadge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-elevated);
+  padding: 0.3rem 0.5rem;
+  font-size: 0.66rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.statusBadge.final,
+.healthBadge.healthy,
+.metricState.healthy,
+.toneBadge.achieved,
+.toneBadge.onTrack {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.statusBadge.archived {
+  border-color: color-mix(in srgb, var(--color-text-muted) 30%, var(--color-border));
+  background: color-mix(in srgb, var(--color-text-muted) 7%, var(--color-surface));
+  color: var(--color-text-muted);
+}
+
+.statusBadge.draft,
+.healthBadge.watch,
+.metricState.watch,
+.toneBadge.high,
+.toneBadge.dueSoon,
+.toneBadge.atRisk {
+  color: #b66d11;
+}
+
+.healthBadge.attention,
+.metricState.pressure,
+.toneBadge.critical,
+.toneBadge.overdue,
+.toneBadge.missed {
+  border-color: color-mix(in srgb, var(--color-danger) 34%, var(--color-border));
+  background: color-mix(in srgb, var(--color-danger) 7%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.healthBadge.notAssessed,
+.metricState.notAvailable,
+.toneBadge.medium,
+.toneBadge.low {
+  color: var(--color-text-muted);
+}
+
+.toolbar {
+  justify-content: space-between;
+  gap: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  padding: 0.55rem 0.65rem;
+}
+
+.toolbarStatus {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+
+.toolbarStatus strong {
+  color: #b66d11;
+}
+
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.toolbar .actionButton {
+  min-height: 2.3rem;
+  padding: 0.45rem 0.7rem;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-elevated);
+}
+
+.summaryCard {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+}
+
+.summaryCard + .summaryCard {
+  border-left: 1px solid var(--color-border);
+}
+
+.summaryCard > span:first-child,
+.summaryCard small,
+.documentMetaGrid span {
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+
+.summaryCard > strong {
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3vw, 1.9rem);
+  line-height: 1.05;
+  text-overflow: ellipsis;
+}
+
+.reportForm {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.narrativeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.reportSection {
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: var(--ui-card-padding);
+}
+
+.fullWidthSection {
+  grid-column: 1 / -1;
+}
+
+.sectionHeading {
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.sectionHeading h3 {
+  margin: 0.25rem 0 0;
+  font-size: var(--ui-section-title-size);
+  line-height: 1.05;
+}
+
+.narrativeParagraph {
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.65;
+}
+
+.textList {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.textList li {
+  padding-left: 0.15rem;
+  line-height: 1.55;
+}
+
+.emptyList {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+}
+
+.derivedStack {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.collapsibleSection {
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.expandedSection {
+  border-color: color-mix(in srgb, var(--color-accent) 20%, var(--color-border));
+}
+
+.collapsibleTrigger {
+  width: 100%;
+  min-height: 3.25rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.65rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.collapsibleTrigger:hover {
+  background: color-mix(in srgb, var(--color-accent) 5%, var(--color-surface));
+}
+
+.collapsibleTrigger:active {
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
+}
+
+.sectionIcon {
+  width: 1.7rem;
+  height: 1.7rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface-elevated));
+  color: var(--color-accent);
+}
+
+.sectionIcon svg {
+  width: 1rem;
+  height: 1rem;
+  stroke-width: 1.9;
+}
+
+.collapsibleTitle {
+  overflow: hidden;
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collapsibleMeta {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.collapseChevron {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-text-muted);
+  stroke-width: 2;
+  transition: transform 160ms ease;
+}
+
+.expandedSection .collapseChevron {
+  transform: rotate(180deg);
+}
+
+.collapsibleBody {
+  display: none;
+  border-top: 1px solid var(--color-border);
+  padding: 0.85rem;
+}
+
+.collapsibleBodyOpen {
+  display: block;
+}
+
+.compactRows {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.compactRow {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.65rem;
+}
+
+.compactRow:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.compactRow > div {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.compactRow strong {
+  overflow: hidden;
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.compactRow div span {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signalGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.signalSectionBody {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.signalActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0.6rem;
+}
+
+.signalActions > span {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 750;
+}
+
+.signalCard {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 0.3rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+  padding: 0.8rem 2.35rem 0.8rem 0.8rem;
+}
+
+.signalCard > span {
+  color: var(--color-danger);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.signalCard strong {
+  font-size: 0.8rem;
+}
+
+.signalCard p {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.dismissSignal {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.55rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 0;
+  cursor: pointer;
+}
+
+.dismissSignal:hover {
+  background: color-mix(in srgb, var(--color-danger) 7%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.dismissSignal:active {
+  background: color-mix(in srgb, var(--color-danger) 12%, var(--color-surface));
+  box-shadow: inset 0 0 0 999px color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.dismissSignal svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  stroke-width: 2;
+}
+
+.evmStrip {
+  background: color-mix(in srgb, var(--color-surface-elevated) 60%, var(--color-surface));
+}
+
+.evmValues {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.evmValues > div {
+  min-width: 0;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
+.evmValues > div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.evmValues span {
+  color: var(--color-text-muted);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.evmValues strong {
+  overflow: hidden;
+  font-size: 0.92rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.documentControl {
+  grid-template-columns: minmax(12rem, 0.3fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.documentControl h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.35rem;
+}
+
+.documentMetaGrid {
+  display: grid;
+  grid-template-columns: 0.7fr 0.7fr 1.2fr 1.3fr;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-elevated);
+}
+
+.documentMetaGrid > div {
+  min-width: 0;
+  display: grid;
+  align-content: center;
+  gap: 0.25rem;
+  padding: 0.65rem 0.75rem;
+}
+
+.documentMetaGrid > div + div {
+  border-left: 1px solid var(--color-border);
+}
+
+.documentMetaGrid strong {
+  overflow: hidden;
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ownerField {
+  min-width: 0;
+}
+
+.ownerField input {
+  min-width: 0;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 750;
+}
+
+.footerActions {
+  gap: 1rem;
+  padding-top: 0.1rem;
+}
+
+.footerActions > :last-child {
+  margin-left: auto;
+}
+
+.printOnly {
+  display: none;
+}
+
+.stateCard,
+.emptyState {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  padding: 1.2rem;
+}
+
+.stateCard span,
+.emptyState p {
+  margin: 0;
+  line-height: 1.55;
+}
+
+.stateCard button,
+.stateCard a {
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  padding: 0;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.mutationError {
+  color: var(--color-danger);
+  padding: 0.8rem 0.9rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+@media (max-width: 1050px) {
+  .createPanel {
+    grid-template-columns: 1fr minmax(12rem, 0.5fr);
+  }
+
+  .createActions {
+    grid-column: 1 / -1;
+  }
+
+  .reportTableHeader,
+  .reportRow {
+    grid-template-columns: minmax(12rem, 1.5fr) minmax(5rem, 0.55fr) minmax(4rem, 0.4fr) minmax(10rem, 1fr) minmax(9rem, 0.85fr);
+  }
+
+  .summaryGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .summaryCard:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .summaryCard:nth-child(4) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .signalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .documentControl {
+    grid-template-columns: 1fr;
+  }
+
+  .documentMetaGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .documentMetaGrid > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .documentMetaGrid > div:nth-child(4) {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .field textarea {
+    min-height: 9.5rem;
+    height: 9.5rem;
+    max-height: 9.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .narrativeParagraph,
+  .textList {
+    max-height: 9.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding-right: 0.35rem;
+  }
+
+  .reportHelpSlot {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .reportTableHeader {
+    display: none;
+  }
+
+  .reportTable {
+    border: 0;
+    border-radius: 0;
+  }
+
+  .reportTableBody {
+    gap: 0.7rem;
+  }
+
+  .reportRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.8rem;
+  }
+
+  .reportRow > span {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .reportRow > span::before {
+    content: attr(data-label);
+    color: var(--color-text-muted);
+    font-size: 0.62rem;
+    font-weight: 850;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .periodCell {
+    grid-column: 1 / -1;
+  }
+
+  .viewCell {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  .pageHeader,
+  .reportHeader,
+  .toolbar,
+  .footerActions,
+  .archiveBanner,
+  .sourceWarning,
+  .draftNotice,
+  .listHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .historyHeaderActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .historyTabs {
+    flex: 1 1 auto;
+  }
+
+  .historyTab {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+
+  .pageHeader .primaryAction {
+    width: 100%;
+  }
+
+  .createPanel,
+  .narrativeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .createActions {
+    grid-column: auto;
+  }
+
+  .createActions > * {
+    flex: 1 1 0;
+  }
+
+  .reportHeaderMeta {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .toolbarActions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .toolbarActions .actionButton,
+  .footerActions > * {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .collapsibleTrigger {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .collapsibleMeta {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .collapseChevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .signalGrid,
+  .evmValues {
+    grid-template-columns: 1fr;
+  }
+
+  .reportSection,
+  .signalCard,
+  .collapsibleBody {
+    height: auto;
+    max-height: none;
+  }
+
+  .evmValues > div + div {
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+
+  .compactRow {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .reportRow {
+    grid-template-columns: 1fr;
+  }
+
+  .periodCell {
+    grid-column: auto;
+  }
+
+  .summaryGrid,
+  .documentMetaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .summaryCard + .summaryCard,
+  .summaryCard:nth-child(3),
+  .summaryCard:nth-child(4),
+  .documentMetaGrid > div + div,
+  .documentMetaGrid > div:nth-child(3),
+  .documentMetaGrid > div:nth-child(4) {
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+
+  .sectionHeading,
+  .compactRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .signalActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .restoreHiddenButton {
+    width: 100%;
+  }
+
+  .compactRow strong,
+  .compactRow div span {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .collapseChevron {
+    transition: none;
+  }
+}
+
+@media print {
+  .root {
+    display: block;
+    color: #17201c;
+  }
+
+  .detailTopline,
+  .archiveBanner,
+  .sourceWarning,
+  .draftNotice {
+    display: none !important;
+  }
+
+  .reportDocument {
+    display: block;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .printMasthead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid #17201c;
+    margin-bottom: 14pt;
+    padding-bottom: 7pt;
+    font-size: 9pt;
+  }
+
+  .printMasthead span {
+    font-family: var(--font-display);
+    font-size: 15pt;
+    font-weight: 800;
+  }
+
+  .reportHeader {
+    margin-bottom: 10pt;
+    border-bottom: 1px solid #ccd2ce;
+    padding-bottom: 8pt;
+  }
+
+  .reportHeader h2 {
+    font-size: 20pt;
+  }
+
+  .reportHeader p,
+  .reportHeaderMeta,
+  .emptyList,
+  .signalCard p,
+  .fieldMeta,
+  .documentMetaGrid span,
+  .collapsibleMeta {
+    color: #58625d;
+  }
+
+  .summaryGrid,
+  .narrativeGrid,
+  .derivedStack,
+  .documentControl {
+    margin-bottom: 10pt;
+  }
+
+  .summaryGrid {
+    grid-template-columns: repeat(4, 1fr);
+    border-color: #ccd2ce;
+    background: #f5f7f5;
+    break-inside: avoid;
+  }
+
+  .summaryCard {
+    padding: 7pt;
+  }
+
+  .summaryCard > strong {
+    font-size: 14pt;
+  }
+
+  .reportForm,
+  .narrativeGrid,
+  .derivedStack {
+    gap: 8pt;
+  }
+
+  .reportSection,
+  .collapsibleSection {
+    break-inside: avoid;
+    border-color: #ccd2ce;
+    border-radius: 8pt;
+    background: #fff;
+  }
+
+  .reportSection {
+    padding: 9pt;
+  }
+
+  .sectionHeading h3 {
+    font-size: 13pt;
+  }
+
+  .field {
+    display: none;
+  }
+
+  .printOnly {
+    display: block;
+  }
+
+  .collapsibleTrigger {
+    min-height: auto;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 7pt 8pt;
+    cursor: default;
+  }
+
+  .collapsibleTrigger:hover {
+    background: transparent;
+  }
+
+  .sectionIcon {
+    width: 18pt;
+    height: 18pt;
+    background: #f5f7f5;
+    color: #27322c;
+  }
+
+  .collapsibleTitle {
+    font-size: 10pt;
+  }
+
+  .collapseChevron {
+    display: none;
+  }
+
+  .collapsibleBody,
+  .collapsibleBodyOpen {
+    display: block !important;
+    border-color: #ccd2ce;
+    padding: 8pt;
+  }
+
+  .textList,
+  .narrativeParagraph {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .textList,
+  .narrativeParagraph,
+  .compactRow,
+  .signalCard,
+  .documentMetaGrid strong {
+    font-size: 8.5pt;
+  }
+
+  .signalGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .signalCard {
+    padding: 7pt;
+  }
+
+  .signalCard,
+  .evmValues,
+  .documentMetaGrid {
+    border-color: #ccd2ce;
+    background: #f8faf8;
+  }
+
+  .documentControl {
+    grid-template-columns: 0.3fr 1fr;
+  }
+
+  .documentMetaGrid {
+    grid-template-columns: 0.7fr 0.7fr 1.2fr 1.3fr;
+  }
+
+  .documentMetaGrid > div:nth-child(3),
+  .documentMetaGrid > div:nth-child(4) {
+    border-top: 0;
+  }
+
+  .documentMetaGrid > div:nth-child(3) {
+    border-left: 1px solid #ccd2ce;
+  }
+
+  .ownerField {
+    display: none;
+  }
+
+  .statusBadge,
+  .healthBadge,
+  .metricState,
+  .toneBadge,
+  .dateBadge {
+    border-color: #bfc8c3 !important;
+    background: #f5f7f5 !important;
+    color: #27322c !important;
+  }
+}

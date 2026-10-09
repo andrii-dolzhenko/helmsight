@@ -1,0 +1,191 @@
+.root {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.focusedRoot {
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.header > div {
+  min-width: 0;
+}
+
+.backLink {
+  display: block;
+  width: fit-content;
+  margin-bottom: 1.35rem;
+  border-radius: 0.45rem;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.backLink:hover {
+  color: var(--color-text);
+}
+
+.backLink:active {
+  transform: translateY(1px);
+}
+
+.backLink:focus {
+  outline: none;
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0.18rem;
+}
+
+.backLink::before {
+  content: '← ';
+}
+
+.eyebrow {
+  display: block;
+  color: var(--color-accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.context {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-muted);
+}
+
+.status {
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 35%, var(--color-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface));
+  color: var(--color-accent);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.archived {
+  border-color: var(--color-border);
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border-bottom: 1px solid var(--color-border);
+  min-height: 3.5rem;
+  padding: 0.35rem 0.75rem 0.8rem;
+  scroll-padding-inline: 0.75rem;
+}
+
+.tab {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.tab:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface-elevated));
+  color: var(--color-text);
+}
+
+.tab:active {
+  transform: translateY(1px);
+}
+
+.tab:focus {
+  outline: none;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0.18rem;
+}
+
+.tab.active {
+  border-color: var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+  box-shadow: 0 0.35rem 0.9rem rgb(0 0 0 / 8%);
+}
+
+.tab.active:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 24%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 8%, var(--color-text));
+}
+
+.stateCard {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: 1.2rem;
+}
+
+.stateCard span {
+  color: var(--color-text-muted);
+}
+
+.stateCard a,
+.stateCard button {
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+@media (max-width: 640px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

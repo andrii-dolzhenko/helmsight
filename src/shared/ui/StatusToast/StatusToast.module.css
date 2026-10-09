@@ -1,0 +1,111 @@
+.toast {
+  position: fixed;
+  top: 5.35rem;
+  right: clamp(1rem, 2.5vw, 2rem);
+  z-index: 60;
+  max-width: min(24rem, calc(100vw - 2rem));
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 38%, var(--color-border));
+  border-radius: 0.95rem;
+  background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+  color: var(--color-text);
+  box-shadow: 0 1rem 2.6rem rgb(4 14 9 / 18%);
+  backdrop-filter: blur(16px);
+  padding: 0.78rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  animation: toast-in 180ms ease-out;
+}
+
+.icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+  color: var(--color-accent);
+}
+
+.icon svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.45rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 780px) {
+  .toast {
+    top: 5.2rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+
+.info {
+  border-color: color-mix(in srgb, var(--color-text-muted) 32%, var(--color-border));
+}
+
+.info .icon {
+  background: var(--color-surface-elevated);
+  color: var(--color-text-muted);
+}
+
+.error {
+  border-color: color-mix(in srgb, var(--color-danger) 42%, var(--color-border));
+}
+
+.error .icon {
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface));
+  color: var(--color-danger);
+}
+
+.message {
+  min-width: 0;
+}
+
+.action {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  padding: 0.2rem 0.1rem;
+  font: inherit;
+  font-weight: 850;
+  text-decoration: underline;
+  text-underline-offset: 0.18rem;
+}
+
+.action:hover {
+  text-decoration-thickness: 2px;
+}
+
+.action:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 70%, transparent);
+  outline-offset: 0.18rem;
+  border-radius: 0.2rem;
+}

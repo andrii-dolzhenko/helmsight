@@ -1,0 +1,282 @@
+.form {
+  display: grid;
+  gap: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.field {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  color: var(--color-text);
+  font-size: 0.84rem;
+  font-weight: 750;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 0.85rem;
+  background-color: var(--color-canvas);
+  color: var(--color-text);
+  padding: 0.82rem 0.9rem;
+  font-weight: 500;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 8rem;
+  line-height: 1.55;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+}
+
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.requiredMark {
+  color: var(--color-accent);
+}
+
+.requiredNote {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.requiredNote span {
+  margin-right: 0.25rem;
+}
+
+.hint {
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: 0.76rem;
+  font-weight: 650;
+}
+
+.submitError {
+  display: grid;
+  gap: 0.2rem;
+  border: 1px solid color-mix(in srgb, var(--color-danger) 40%, var(--color-border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-danger) 8%, var(--color-surface));
+  color: var(--color-text);
+  padding: 0.9rem 1rem;
+}
+
+.submitError span {
+  color: var(--color-text-muted);
+  font-size: 0.84rem;
+}
+
+.formFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1.25rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  min-height: 2.8rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primaryButton {
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-canvas);
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.secondaryButton {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullWidth {
+    grid-column: auto;
+  }
+
+  .formFooter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+  }
+}
+
+/* Keep the native calendar popup for accessibility/reliability, but make the field itself HelmSight-native. */
+.field input[type='date'] {
+  min-height: 3.05rem;
+  cursor: pointer;
+  color-scheme: light;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-surface) 70%, transparent),
+      transparent
+    ),
+    var(--color-canvas);
+}
+
+:global(html[data-theme='dark']) .field input[type='date'] {
+  color-scheme: dark;
+}
+
+.field input[type='date']::-webkit-calendar-picker-indicator {
+  border-radius: 0.45rem;
+  cursor: pointer;
+  opacity: 0.72;
+  padding: 0.3rem;
+  transition: background-color 150ms ease, opacity 150ms ease;
+}
+
+.field input[type='date']:hover::-webkit-calendar-picker-indicator {
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  opacity: 1;
+}
+
+.field input[type='date']:focus-visible {
+  border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-border));
+  background-color: var(--color-surface);
+}
+
+.draftNotice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  padding: 0.8rem 0.95rem;
+}
+
+.draftNotice div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.draftNotice strong {
+  color: var(--color-text);
+  font-size: 0.82rem;
+}
+
+.draftNotice span {
+  color: var(--color-text-muted);
+  font-size: 0.76rem;
+}
+
+.draftNotice button {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+@media (max-width: 640px) {
+  .draftNotice {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Shared interaction polish for form actions. */
+.primaryButton,
+.secondaryButton,
+.draftNotice button {
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.primaryButton:not(:disabled):hover {
+  border-color: color-mix(in srgb, var(--color-accent) 38%, var(--color-text));
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-text));
+  transform: translateY(-1px);
+}
+
+.secondaryButton:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.primaryButton:not(:disabled):active,
+.secondaryButton:active {
+  transform: translateY(0);
+}
+
+.draftNotice button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}

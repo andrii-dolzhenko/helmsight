@@ -1,0 +1,155 @@
+.historySection {
+  display: grid;
+  gap: .85rem;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sectionHeading > div {
+  display: grid;
+  gap: .25rem;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.sectionHeading h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--ui-section-title-size);
+  letter-spacing: -.035em;
+}
+
+.sectionHeading p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: .78rem;
+  line-height: 1.5;
+  text-align: right;
+}
+
+.chartGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .9rem;
+}
+
+.chartCard {
+  min-width: 0;
+  display: grid;
+  gap: .9rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  padding: clamp(1rem, 2.5vw, 1.35rem);
+}
+
+.chartHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.chartHeader > div {
+  min-width: 0;
+  display: grid;
+  gap: .22rem;
+}
+
+.chartHeader span {
+  color: var(--color-text-muted);
+  font-size: var(--ui-meta-label-size);
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.chartHeader h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 2.3vw, 1.75rem);
+  letter-spacing: -.03em;
+}
+
+.chartHeader small {
+  color: var(--color-text-muted);
+  font-size: .72rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.chartViewport {
+  position: relative;
+  min-width: 0;
+  height: clamp(18rem, 29vw, 21rem);
+}
+
+.chartViewport canvas {
+  max-width: 100%;
+}
+
+.emptyState {
+  display: grid;
+  gap: .35rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: 1.1rem 1.2rem;
+}
+
+.emptyState span {
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) {
+  .chartGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartViewport {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .sectionHeading,
+  .chartHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sectionHeading p {
+    max-width: none;
+    text-align: left;
+  }
+
+  .chartViewport {
+    height: 18rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .chartViewport {
+    height: 16.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chartViewport canvas {
+    scroll-behavior: auto;
+  }
+}

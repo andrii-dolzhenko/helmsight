@@ -1,0 +1,88 @@
+/* Workspace heading contract: eyebrow, title/action row, full-width description.
+ * Keep actions aligned with the title, not its supporting copy.
+ */
+:root {
+  --ui-page-title-size: clamp(2.2rem, 5vw, 3.5rem);
+}
+
+:root [data-ui-page-header] {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  align-content: start;
+  justify-content: stretch; /* Reset legacy justify-content: space-between on page headers. */
+  justify-items: stretch;
+  gap: 0.65rem;
+}
+
+:root [data-ui-page-title-row],
+:root [data-ui-section-title-row] {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  justify-content: stretch;
+  column-gap: 1.25rem;
+  row-gap: 0.75rem;
+}
+
+:root [data-ui-page-header] [data-ui-page-title-row] > :is(h1, h2) {
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--ui-page-title-size);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+
+:root [data-ui-section-title-row] > h3 {
+  min-width: 0;
+  margin: 0;
+}
+
+:root [data-ui-page-title-row] > :not(:is(h1, h2)),
+:root [data-ui-section-title-row] > :not(h3) {
+  min-width: 0;
+  justify-self: end;
+  align-self: center;
+}
+
+:root [data-ui-page-header] > p {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Section descriptions should occupy the full width below their title row. */
+:root [data-ui-section-header] {
+  width: 100%;
+  min-width: 0;
+}
+
+:root [data-ui-section-header] > p {
+  width: 100%;
+  max-width: none;
+  margin-top: 0.35rem;
+}
+
+@media (max-width: 760px) {
+  :root [data-ui-page-title-row],
+  :root [data-ui-section-title-row] {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  :root [data-ui-page-title-row] > :not(:is(h1, h2)),
+  :root [data-ui-section-title-row] > :not(h3) {
+    justify-self: end;
+    max-width: 100%;
+  }
+
+  :root [data-ui-page-title-row] > [data-ui-button],
+  :root [data-ui-section-title-row] > [data-ui-button] {
+    white-space: normal;
+  }
+}

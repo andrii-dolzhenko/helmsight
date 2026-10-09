@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="HelmSight — Project Delivery Intelligence for Project and Delivery Managers."
+    >
+    <meta name="theme-color" content="#f5f1e8">
+    <link rel="icon" type="image/png" sizes="128x128" href="/favicon.png">
+    <style>
+      html,
+      body {
+        min-width: 320px;
+        min-height: 100%;
+        margin: 0;
+        background:
+          radial-gradient(circle at 15% 15%, rgb(23 122 88 / 6%), transparent 26rem),
+          #f5f1e8;
+        color: #1e2421;
+        color-scheme: light;
+      }
+
+      html[data-theme='dark'],
+      html[data-theme='dark'] body {
+        background:
+          radial-gradient(circle at 15% 15%, rgb(111 213 163 / 6%), transparent 26rem),
+          #111512;
+        color: #f1eee5;
+        color-scheme: dark;
+      }
+
+      body,
+      #root {
+        min-height: 100dvh;
+      }
+    </style>
+    <script>
+      (() => {
+        const root = document.documentElement
+        root.dataset.appBooting = 'true'
+
+        if (window.location.pathname === '/') {
+          root.dataset.theme = 'light'
+          root.dataset.themeMode = 'marketing'
+          return
+        }
+
+        try {
+          const rawPreferences = window.localStorage.getItem('helmsight:p0:v1:preferences')
+          const preferences = rawPreferences ? JSON.parse(rawPreferences) : null
+          const themeMode = ['light', 'dark', 'system'].includes(preferences?.themeMode)
+            ? preferences.themeMode
+            : 'system'
+          const resolvedTheme = themeMode === 'system'
+            ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+            : themeMode
+
+          root.dataset.theme = resolvedTheme
+          root.dataset.themeMode = themeMode
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            'content',
+            resolvedTheme === 'dark' ? '#111512' : '#f5f1e8',
+          )
+        } catch {
+          root.dataset.theme = 'light'
+          root.dataset.themeMode = 'system'
+        }
+      })()
+    </script>
+    <title>HelmSight — Project Delivery Intelligence</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

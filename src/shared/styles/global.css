@@ -1,0 +1,214 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+
+  --radius-sm: 0.65rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.45rem;
+  --shadow-card: 0 1.2rem 3.5rem rgb(30 36 32 / 7%);
+
+  /* Shared module scale: keep register cards, list rows and entity editors visually consistent. */
+  --layout-module-gap: 1.35rem;
+  --layout-editor-gap: 1.25rem;
+  --layout-editor-max-width: 70rem;
+  --ui-section-title-size: clamp(1.7rem, 3vw, 2.35rem);
+  --ui-card-title-size: 1.65rem;
+  --ui-list-title-size: 1.05rem;
+  --ui-list-description-size: 0.82rem;
+  --ui-badge-font-size: 0.7rem;
+  --ui-meta-label-size: 0.66rem;
+  --ui-meta-value-size: 0.82rem;
+  --ui-action-font-size: 0.78rem;
+  --ui-card-padding: 1.15rem;
+  --ui-list-row-padding: 0.9rem 1rem;
+
+  --color-accent: #177a58;
+  --color-danger: #b8403b;
+  --color-brand-wordmark: #0b1f44;
+
+  /* Workspace pattern geometry stays theme-invariant; theme controls tone and motif intensity. */
+  --workspace-pattern-base: #f5f1e8;
+  --workspace-pattern-fill: #fffdf8;
+  --workspace-pattern-opacity: 0.28;
+}
+
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --color-canvas: #f5f1e8;
+  --color-surface: #fffdf8;
+  --color-surface-elevated: #ece8de;
+  --color-text: #1e2421;
+  --color-text-muted: #69716d;
+  --color-border: #dad6cb;
+  --color-inverse-surface: #202522;
+  --color-inverse-text: #fbf7ee;
+  --color-accent: #177a58;
+  --color-brand-wordmark: #0b1f44;
+  --workspace-pattern-base: #f5f1e8;
+  --workspace-pattern-fill: #fffdf8;
+  --workspace-pattern-opacity: 0.28;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-canvas: #0b1514;
+  --color-surface: #14201d;
+  --color-surface-elevated: #203029;
+  --color-text: #f4f1e9;
+  --color-text-muted: #b2bcb6;
+  --color-border: #30483e;
+  --color-inverse-surface: #f0e9dc;
+  --color-inverse-text: #242824;
+  --color-accent: #6fd5a3;
+  --color-danger: #ff8d86;
+  --color-brand-wordmark: #ffffff;
+  --workspace-pattern-base: #0b1514;
+  --workspace-pattern-fill: #14201d;
+  --workspace-pattern-opacity: 0.3;
+  --shadow-card: 0 1.2rem 3.5rem rgb(0 0 0 / 22%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html[data-app-booting='true'] *,
+html[data-app-booting='true'] *::before,
+html[data-app-booting='true'] *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
+html {
+  min-width: 320px;
+  scrollbar-gutter: stable;
+  background: var(--color-canvas);
+  color: var(--color-text);
+}
+
+/* Keep the marketing landing full bleed without altering workspace gutters. */
+html:has([data-landing-page='true']) {
+  scrollbar-gutter: auto;
+  background: #02090d;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100dvh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--color-accent) 6%, transparent), transparent 26rem),
+    var(--color-canvas);
+  color: var(--color-text);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    filter 140ms ease,
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:not(:disabled):hover {
+  filter: brightness(1.04) saturate(1.03);
+}
+
+button:not(:disabled):active {
+  filter: brightness(0.99);
+  transform: translateY(1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+select {
+  appearance: none;
+  padding-right: 3.15rem !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%2369716d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.2rem center;
+  background-size: 1.05rem;
+}
+
+:root[data-theme='dark'] select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23b2bcb6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  outline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    min-width: 0;
+    background: #fff !important;
+    color: #17201c;
+  }
+
+  [data-print-hide='true'] {
+    display: none !important;
+  }
+
+  [data-app-shell='true'],
+  [data-project-workspace='true'] {
+    display: block !important;
+    min-height: 0 !important;
+  }
+
+  [data-app-main='true'] {
+    min-height: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    padding: 0 !important;
+  }
+
+  [data-app-main='true']::before {
+    display: none !important;
+  }
+}

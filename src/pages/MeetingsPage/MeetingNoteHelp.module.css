@@ -1,0 +1,159 @@
+.helpButton {
+  flex: 0 0 auto;
+  width: 2.65rem;
+  height: 2.65rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  color: var(--color-accent);
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.helpButton:hover {
+  background: color-mix(in srgb, var(--color-accent) 13%, var(--color-surface));
+}
+
+.helpButton:active {
+  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
+}
+
+.helpButton:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: rgb(7 12 9 / 58%);
+  backdrop-filter: blur(0.3rem);
+  padding: 1rem;
+}
+
+.dialog {
+  width: min(44rem, 100%);
+  max-height: min(46rem, calc(100dvh - 2rem));
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 2rem 6rem rgb(0 0 0 / 28%);
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.25rem 1.35rem;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dialogHeader h2 {
+  margin: 0.35rem 0 0;
+  max-width: 30rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+
+.closeButton {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.closeButton:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline-offset: 0.2rem;
+}
+
+.closeButton svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.content {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.25rem 1.35rem 1.35rem;
+}
+
+.content section {
+  padding: 1rem 0;
+}
+
+.content section + section {
+  border-top: 1px solid var(--color-border);
+}
+
+.content h3 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.content p {
+  margin: 0.45rem 0 0;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+.content strong {
+  color: var(--color-text);
+}
+
+@media (max-width: 560px) {
+  .backdrop {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .dialog {
+    width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
+
+@media print {
+  .helpButton,
+  .backdrop {
+    display: none !important;
+  }
+}

@@ -1,0 +1,391 @@
+.shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 17rem minmax(0, 1fr);
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-right: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  backdrop-filter: blur(18px);
+  padding: 1.5rem;
+}
+
+.navigation,
+.mobileNavigation {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.navLink,
+.mobileNavLink {
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: 0.8rem 0.9rem;
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.navLink:hover,
+.mobileNavLink:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface-elevated));
+  color: var(--color-text);
+}
+
+.navLink:active,
+.mobileNavLink:active {
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface-elevated));
+  transform: translateY(1px);
+}
+
+.navLink:focus,
+.mobileNavLink:focus {
+  outline: none;
+}
+
+.navLink:focus-visible,
+.mobileNavLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 0.18rem;
+}
+
+.navLink.active,
+.mobileNavLink.active {
+  border-color: color-mix(in srgb, var(--color-accent) 18%, var(--color-border));
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 4%, transparent);
+}
+
+.navLink.active:hover,
+.mobileNavLink.active:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface-elevated));
+}
+
+.sidebarFooter {
+  margin-top: auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.sidebarMessage {
+  display: grid;
+  gap: 0.2rem;
+  border-radius: var(--radius-md);
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-text);
+  padding: 0.95rem;
+}
+
+.sidebarMessage span {
+  opacity: 0.7;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.sidebarMessage strong {
+  font-size: 0.9rem;
+}
+
+.workspace {
+  min-width: 0;
+  background: var(--color-canvas);
+}
+
+.mobileHeader {
+  display: none;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--color-border);
+  background: color-mix(in srgb, var(--color-canvas) 88%, transparent);
+  backdrop-filter: blur(18px);
+  padding: 0.75rem clamp(1.25rem, 3vw, 3rem);
+}
+
+.topbarSpacer {
+  min-width: 0;
+  flex: 1;
+}
+
+.accountArea {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.avatarBadge {
+  width: 2.7rem;
+  height: 2.7rem;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-text);
+  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 8%);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.main {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: calc(100dvh - 4.5rem);
+  overflow: hidden;
+  background: var(--workspace-pattern-base);
+  padding: clamp(1.25rem, 2.2vw, 2.25rem) clamp(1.25rem, 3vw, 3rem);
+  transition: background-color 180ms ease;
+}
+
+.main::before {
+  content: '';
+  position: absolute;
+  /*
+   * Keep a fixed overscan/origin instead of sizing the layer from page height.
+   * Project tabs can have very different content heights; percentage insets plus
+   * a centered rotation made the visible tile origin jump between routes.
+   */
+  inset: -40rem;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--workspace-pattern-fill);
+  opacity: var(--workspace-pattern-opacity);
+  -webkit-mask-image: url('../../shared/assets/workspace-pattern.svg');
+  mask-image: url('../../shared/assets/workspace-pattern.svg');
+  /* One exact repeat cell extracted from the supplied SVG geometry. */
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 24rem auto;
+  mask-size: 24rem auto;
+  transform: rotate(-7deg);
+  transform-origin: top left;
+  transition:
+    background-color 180ms ease,
+    opacity 180ms ease;
+}
+
+.main > * {
+  position: relative;
+  z-index: 1;
+}
+
+.mobileMenuButton {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.mobileMenuButton:hover {
+  border-color: color-mix(in srgb, var(--color-accent) 45%, var(--color-border));
+  background: var(--color-surface-elevated);
+}
+
+.mobileMenuButton:active {
+  transform: scale(0.96);
+}
+
+.mobileMenuButton:focus {
+  outline: none;
+}
+
+.mobileMenuButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.mobileMenuButton svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mobileNavLayer {
+  display: none;
+}
+
+.accountSummary {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.accountCopy {
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.accountCopy strong {
+  font-size: 0.85rem;
+}
+
+.accountCopy span {
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+}
+
+@media (max-width: 780px) {
+  .shell {
+    display: block;
+  }
+
+  .sidebar,
+  .topbar {
+    display: none;
+  }
+
+  .mobileHeader {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-canvas) 92%, transparent);
+    backdrop-filter: blur(18px);
+    padding: 0.75rem 1.25rem;
+  }
+
+  .main {
+    min-height: calc(100dvh - 4.5rem);
+    padding: 1.5rem 1.25rem 2.5rem;
+  }
+
+  .mobileNavLayer {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: block;
+  }
+
+  .mobileNavBackdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: rgb(7 12 9 / 52%);
+    backdrop-filter: blur(4px);
+    cursor: default;
+  }
+
+  .mobileNavBackdrop:focus {
+    outline: none;
+  }
+
+  .mobileNavPanel {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(20rem, 86vw);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+    border-left: 1px solid var(--color-border);
+    background: var(--color-surface);
+    box-shadow: -1.5rem 0 4rem rgb(0 0 0 / 18%);
+    padding: 1rem 1.1rem 1.25rem;
+    animation: mobile-nav-in 180ms ease-out;
+  }
+
+  .mobileNavHeader {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .mobileNavigation {
+    padding-top: 0.4rem;
+  }
+
+  .mobileNavLink {
+    color: var(--color-text);
+  }
+
+  .mobileNavFooter {
+    margin-top: auto;
+    display: grid;
+    gap: 1rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+  }
+
+  .mobileAppearanceRow {
+    min-height: 2.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  @keyframes mobile-nav-in {
+    from {
+      opacity: 0;
+      transform: translateX(1rem);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobileNavPanel {
+    animation: none;
+  }
+}

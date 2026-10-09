@@ -1,0 +1,111 @@
+.root { display:grid; gap:var(--layout-module-gap); }
+.header { display:grid; gap:.65rem; }
+.titleRow { display:flex; align-items:flex-end; justify-content:space-between; gap:1.5rem; }
+.eyebrow { color:var(--color-accent); font-size:var(--ui-badge-font-size); font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+.header h2,.sectionHeading h3,.registerHeading h3 { margin:.35rem 0 0; font-family:var(--font-display); letter-spacing:-.045em; }
+.header h2 { font-size:clamp(2.2rem,5vw,3.5rem); }
+.header p,.sectionHeading p,.archiveBanner span,.emptyState p { margin:0; color:var(--color-text-muted); line-height:1.6; }
+.primaryButton,.editButton,.emptyState a { display:inline-flex; align-items:center; justify-content:center; border-radius:999px; text-decoration:none; font-weight:800; }
+.primaryButton { flex:0 0 auto; border:1px solid var(--color-text); background:var(--color-text); color:var(--color-canvas); padding:.75rem 1rem; }
+.archiveBanner,.roadmapSection,.stateCard,.emptyState,.mutationError { border:1px solid var(--color-border); border-radius:var(--radius-lg); background:var(--color-surface); }
+.archiveBanner { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.85rem 1rem; }
+.archiveBanner span { font-size:.82rem; }
+.summary { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); overflow:hidden; border:1px solid var(--color-border); border-radius:var(--radius-lg); background:var(--color-surface); box-shadow:var(--shadow-card); }
+.summary > div { display:grid; gap:.55rem; padding:1rem 1.1rem; }
+.summary > div + div { border-left:1px solid var(--color-border); }
+.summary span { color:var(--color-text-muted); font-size:.75rem; font-weight:750; }
+.summary strong { font-family:var(--font-display); font-size:2rem; }
+.roadmapSection { display:grid; gap:1.2rem; padding:1.2rem; box-shadow:var(--shadow-card); }
+.sectionHeading { display:grid; gap:.35rem; }
+.sectionHeading h3,.registerHeading h3 { font-size:var(--ui-section-title-size); }
+.sectionHeading p { max-width:60rem; font-size:.84rem; }
+.roadmap { position:relative; min-height:5.2rem; margin:0; padding:0; list-style:none; }
+.roadmap::before { content:''; position:absolute; z-index:0; top:.65rem; right:.36rem; left:.36rem; height:1px; background:var(--color-border); }
+.roadmapSingle::before { content:none; }
+.roadmapItem { position:absolute; top:0; left:var(--roadmap-position); width:min(18rem,var(--roadmap-item-width)); min-width:0; padding-top:1.7rem; transform:translateX(-50%); }
+.roadmapItem:first-child { width:min(18rem,var(--roadmap-edge-width)); transform:none; }
+.roadmapItem:last-child { width:min(18rem,var(--roadmap-edge-width)); transform:translateX(-100%); }
+.roadmapSingle .roadmapItem { position:relative; left:auto; width:100%; transform:none; }
+.roadmapDot { position:absolute; z-index:1; top:.32rem; left:50%; width:.72rem; height:.72rem; border:2px solid var(--color-surface); border-radius:999px; background:var(--color-accent); box-shadow:0 0 0 1px color-mix(in srgb,var(--color-accent) 40%,var(--color-border)); transform:translateX(-50%); }
+.roadmapItem:first-child .roadmapDot { left:.2rem; transform:none; }
+.roadmapItem:last-child .roadmapDot { right:.2rem; left:auto; transform:none; }
+.roadmapDot.dueSoon { background:#d6a32f; box-shadow:0 0 0 1px color-mix(in srgb,#d6a32f 55%,var(--color-border)); }
+.roadmapDot.overdue { background:var(--color-danger); box-shadow:0 0 0 1px color-mix(in srgb,var(--color-danger) 55%,var(--color-border)); }
+.roadmapDot.completed { background:color-mix(in srgb,var(--color-accent) 65%,#ffffff); }
+.roadmapItem > div { display:grid; gap:.3rem; }
+.roadmapItem:last-child > div { justify-items:end; text-align:right; }
+.roadmapItem time,.roadmapItem span { color:var(--color-text-muted); font-size:.72rem; }
+.roadmapItem strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:.9rem; }
+.registerHeading { display:flex; align-items:end; justify-content:space-between; gap:1rem; }
+.registerHeading > span { color:var(--color-text-muted); font-size:var(--ui-meta-value-size); font-weight:750; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+.card { min-width:0; min-height:22rem; height:100%; display:grid; grid-template-rows:auto minmax(6.8rem,auto) auto auto 1fr; gap:1rem; border:1px solid var(--color-border); border-radius:var(--radius-lg); background:var(--color-surface); box-shadow:var(--shadow-card); padding:var(--ui-card-padding); }
+.cardHeader,.badges,.progressHeader,.actions { display:flex; align-items:center; }
+.cardHeader,.progressHeader { justify-content:space-between; gap:.75rem; }
+.badges,.actions { gap:.5rem; flex-wrap:wrap; }
+.statusBadge,.scheduleBadge,.dateBadge { border-radius:999px; padding:.34rem .55rem; font-size:var(--ui-badge-font-size); font-weight:800; }
+.statusBadge,.dateBadge { background:var(--color-surface-elevated); color:var(--color-text-muted); }
+.scheduleBadge { border:1px solid color-mix(in srgb,var(--color-accent) 32%,var(--color-border)); background:color-mix(in srgb,var(--color-accent) 8%,var(--color-surface)); color:var(--color-accent); }
+.scheduleBadge.dueSoon,.metaStrip dd.dueSoon { color:#b66d11; }
+.scheduleBadge.overdue,.metaStrip dd.overdue { color:var(--color-danger); }
+.scheduleBadge.completed,.metaStrip dd.completed { color:var(--color-accent); }
+.identity { min-width:0; display:grid; grid-template-rows:auto minmax(3.45rem,auto); align-content:start; gap:.55rem; overflow:hidden; }
+.identity h4 { overflow:hidden; margin:0; font-family:var(--font-display); font-size:var(--ui-card-title-size); letter-spacing:-.04em; text-overflow:ellipsis; white-space:nowrap; }
+.identity p { display:-webkit-box; overflow:hidden; min-height:3.45rem; max-height:3.45rem; margin:0; color:var(--color-text-muted); line-height:1.55; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+.progressBlock { display:grid; gap:.55rem; }
+.progressHeader span { color:var(--color-text-muted); font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.progressHeader strong { font-size:.82rem; }
+.progressTrack { height:.65rem; overflow:hidden; border-radius:999px; background:var(--color-surface-elevated); }
+.progressTrack span { display:block; height:100%; border-radius:inherit; background:var(--color-accent); }
+.metaStrip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:hidden; margin:0; border:1px solid var(--color-border); border-radius:var(--radius-md); background:var(--color-surface-elevated); }
+.metaStrip div { min-width:0; padding:.75rem; }
+.metaStrip div + div { border-left:1px solid var(--color-border); }
+.metaStrip dt { color:var(--color-text-muted); font-size:var(--ui-meta-label-size); font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.metaStrip dd { overflow:hidden; margin:.3rem 0 0; font-size:var(--ui-meta-value-size); font-weight:800; text-overflow:ellipsis; white-space:nowrap; }
+.actions { align-self:end; padding-top:.2rem; }
+.editButton,.deleteButton { min-height:2.35rem; border-radius:999px; padding:.55rem .8rem; font-size:var(--ui-action-font-size); font-weight:800; }
+.editButton { border:1px solid color-mix(in srgb,var(--color-accent) 45%,var(--color-border)); background:color-mix(in srgb,var(--color-accent) 7%,transparent); color:var(--color-accent); }
+.deleteButton { border:1px solid var(--color-border); background:transparent; color:var(--color-text-muted); cursor:pointer; }
+.emptyState,.stateCard { display:grid; justify-items:start; gap:.55rem; padding:1.25rem; }
+.emptyState a,.stateCard button { border:0; background:transparent; color:var(--color-accent); cursor:pointer; padding:0; font-weight:800; text-decoration:underline; text-underline-offset:.2rem; }
+.stateCard span { color:var(--color-text-muted); }
+.mutationError { border-color:color-mix(in srgb,var(--color-danger) 40%,var(--color-border)); color:var(--color-danger); padding:.8rem 1rem; }
+@media (max-width:920px) {
+  .grid { grid-template-columns:1fr; }
+  .roadmap { min-height:0; display:grid; grid-template-columns:1fr; gap:0; }
+  .roadmap::before { content:none; }
+  .roadmapItem,
+  .roadmapItem:first-child,
+  .roadmapItem:last-child,
+  .roadmapSingle .roadmapItem { position:relative; top:auto; left:auto; width:auto; min-height:4.4rem; padding:0 0 1.25rem 1.7rem; transform:none; }
+  .roadmapItem:not(:last-child)::after { content:''; position:absolute; z-index:0; top:.71rem; bottom:-.71rem; left:.36rem; width:1px; background:var(--color-border); }
+  .roadmapItem:last-child { min-height:0; padding-bottom:0; }
+  .roadmapItem:last-child > div { justify-items:start; text-align:left; }
+  .roadmapDot,
+  .roadmapItem:first-child .roadmapDot,
+  .roadmapItem:last-child .roadmapDot { top:.35rem; right:auto; left:0; transform:none; }
+}
+@media (max-width:680px) { .titleRow,.archiveBanner{align-items:flex-start;flex-direction:column}.primaryButton{width:100%}.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.summary>div+div{border-left:0}.summary>div:nth-child(even){border-left:1px solid var(--color-border)}.summary>div:nth-child(n+3){border-top:1px solid var(--color-border)}.registerHeading{align-items:flex-start;flex-direction:column}.card{min-height:0}.cardHeader{align-items:flex-start;flex-direction:column}.metaStrip{grid-template-columns:1fr 1fr}.metaStrip div:last-child{grid-column:1/-1;border-top:1px solid var(--color-border);border-left:0}.actions{display:grid;grid-template-columns:1fr 1fr}.editButton,.deleteButton{justify-content:center;text-align:center} }
+
+.card[id] {
+  scroll-margin-block: 7rem;
+}
+
+.card:target {
+  border-color: color-mix(in srgb, var(--color-accent) 58%, var(--color-border));
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
+}
+
+/* Consistent button states. */
+.primaryButton,
+.editButton,
+.deleteButton,
+.emptyState a,
+.stateCard button {
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+.primaryButton:hover { border-color:color-mix(in srgb,var(--color-accent) 38%,var(--color-text)); background:color-mix(in srgb,var(--color-accent) 12%,var(--color-text)); transform:translateY(-1px); }
+.editButton:hover { border-color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 13%,var(--color-surface)); transform:translateY(-1px); }
+.deleteButton:hover { border-color:color-mix(in srgb,var(--color-danger) 42%,var(--color-border)); background:color-mix(in srgb,var(--color-danger) 7%,transparent); color:var(--color-danger); transform:translateY(-1px); }
+.primaryButton:active,.editButton:active,.deleteButton:active { transform:translateY(0); }
+.emptyState a:hover,.stateCard button:hover { color:color-mix(in srgb,var(--color-accent) 78%,var(--color-text)); }
