@@ -32,12 +32,12 @@
 .performanceHeading p { max-width:34rem; margin:0; color:var(--color-text-muted); font-size:.78rem; line-height:1.5; text-align:right; }
 .performanceIndexGrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:.75rem; }
 .varianceGrid { grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); }
-.indexCard { --index-accent:var(--color-border); min-width:0; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:1rem; overflow:hidden; border:1px solid color-mix(in srgb,var(--index-accent) 46%,var(--color-border)); border-radius:var(--radius-lg); background:linear-gradient(90deg,color-mix(in srgb,var(--index-accent) 8%,var(--color-surface)),var(--color-surface) 48%); box-shadow:inset .28rem 0 0 var(--index-accent); padding:1rem 1.1rem 1rem 1.3rem; }
+.indexCard { --index-accent:var(--color-border); --index-card-start:color-mix(in srgb,var(--index-accent) 8%,var(--color-surface)); min-width:0; display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:1rem; overflow:hidden; border:1px solid color-mix(in srgb,var(--index-accent) 46%,var(--color-border)); border-radius:var(--radius-lg); background-image:linear-gradient(90deg,var(--index-card-start),var(--color-surface) 48%); box-shadow:inset .28rem 0 0 var(--index-accent); padding:1rem 1.1rem 1rem 1.3rem; }
 .indexValue,.indexContext { min-width:0; display:grid; gap:.28rem; }
 .indexValue span { color:var(--color-text-muted); font-size:var(--ui-meta-label-size); font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
 .indexValue strong { overflow:hidden; font-family:var(--font-display); font-size:2rem; text-overflow:ellipsis; white-space:nowrap; }
 .indexContext { justify-items:end; text-align:right; }
-.indexState { display:inline-flex; align-items:center; width:max-content; max-width:100%; border:1px solid color-mix(in srgb,var(--index-accent) 42%,var(--color-border)); border-radius:999px; background:color-mix(in srgb,var(--index-accent) 10%,var(--color-surface)); color:var(--color-text); padding:.38rem .62rem; font-size:.72rem; font-weight:850; white-space:nowrap; }
+.indexState { display:inline-flex; align-items:center; width:max-content; max-width:100%; border:1px solid color-mix(in srgb,var(--index-accent) 42%,var(--color-border)); border-radius:999px; background-color:color-mix(in srgb,var(--index-accent) 10%,var(--color-surface)); color:var(--color-text); padding:.38rem .62rem; font-size:.72rem; font-weight:850; white-space:nowrap; }
 .indexContext small { color:var(--color-text-muted); font-size:.75rem; }
 .indexCard.healthy { --index-accent:color-mix(in srgb,var(--color-accent) 78%,#5aa879); }
 .indexCard.watch { --index-accent:#d6a32f; }
@@ -91,10 +91,13 @@
 }
 
 .indexCard:target {
-  border-color: color-mix(in srgb, var(--index-accent) 78%, var(--color-border));
+  /* Keep both highlight colors live for healthy/watch/pressure states. */
+  --index-target-border: color-mix(in srgb, var(--index-accent) 78%, var(--color-border));
+  --index-target-halo: color-mix(in srgb, var(--index-accent) 13%, transparent);
+  border-color: var(--index-target-border);
   box-shadow:
     inset .28rem 0 0 var(--index-accent),
-    0 0 0 .2rem color-mix(in srgb, var(--index-accent) 13%, transparent);
+    0 0 0 .2rem var(--index-target-halo);
 }
 
 /* Consistent button states. */

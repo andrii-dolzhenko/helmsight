@@ -79,7 +79,7 @@
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--health-accent) 42%, #0c2118);
   border-radius: calc(var(--radius-lg) + 0.2rem);
-  background:
+  background-image:
     radial-gradient(ellipse at 0% 10%, color-mix(in srgb, var(--health-accent) 42%, transparent), transparent 31rem),
     radial-gradient(circle at 67% 52%, rgb(34 154 100 / 14%), transparent 24rem),
     linear-gradient(100deg, #151713 0%, #0a1712 46%, #071c14 70%, #063222 100%);
@@ -100,8 +100,14 @@
   transform: translate(-50%, -50%) rotate(-4deg);
   background: var(--radar-accent);
   opacity: 0.46;
-  -webkit-mask: url('../../shared/assets/signal-radar.svg') center / contain no-repeat;
-  mask: url('../../shared/assets/signal-radar.svg') center / contain no-repeat;
+  -webkit-mask-image: url('../../shared/assets/signal-radar.svg');
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('../../shared/assets/signal-radar.svg');
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
   pointer-events: none;
 }
 
@@ -283,8 +289,7 @@
   overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--summary-accent) 5%, var(--color-surface)), var(--color-surface) 48%);
+  background-color: var(--color-surface);
   color: var(--color-text);
   box-shadow: var(--shadow-card);
   padding: var(--ui-card-padding);
@@ -294,11 +299,28 @@
 .summaryCard::before {
   content: '';
   position: absolute;
+  z-index: 1;
   left: 0;
   top: 0;
   bottom: 0;
   width: 0.24rem;
   background: var(--summary-accent);
+}
+
+.summaryCard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(145deg, var(--summary-accent), transparent 48%);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.summaryCard > span,
+.summaryCard > strong,
+.summaryCard > small,
+.summaryCard > i {
+  z-index: 1;
 }
 
 .summaryCard > span {
@@ -442,9 +464,20 @@
 }
 
 .deliveryPanel {
-  background:
-    radial-gradient(circle at 92% 8%, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 18rem),
-    var(--color-surface);
+  position: relative;
+  isolation: isolate;
+  background-color: var(--color-surface);
+}
+
+.deliveryPanel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(circle at 92% 8%, var(--color-accent), transparent 18rem);
+  opacity: 0.08;
+  pointer-events: none;
 }
 
 .deliveryAsOf {
@@ -467,18 +500,30 @@
 .indexGauge {
   --gauge-accent: var(--color-border);
   --gauge-track: color-mix(in srgb, var(--color-text) 20%, var(--color-surface-elevated));
+  --gauge-surface-start: color-mix(in srgb, var(--color-surface) 76%, var(--color-canvas));
   min-width: 0;
+  position: relative;
+  isolation: isolate;
   display: grid;
   gap: 0.95rem;
   border: 1px solid color-mix(in srgb, var(--gauge-accent) 44%, var(--color-border));
   border-radius: var(--radius-md);
-  background:
-    radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--gauge-accent) 8%, transparent), transparent 42%),
-    linear-gradient(145deg, color-mix(in srgb, var(--color-surface) 76%, var(--color-canvas)), var(--color-surface));
+  background-image: linear-gradient(145deg, var(--gauge-surface-start), var(--color-surface));
   box-shadow:
     inset 0 1px 0 color-mix(in srgb, white 50%, transparent),
     0 0.65rem 1.7rem color-mix(in srgb, var(--color-text) 7%, transparent);
   padding: clamp(0.9rem, 2.2vw, 1.15rem);
+}
+
+/* Keep the translucent status halo above the card background but below content. */
+.indexGauge::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background-image: radial-gradient(circle at 14% 8%, color-mix(in srgb, var(--gauge-accent) 8%, transparent), transparent 42%);
+  pointer-events: none;
 }
 
 .gauge_healthy { --gauge-accent: var(--color-accent); }
@@ -533,16 +578,17 @@
 }
 
 .gaugeRing {
+  --gauge-ring-active: color-mix(in srgb, var(--gauge-accent) 82%, white);
   position: relative;
   width: clamp(7.2rem, 9.5vw, 8.45rem);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background:
+  background-image:
     conic-gradient(
       from 0deg,
-      color-mix(in srgb, var(--gauge-accent) 82%, white) 0 var(--gauge-progress),
+      var(--gauge-ring-active) 0 var(--gauge-progress),
       var(--gauge-track) var(--gauge-progress) 100%
     );
   box-shadow:
@@ -1213,7 +1259,7 @@
   aspect-ratio: 1;
   opacity: 0;
   transform: translate(-50%, -50%) rotate(-4deg);
-  background: radial-gradient(
+  background-image: radial-gradient(
     circle at 50% 50%,
     transparent 0 calc(var(--radar-wave-radius) - 5%),
     rgb(222 255 237 / 18%) calc(var(--radar-wave-radius) - 3%),
@@ -1221,8 +1267,14 @@
     rgb(101 248 171 / 56%) calc(var(--radar-wave-radius) + 3%),
     transparent calc(var(--radar-wave-radius) + 7%)
   );
-  -webkit-mask: url('../../shared/assets/signal-radar.svg') center / contain no-repeat;
-  mask: url('../../shared/assets/signal-radar.svg') center / contain no-repeat;
+  -webkit-mask-image: url('../../shared/assets/signal-radar.svg');
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url('../../shared/assets/signal-radar.svg');
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
   filter: drop-shadow(0 0 0.45rem rgb(115 255 181 / 28%));
   pointer-events: none;
   mix-blend-mode: screen;

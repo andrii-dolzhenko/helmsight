@@ -24,3 +24,9 @@ coverage/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Opt-in generated theme compatibility previews (not application assets)
+w3c-preview/
+
+# W3C production CSS audit (generated remote validation reports)
+w3c-audit/

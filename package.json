@@ -4,16 +4,28 @@
   "version": "1.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20.19.0"
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
   },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "w3c:preview": "node scripts/w3c-theme-preview.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "check": "npm run lint && npm run test:run && npm run build"
+    "check": "npm run lint && npm run test:run && npm run build",
+    "w3c:preview:test": "node --test scripts/w3c-theme-preview.test.mjs",
+    "w3c:audit": "node scripts/w3c-css-audit.mjs",
+    "w3c:audit:test": "node --test scripts/w3c-css-audit.test.mjs",
+    "w3c:probe": "node scripts/w3c-gradient-probe.mjs",
+    "w3c:probe:test": "node --test scripts/w3c-gradient-probe.test.mjs",
+    "w3c:matrix": "node scripts/w3c-gradient-matrix.mjs",
+    "w3c:matrix:test": "node --test scripts/w3c-gradient-matrix.test.mjs",
+    "w3c:inventory": "node scripts/w3c-gradient-inventory.mjs",
+    "w3c:inventory:test": "node --test scripts/w3c-gradient-inventory.test.mjs",
+    "w3c:repro": "node scripts/w3c-css-repro.mjs",
+    "w3c:repro:test": "node --test scripts/w3c-css-repro.test.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
@@ -38,6 +50,7 @@
     "globals": "^17.12.0",
     "jsdom": "^30.0.1",
     "vite": "^8.3.3",
-    "vitest": "^5.0.3"
+    "vitest": "^5.0.3",
+    "postcss": "^8.5.29"
   }
 }

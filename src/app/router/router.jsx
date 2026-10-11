@@ -1,90 +1,75 @@
 import { createBrowserRouter } from 'react-router'
 import { AppLayout } from '../../layouts/AppLayout/AppLayout.jsx'
 import { ProjectLayout } from '../../layouts/ProjectLayout/ProjectLayout.jsx'
-import { LandingPage } from '../../pages/LandingPage/LandingPage.jsx'
-import { ProjectsPage } from '../../pages/ProjectsPage/ProjectsPage.jsx'
-import { NewProjectPage } from '../../pages/NewProjectPage/NewProjectPage.jsx'
-import { EditProjectPage } from '../../pages/EditProjectPage.jsx'
-import { ProjectOverviewPage } from '../../pages/ProjectOverviewPage/ProjectOverviewPage.jsx'
-import { GovernancePage } from '../../pages/GovernancePage/GovernancePage.jsx'
-import { RisksPage } from '../../pages/RisksPage/RisksPage.jsx'
-import { RiskEditorPage } from '../../pages/RiskEditorPage/RiskEditorPage.jsx'
-import { RiskDetailPage } from '../../pages/RiskDetailPage/RiskDetailPage.jsx'
-import { SuccessCriteriaPage } from '../../pages/SuccessCriteriaPage/SuccessCriteriaPage.jsx'
-import { SuccessCriterionEditorPage } from '../../pages/SuccessCriterionEditorPage/SuccessCriterionEditorPage.jsx'
-import { MilestonesPage } from '../../pages/MilestonesPage/MilestonesPage.jsx'
-import { MilestoneEditorPage } from '../../pages/MilestoneEditorPage/MilestoneEditorPage.jsx'
-import { MetricsPage } from '../../pages/MetricsPage/MetricsPage.jsx'
-import { MetricsBaselineEditorPage } from '../../pages/MetricsBaselineEditorPage/MetricsBaselineEditorPage.jsx'
-import { MetricsSnapshotEditorPage } from '../../pages/MetricsSnapshotEditorPage/MetricsSnapshotEditorPage.jsx'
-import { ReportsPage } from '../../pages/ReportsPage/ReportsPage.jsx'
-import { ReportDetailPage } from '../../pages/ReportsPage/ReportDetailPage.jsx'
-import { ActionsPage } from '../../pages/ActionsPage/ActionsPage.jsx'
-import { ActionEditorPage } from '../../pages/ActionEditorPage/ActionEditorPage.jsx'
-import { MeetingsPage } from '../../pages/MeetingsPage/MeetingsPage.jsx'
-import { MeetingNoteEditorPage } from '../../pages/MeetingsPage/MeetingNoteEditorPage.jsx'
-import { MeetingNoteDetailPage } from '../../pages/MeetingsPage/MeetingNoteDetailPage.jsx'
-import { NotFoundPage } from '../../pages/NotFoundPage/NotFoundPage.jsx'
+import { RouteLoadingFallback } from './RouteLoadingFallback.jsx'
+
+// Import the matched page only when its route is visited.
+const loadPage = (importPage, exportName) => async () => ({
+  Component: (await importPage())[exportName],
+})
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage />,
+    HydrateFallback: RouteLoadingFallback,
+    lazy: loadPage(() => import('../../pages/LandingPage/LandingPage.jsx'), 'LandingPage'),
   },
   {
     element: <AppLayout />,
+    HydrateFallback: RouteLoadingFallback,
     children: [
       {
         path: '/projects',
-        element: <ProjectsPage />,
+        lazy: loadPage(() => import('../../pages/ProjectsPage/ProjectsPage.jsx'), 'ProjectsPage'),
       },
       {
         path: '/projects/new',
-        element: <NewProjectPage />,
+        lazy: loadPage(() => import('../../pages/NewProjectPage/NewProjectPage.jsx'), 'NewProjectPage'),
       },
       {
         path: '/projects/:projectId/edit',
-        element: <EditProjectPage />,
+        lazy: loadPage(() => import('../../pages/EditProjectPage.jsx'), 'EditProjectPage'),
       },
       {
         path: '/projects/:projectId',
         element: <ProjectLayout />,
         children: [
-          { index: true, element: <ProjectOverviewPage /> },
-          { path: 'governance', element: <GovernancePage /> },
-          { path: 'success-criteria', element: <SuccessCriteriaPage /> },
-          { path: 'success-criteria/new', element: <SuccessCriterionEditorPage /> },
+          { index: true, lazy: loadPage(() => import('../../pages/ProjectOverviewPage/ProjectOverviewPage.jsx'), 'ProjectOverviewPage') },
+          { path: 'governance', lazy: loadPage(() => import('../../pages/GovernancePage/GovernancePage.jsx'), 'GovernancePage') },
+          { path: 'success-criteria', lazy: loadPage(() => import('../../pages/SuccessCriteriaPage/SuccessCriteriaPage.jsx'), 'SuccessCriteriaPage') },
+          { path: 'success-criteria/new', lazy: loadPage(() => import('../../pages/SuccessCriterionEditorPage/SuccessCriterionEditorPage.jsx'), 'SuccessCriterionEditorPage') },
           {
             path: 'success-criteria/:criterionId/edit',
-            element: <SuccessCriterionEditorPage />,
+            lazy: loadPage(() => import('../../pages/SuccessCriterionEditorPage/SuccessCriterionEditorPage.jsx'), 'SuccessCriterionEditorPage'),
           },
-          { path: 'risks', element: <RisksPage /> },
-          { path: 'risks/new', element: <RiskEditorPage /> },
-          { path: 'risks/:riskId', element: <RiskDetailPage /> },
-          { path: 'risks/:riskId/edit', element: <RiskEditorPage /> },
-          { path: 'milestones', element: <MilestonesPage /> },
-          { path: 'milestones/new', element: <MilestoneEditorPage /> },
-          { path: 'milestones/:milestoneId/edit', element: <MilestoneEditorPage /> },
-          { path: 'metrics', element: <MetricsPage /> },
-          { path: 'metrics/baseline', element: <MetricsBaselineEditorPage /> },
-          { path: 'metrics/snapshots/new', element: <MetricsSnapshotEditorPage /> },
-          { path: 'metrics/snapshots/:snapshotId/edit', element: <MetricsSnapshotEditorPage /> },
-          { path: 'reports', element: <ReportsPage /> },
-          { path: 'reports/new', element: <ReportDetailPage /> },
-          { path: 'reports/:reportId', element: <ReportDetailPage /> },
-          { path: 'actions', element: <ActionsPage /> },
-          { path: 'actions/new', element: <ActionEditorPage /> },
-          { path: 'actions/:actionId/edit', element: <ActionEditorPage /> },
-          { path: 'meetings', element: <MeetingsPage /> },
-          { path: 'meetings/new', element: <MeetingNoteEditorPage /> },
-          { path: 'meetings/:meetingId', element: <MeetingNoteDetailPage /> },
-          { path: 'meetings/:meetingId/edit', element: <MeetingNoteEditorPage /> },
+          { path: 'risks', lazy: loadPage(() => import('../../pages/RisksPage/RisksPage.jsx'), 'RisksPage') },
+          { path: 'risks/new', lazy: loadPage(() => import('../../pages/RiskEditorPage/RiskEditorPage.jsx'), 'RiskEditorPage') },
+          { path: 'risks/:riskId', lazy: loadPage(() => import('../../pages/RiskDetailPage/RiskDetailPage.jsx'), 'RiskDetailPage') },
+          { path: 'risks/:riskId/edit', lazy: loadPage(() => import('../../pages/RiskEditorPage/RiskEditorPage.jsx'), 'RiskEditorPage') },
+          { path: 'milestones', lazy: loadPage(() => import('../../pages/MilestonesPage/MilestonesPage.jsx'), 'MilestonesPage') },
+          { path: 'milestones/new', lazy: loadPage(() => import('../../pages/MilestoneEditorPage/MilestoneEditorPage.jsx'), 'MilestoneEditorPage') },
+          { path: 'milestones/:milestoneId/edit', lazy: loadPage(() => import('../../pages/MilestoneEditorPage/MilestoneEditorPage.jsx'), 'MilestoneEditorPage') },
+          { path: 'metrics', lazy: loadPage(() => import('../../pages/MetricsPage/MetricsPage.jsx'), 'MetricsPage') },
+          { path: 'metrics/baseline', lazy: loadPage(() => import('../../pages/MetricsBaselineEditorPage/MetricsBaselineEditorPage.jsx'), 'MetricsBaselineEditorPage') },
+          { path: 'metrics/snapshots/new', lazy: loadPage(() => import('../../pages/MetricsSnapshotEditorPage/MetricsSnapshotEditorPage.jsx'), 'MetricsSnapshotEditorPage') },
+          { path: 'metrics/snapshots/:snapshotId/edit', lazy: loadPage(() => import('../../pages/MetricsSnapshotEditorPage/MetricsSnapshotEditorPage.jsx'), 'MetricsSnapshotEditorPage') },
+          { path: 'reports', lazy: loadPage(() => import('../../pages/ReportsPage/ReportsPage.jsx'), 'ReportsPage') },
+          { path: 'reports/new', lazy: loadPage(() => import('../../pages/ReportsPage/ReportDetailPage.jsx'), 'ReportDetailPage') },
+          { path: 'reports/:reportId', lazy: loadPage(() => import('../../pages/ReportsPage/ReportDetailPage.jsx'), 'ReportDetailPage') },
+          { path: 'actions', lazy: loadPage(() => import('../../pages/ActionsPage/ActionsPage.jsx'), 'ActionsPage') },
+          { path: 'actions/new', lazy: loadPage(() => import('../../pages/ActionEditorPage/ActionEditorPage.jsx'), 'ActionEditorPage') },
+          { path: 'actions/:actionId/edit', lazy: loadPage(() => import('../../pages/ActionEditorPage/ActionEditorPage.jsx'), 'ActionEditorPage') },
+          { path: 'meetings', lazy: loadPage(() => import('../../pages/MeetingsPage/MeetingsPage.jsx'), 'MeetingsPage') },
+          { path: 'meetings/new', lazy: loadPage(() => import('../../pages/MeetingsPage/MeetingNoteEditorPage.jsx'), 'MeetingNoteEditorPage') },
+          { path: 'meetings/:meetingId', lazy: loadPage(() => import('../../pages/MeetingsPage/MeetingNoteDetailPage.jsx'), 'MeetingNoteDetailPage') },
+          { path: 'meetings/:meetingId/edit', lazy: loadPage(() => import('../../pages/MeetingsPage/MeetingNoteEditorPage.jsx'), 'MeetingNoteEditorPage') },
         ],
       },
     ],
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    HydrateFallback: RouteLoadingFallback,
+    lazy: loadPage(() => import('../../pages/NotFoundPage/NotFoundPage.jsx'), 'NotFoundPage'),
   },
 ])

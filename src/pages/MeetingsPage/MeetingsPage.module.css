@@ -137,8 +137,10 @@
   outline-offset: 0.2rem;
 }
 
+/* The opaque fill already paints beneath this 1px border (background-clip: border-box).
+   Keep the same button silhouette without a redundant fill-colored border. */
 .primaryAction {
-  border-color: var(--color-text);
+  border-color: transparent;
   background: var(--color-text);
   color: var(--color-canvas);
 }

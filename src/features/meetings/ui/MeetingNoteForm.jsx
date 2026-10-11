@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useFieldArray, useForm, useWatch } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router'
 import { formDraftService } from '../../../shared/services/drafts/formDraftService.js'
@@ -6,6 +6,7 @@ import { ConfirmDialog } from '../../../shared/ui/ConfirmDialog/ConfirmDialog.js
 import {
   MEETING_NOTE_LIMITS,
   MEETING_NOTE_MIN_TEXT_LENGTH,
+  meetingTextLength,
 } from '../lib/meetingNotes.js'
 import styles from './MeetingNoteForm.module.css'
 
@@ -69,6 +70,16 @@ function validateOptionalItem(value, maxLength) {
   return true
 }
 
+function CharacterCount({ value, maxLength }) {
+  const length = meetingTextLength(value)
+
+  return (
+    <small className={length > maxLength ? styles.error : styles.hint}>
+      {length.toLocaleString('en-US')} / {maxLength.toLocaleString('en-US')} characters
+    </small>
+  )
+}
+
 function ListEditor({
   title,
   description,
@@ -78,6 +89,7 @@ function ListEditor({
   remove,
   register,
   errors,
+  values,
   maxLength,
   addLabel,
   placeholder,
@@ -112,6 +124,7 @@ function ListEditor({
                 {multiline ? (
                   <textarea
                     rows="2"
+                    data-auto-grow
                     placeholder={placeholder}
                     aria-invalid={Boolean(error)}
                     {...common}
@@ -126,6 +139,7 @@ function ListEditor({
                   />
                 )}
                 {error ? <small className={styles.error}>{error.message}</small> : null}
+                <CharacterCount value={values?.[index]?.value} maxLength={maxLength} />
               </label>
               <button
                 className={styles.removeButton}
@@ -166,6 +180,7 @@ export function MeetingNoteForm({
   const [draftRestored, setDraftRestored] = useState(Boolean(restoredValues))
   const [pendingDiscard, setPendingDiscard] = useState(null)
   const navigate = useNavigate()
+  const formRef = useRef(null)
 
   const {
     register,
@@ -184,6 +199,24 @@ export function MeetingNoteForm({
   const decisions = useFieldArray({ control, name: 'decisions' })
   const followUps = useFieldArray({ control, name: 'followUps' })
   const watched = useWatch({ control })
+
+  // Preserve content-based textarea growth without relying on field-sizing,
+  // which is not recognized by the selected W3C CSS Level 3 validator.
+  useLayoutEffect(() => {
+    const form = formRef.current
+    if (!form) return undefined
+
+    const fitTextareas = () => {
+      form.querySelectorAll('textarea[data-auto-grow]').forEach((textarea) => {
+        textarea.style.height = 'auto'
+        textarea.style.height = `${textarea.scrollHeight}px`
+      })
+    }
+
+    fitTextareas()
+    window.addEventListener('resize', fitTextareas)
+    return () => window.removeEventListener('resize', fitTextareas)
+  }, [watched])
 
   useEffect(() => {
     if (!draftKey || !isDirty) return undefined
@@ -240,7 +273,7 @@ export function MeetingNoteForm({
   })
 
   return (
-    <form className={styles.form} onSubmit={submit} noValidate>
+    <form ref={formRef} className={styles.form} onSubmit={submit} noValidate>
       {draftRestored ? (
         <div className={styles.draftNotice} role="status">
           <div>
@@ -268,6 +301,7 @@ export function MeetingNoteForm({
               })}
             />
             {errors.title ? <small className={styles.error}>{errors.title.message}</small> : null}
+            <CharacterCount value={watched?.title} maxLength={MEETING_NOTE_LIMITS.title} />
           </label>
 
           <label className={styles.field}>
@@ -292,6 +326,7 @@ export function MeetingNoteForm({
               })}
             />
             {errors.owner ? <small className={styles.error}>{errors.owner.message}</small> : <small className={styles.hint}>Person responsible for maintaining this record.</small>}
+            <CharacterCount value={watched?.owner} maxLength={MEETING_NOTE_LIMITS.owner} />
           </label>
 
           <label className={`${styles.field} ${styles.fullWidth}`}>
@@ -299,6 +334,7 @@ export function MeetingNoteForm({
             <textarea
               className={styles.notesArea}
               rows="8"
+              data-auto-grow
               aria-required="true"
               aria-invalid={Boolean(errors.notes)}
               placeholder="Capture the key discussion, context, and relevant facts from the meeting."
@@ -306,7 +342,8 @@ export function MeetingNoteForm({
                 validate: (value) => trimRequired(value, 'Notes', MEETING_NOTE_LIMITS.notes),
               })}
             />
-            {errors.notes ? <small className={styles.error}>{errors.notes.message}</small> : <small className={styles.hint}>Up to {MEETING_NOTE_LIMITS.notes.toLocaleString('en-US')} characters.</small>}
+            {errors.notes ? <small className={styles.error}>{errors.notes.message}</small> : null}
+            <CharacterCount value={watched?.notes} maxLength={MEETING_NOTE_LIMITS.notes} />
           </label>
         </div>
       </section>
@@ -320,6 +357,7 @@ export function MeetingNoteForm({
         remove={participants.remove}
         register={register}
         errors={errors.participants}
+        values={watched?.participants}
         maxLength={MEETING_NOTE_LIMITS.participant}
         addLabel="Add participant"
         placeholder="e.g. Maya Chen"
@@ -334,6 +372,7 @@ export function MeetingNoteForm({
         remove={decisions.remove}
         register={register}
         errors={errors.decisions}
+        values={watched?.decisions}
         maxLength={MEETING_NOTE_LIMITS.decision}
         addLabel="Add decision"
         placeholder="Decision made during the meeting"
@@ -349,6 +388,7 @@ export function MeetingNoteForm({
         remove={followUps.remove}
         register={register}
         errors={errors.followUps}
+        values={watched?.followUps}
         maxLength={MEETING_NOTE_LIMITS.followUp}
         addLabel="Add follow-up"
         placeholder="Owner — follow-up and target timing"

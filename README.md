@@ -1,177 +1,131 @@
 # HelmSight — Project Delivery Intelligence
 
-**Hillel Full-Stack JavaScript · HW-15 · React + Redux Toolkit**
+HelmSight is a responsive project-delivery management application for Project Managers and Delivery Managers. It brings project health, governance, risks, milestones, Earned Value Management (EVM), management actions, reporting, and meeting notes into one workspace. The application is being developed in phases, with backend and API integration planned for future releases.
 
-HelmSight is a responsive project-delivery workspace for Project and Delivery Managers. It brings project governance, delivery controls, Earned Value metrics, reporting, meeting notes, and portfolio health into one frontend application.
+**Live demo:** Link to be added after deployment.
 
-> **Live demo:** will be added after the Vercel deployment step.
+**Repository:** Link to be added after publication.
 
-## ✨ What is implemented
+## Features
 
-### Portfolio & project workspace
+### Portfolio and project workspace
 
-- Active / Archived project lifecycle with restore support;
-- Grid / List portfolio views with persisted preference;
-- derived portfolio Project Health: **Healthy / Watch / Needs attention / Not assessed**;
-- project Overview dashboard with Project Pulse, control KPIs, attention signals, upcoming milestones, Success Criteria, management actions, and EVM position;
-- responsive desktop, tablet, and mobile layouts;
-- Light / Dark / System themes with persisted preference.
+- Active and archived projects, restore actions, and persistent **Grid / List** views.
+- Project creation and editing, plus a seeded **Atlas Modernization** demo workspace.
+- Derived portfolio health: **Healthy / Watch / Needs attention / Not assessed**.
+- Project Overview with delivery signals, upcoming milestones, success criteria, management actions, and performance indicators.
+- Responsive desktop, tablet, and mobile layouts; persistent **Light / Dark / System** appearance settings.
 
-### Interface & motion
+### Governance and delivery controls
 
-- branded responsive landing page with HelmSight visual identity and demo workspace entry;
-- consistent project-tab headings, right-aligned primary actions, and full-width supporting descriptions;
-- shared primary, secondary, and danger button styles across Light and Dark themes;
-- Projects Portfolio Hero with date-stable Daily Insight and an emerald glint that illuminates the existing vertical ribs (a short pass within a 30-second cycle), disabled for `prefers-reduced-motion`.
+- **Governance:** Project Charter, Stakeholder Register, and Communication Plan, with structured editing and saved versions.
+- **Success Criteria:** measurable outcomes, status tracking, ROI, gross margin, and profit margin where applicable.
+- **Risks:** probability × impact scoring, severity levels, risk matrix, and Grid / List views.
+- **Milestones:** lifecycle management, progress, due-soon/overdue indicators, and roadmap.
+- **Management Actions:** owners, priorities, progress, and attention states.
+- Archived projects remain **read-only** until restored.
 
-### Governance
+### Metrics and Earned Value Management
 
-- Project Charter;
-- Stakeholder Register;
-- Communication Plan;
-- structured validation and explicit save/version behavior;
-- archived-project read-only mode.
+- Work-package baselines, measurement basis, and Budget at Completion (BAC).
+- Planned Value (PV), Earned Value (EV), and Actual Consumption (AC) snapshots.
+- Derived CV, SV, CPI, SPI, EAC, ETC, VAC, and TCPI where meaningful.
+- Historical **PV / EV / AC** and **SPI / CPI** visualizations.
+- Hours, person-days, currency, and story-points modes; cost-based indicators are excluded where the unit does not support them.
 
-### Project control
+### Reports and meeting notes
 
-- **Success Criteria** — CRUD, deterministic statuses, ROI / Gross Margin / Profit Margin calculations;
-- **Risk Register** — CRUD, probability × impact score, severity bands, matrix, Grid / List modes;
-- **Milestones** — CRUD, progress, due-soon / overdue attention, responsive roadmap;
-- **Management Actions** — accountable PM follow-ups, lifecycle actions, attention states, Grid / List modes.
+- **Weekly Status Reports:** reporting periods, Draft / Final states, reopen, archive/restore, saved versions, and management narrative.
+- Report snapshots derived from project records, with report-local **Hide / Undo / Restore** of signals.
+- **Meeting Notes:** participants, decisions, follow-ups, owners, and create/edit/delete flows.
+- Live character counters and validation for meeting-note inputs (see [text-input limits](docs/TEXT_INPUT_LIMITS.md)).
+- Recoverable drafts where implemented, plus browser-native **Print / Save as PDF**.
 
-### Metrics / EVM
+### Interface and accessibility
 
-- measurement basis: Hours / Person-days / Currency / Story points;
-- work-package baseline and BAC;
-- automatic Planned Value (PV);
-- weekly Earned Value (EV) / Actual Consumption (AC) snapshots;
-- CV, SV, CPI, SPI, EAC, ETC, VAC, TCPI where semantically valid;
-- cumulative PV / EV / AC position;
-- **PV / EV / AC historical trend chart**;
-- **SPI / CPI historical trend chart** with Target 1.00;
-- Story-points mode intentionally excludes cost-derived indicators.
+- Branded landing page, contextual guidance, responsive navigation, and custom 404 page.
+- Semantic controls, keyboard interactions, visible focus states, and reduced-motion support.
+- Lazy-loaded routes with a loading fallback for initial navigation.
 
-### Weekly Status Reports
+## Technology stack
 
-- one report per project / reporting period;
-- Draft / Final lifecycle;
-- Reopen for correction;
-- Current / Archived report history;
-- derived historical snapshot from canonical project data;
-- editable management narrative;
-- report-local Hide / Undo / Restore for control signals;
-- browser **Print / Save as PDF**;
-- explicit saved-content versioning.
-
-### Meeting Notes
-
-- meeting-history index;
-- create / read / edit / delete flows;
-- participants, notes, decisions, follow-ups, owner, meeting date;
-- draft recovery and explicit saved-content versioning;
-- browser **Print / Save as PDF**;
-- archived projects remain read-only.
-
-## 🧰 Tech stack
-
-| Area | Technology |
+| Area | Technologies |
 | --- | --- |
-| UI | React 19 |
-| Build tool | Vite 8 |
-| State management | Redux Toolkit + React Redux |
+| Frontend | React 19, JavaScript, Vite 8 |
+| State | Redux Toolkit, React Redux, slices, async thunks |
 | Routing | React Router 7 |
 | Forms | React Hook Form |
-| Charts | Chart.js + react-chartjs-2 |
-| Styling | CSS Modules + global CSS custom properties |
-| Testing | Vitest + React Testing Library |
-| Linting | ESLint |
-| P0 persistence | versioned `localStorage` adapter behind feature services |
+| Charts | Chart.js, react-chartjs-2 |
+| Styling | CSS Modules, CSS custom properties |
+| Testing | Vitest, React Testing Library, Node.js test runner |
+| Quality | ESLint, production build, W3C CSS diagnostic scripts |
+| Persistence | Versioned browser `localStorage` behind feature services |
 
-## 🏗 Architecture
+## Architecture
 
-The frontend uses a feature-oriented structure without adopting full Feature-Sliced Design.
+The application uses a **feature-oriented structure**, without claiming full Feature-Sliced Design:
 
 ```text
-UI
-  ↓
-Redux Toolkit thunk
-  ↓
-feature service / API boundary
-  ↓
-versioned local persistence
+React UI → Redux Toolkit → feature services → versioned localStorage adapter
 ```
 
-React components do not access persistence directly. Business calculations such as EVM, risk severity, Success Criteria status, Project Health, and attention signals are implemented as deterministic domain logic outside presentation components.
-
-### Source structure
+Components do not need to implement domain calculations or persistence details. EVM, risk severity, success criteria, and portfolio health are handled by testable domain logic.
 
 ```text
 src/
-├── app/
-│   ├── providers/
-│   ├── router/
-│   └── store/
-├── features/
-│   ├── dashboard/
-│   ├── evm/
-│   ├── managementActions/
-│   ├── meetings/
-│   ├── milestones/
-│   ├── preferences/
-│   ├── projects/
-│   ├── reports/
-│   ├── risks/
-│   └── successCriteria/
-├── layouts/
-├── pages/
-├── shared/
-│   ├── assets/
-│   ├── hooks/
-│   ├── services/
-│   ├── styles/
-│   └── ui/
-└── test/
+├── app/             # Router, providers, Redux store
+├── features/        # Feature services, state, forms, domain logic
+├── layouts/         # App and project layouts
+├── pages/           # Screens and editors
+├── shared/          # UI components, hooks, styles, storage
+└── test/            # Shared test setup
+scripts/             # CSS/W3C diagnostics and Node tests
+docs/                # Supporting technical documentation
 ```
 
-## 🚀 Getting started
+**Current P0 architecture:** data and preferences are stored in the browser. Backend services, a database, authentication, and multi-user synchronization are not implemented yet. The feature-service boundary is intended to support later API integration without coupling persistence to React components.
 
-### Requirements
+## Getting started
 
-- Node.js `>=20.19.0`;
-- Node 22 LTS is recommended;
-- npm 10+.
-
-### Install dependencies
+**Requirements:** Node.js `^22.22.2 || ^24.15.0 || >=26.0.0` and npm.
 
 ```bash
 npm ci
-```
-
-### Start development server
-
-```bash
 npm run dev
 ```
 
-Vite prints the local URL in the terminal.
+Open the local URL printed by Vite. A seeded project is available for exploring the main workflows.
 
-## ✅ Quality checks
+## Quality checks
 
 ```bash
-npm run lint
-npm run test:run
+npm run lint             # ESLint
+npm run test:run         # Vitest
+npm run build            # Production bundle
+npm run check            # Lint + Vitest + build
+npm run preview          # Serve the production build locally
+node --test scripts/*.test.mjs  # Standalone Node diagnostic tests
+```
+
+### CSS validation and phase quality gates
+
+CSS is validated **after the production build**, not only in source files. At the end of P1, P2, and P3, the target is **0 errors / 0 warnings** in the selected HTML/CSS validators, with no skipped or unverified files. The same quality standard also applies to ESLint, tests, build output, and application-origin browser diagnostics.
+
+```bash
 npm run build
+npm run w3c:preview:test
+node --test scripts/*.test.mjs
+npm run w3c:audit -- --warning=1 --force
+npm run w3c:audit -- --warning=2 --force
 ```
 
-Run the full quality gate:
+W3C requests need network access. Reports are written to ignored `w3c-audit/`; theme previews to ignored `w3c-preview/`. An unavailable validator is **unverified**, never a pass. Some modern standards-based CSS can be rejected by the older `css3svg` validator; such results are investigated and documented rather than silenced or hidden.
 
-```bash
-npm run check
-```
+**Canonical policy and phase acceptance checklist:** [CSS Validation & Quality Gates](docs/CSS_VALIDATION_POLICY.md). See also [W3C compatibility plan](docs/W3C_COMPATIBILITY_PLAN.md) and [batch audit notes](docs/W3C_BATCH_AUDIT.md).
 
-The project currently contains **40 focused test files** covering store configuration, services, deterministic domain calculations, forms, shared UI behavior, routing-related components, and critical project-control logic.
+## Main routes
 
-## 🧭 Main routes
+The URLs below are client-side routes; `:projectId` and similar segments are dynamic identifiers.
 
 ```text
 /
@@ -195,7 +149,7 @@ The project currently contains **40 focused test files** covering store configur
 /projects/:projectId/metrics/snapshots/new
 /projects/:projectId/metrics/snapshots/:snapshotId/edit
 /projects/:projectId/reports
-/projects/:projectId/reports/new?periodEnd=YYYY-MM-DD
+/projects/:projectId/reports/new
 /projects/:projectId/reports/:reportId
 /projects/:projectId/actions
 /projects/:projectId/actions/new
@@ -206,74 +160,24 @@ The project currently contains **40 focused test files** covering store configur
 /projects/:projectId/meetings/:meetingId/edit
 ```
 
-Unknown URLs render the application Not Found page.
+Unknown paths render the custom Not Found page. Route modules are loaded on demand.
 
-## 💾 Demo data & persistence
+## Deployment
 
-A realistic synthetic project, **Atlas Modernization**, is included so the main workflows can be demonstrated immediately after first launch.
+The project includes `vercel.json` with a single-page-application rewrite to `index.html`, so React Router routes can be opened directly or refreshed after deployment.
 
-P0 data is stored locally in the browser behind Promise-based feature services. The service boundary is intentionally API-ready so a later backend can replace the temporary data source without moving persistence logic into React components.
+**Vercel settings:** Framework **Vite** · Build command `npm run build` · Output directory `dist`.
 
-Form drafts are stored separately from saved domain records and are used only for accidental-reload recovery where the workflow requires it.
+After deployment, replace the placeholder demo/repository links near the top of this file.
 
-## 🖨 Printing
+## Scope and limitations
 
-Weekly Status Reports and Meeting Notes use browser-native printing:
+**P0 — implemented:** project portfolio and workspace, Project Overview, governance, success criteria, risks, milestones, management actions, EVM and trends, weekly reports, meeting notes, and portfolio health. The current release is a working client-side application backed by versioned browser storage.
 
-```js
-window.print()
-```
+**P1–P3 — planned:** incremental delivery of the next project capabilities, with the scope of each phase managed in the project backlog. The architecture is prepared for gradual backend/API integration, but those services are not part of P0.
 
-The print layouts hide application navigation and editing controls. The browser/system dialog can print to a physical printer or **Save as PDF**.
+**Current limitations:** no server API, shared database, sign-in/authorization, real-time multi-user collaboration, external integrations, AI features, or full resource/critical-path planning. Browser-local data does not synchronize across users or devices. These are current implementation limits, not permanent product boundaries.
 
-## 🌐 Vercel deployment
+## Author
 
-The repository includes `vercel.json` with an SPA rewrite so direct navigation or page refresh on React Router routes resolves through `index.html`.
-
-Recommended Vercel settings:
-
-```text
-Framework Preset: Vite
-Build Command: npm run build
-Output Directory: dist
-```
-
-After deployment, add the production URL to the **Live demo** line at the top of this README.
-
-## 🎯 P0 scope status
-
-The HW-15 frontend P0 business scope is implemented end-to-end:
-
-- Projects / Portfolio;
-- Project Overview;
-- Governance;
-- Success Criteria;
-- Risks;
-- Milestones;
-- Management Actions;
-- Metrics / EVM + historical trends;
-- Weekly Status Reports;
-- Meeting Notes;
-- derived Portfolio Project Health.
-
-The remaining submission work is final regression QA, GitHub/Vercel publication, LMS submission formatting, and the final demonstration walkthrough.
-
-## 🚧 Intentionally outside HW-15 P0
-
-The following are deferred to later Full-Stack course stages:
-
-- real backend and database;
-- authentication / authorization;
-- OAuth;
-- AI features;
-- email and real in-product sharing;
-- external Jira / GitHub / Slack / Teams integrations;
-- WebSockets / real-time synchronization;
-- backend audit history;
-- full Gantt / critical-path / resource-planning engine;
-- generic backlog / sprint / Kanban task management.
-
----
-
-**Course:** Hillel IT School — Full-Stack JavaScript<br>
-**Homework:** HW-15 — React + Redux Toolkit course project
+© 2026 Andrii Dolzhenko. All Rights Reserved.

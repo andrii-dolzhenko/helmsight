@@ -1,29 +1,45 @@
+/* W3C theme pilot: concrete light/dark values mirror global.css theme tokens.
+   Keep both palettes in sync while evaluating a scalable build-time transform. */
 .helpButton {
   flex: 0 0 auto;
   width: 2.65rem;
   height: 2.65rem;
   display: inline-grid;
   place-items: center;
-  border: 1px solid color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
+  border: 1px solid rgb(147.8, 180.88, 161.6);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
-  color: var(--color-accent);
+  background: rgb(238.76, 243.83, 236.8);
+  color: #177a58;
   cursor: pointer;
   font-size: 1.05rem;
   font-weight: 900;
 }
+:global(html[data-theme='dark']) .helpButton {
+  border: 1px solid rgb(70.68, 122.76, 98.36);
+  background: rgb(26.37, 44.67, 38.38);
+  color: #6fd5a3;
+}
 
 .helpButton:hover {
-  background: color-mix(in srgb, var(--color-accent) 13%, var(--color-surface));
+  background: rgb(224.84, 235.97, 227.2);
+}
+:global(html[data-theme='dark']) .helpButton:hover {
+  background: rgb(31.83, 55.53, 46.42);
 }
 
 .helpButton:active {
-  background: color-mix(in srgb, var(--color-accent) 18%, var(--color-surface));
+  background: rgb(213.24, 229.42, 219.2);
+}
+:global(html[data-theme='dark']) .helpButton:active {
+  background: rgb(36.38, 64.58, 53.12);
 }
 
 .helpButton:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline: 2px solid rgba(23, 122, 88, 0.72);
   outline-offset: 0.2rem;
+}
+:global(html[data-theme='dark']) .helpButton:focus-visible {
+  outline: 2px solid rgba(111, 213, 163, 0.72);
 }
 
 .backdrop {
@@ -43,11 +59,16 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-text);
+  border: 1px solid #dad6cb;
+  border-radius: 1.45rem;
+  background: #fffdf8;
+  color: #1e2421;
   box-shadow: 0 2rem 6rem rgb(0 0 0 / 28%);
+}
+:global(html[data-theme='dark']) .dialog {
+  border: 1px solid #30483e;
+  background: #14201d;
+  color: #f4f1e9;
 }
 
 .dialogHeader {
@@ -55,22 +76,28 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid #dad6cb;
   padding: 1.25rem 1.35rem;
+}
+:global(html[data-theme='dark']) .dialogHeader {
+  border-bottom: 1px solid #30483e;
 }
 
 .eyebrow {
-  color: var(--color-accent);
+  color: #177a58;
   font-size: 0.7rem;
   font-weight: 850;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+:global(html[data-theme='dark']) .eyebrow {
+  color: #6fd5a3;
+}
 
 .dialogHeader h2 {
   margin: 0.35rem 0 0;
   max-width: 30rem;
-  font-family: var(--font-display);
+  font-family: Georgia, serif;
   font-size: clamp(1.65rem, 4vw, 2.35rem);
   line-height: 1.05;
   letter-spacing: -0.035em;
@@ -82,21 +109,32 @@
   flex: 0 0 auto;
   display: grid;
   place-items: center;
-  border: 1px solid var(--color-border);
+  border: 1px solid #dad6cb;
   border-radius: 999px;
   background: transparent;
-  color: var(--color-text);
+  color: #1e2421;
   cursor: pointer;
+}
+:global(html[data-theme='dark']) .closeButton {
+  border: 1px solid #30483e;
+  color: #f4f1e9;
 }
 
 .closeButton:hover {
-  border-color: color-mix(in srgb, var(--color-accent) 36%, var(--color-border));
-  background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface));
+  border-color: rgb(147.8, 180.88, 161.6);
+  background: rgb(238.76, 243.83, 236.8);
+}
+:global(html[data-theme='dark']) .closeButton:hover {
+  border-color: rgb(70.68, 122.76, 98.36);
+  background: rgb(26.37, 44.67, 38.38);
 }
 
 .closeButton:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, transparent);
+  outline: 2px solid rgba(23, 122, 88, 0.72);
   outline-offset: 0.2rem;
+}
+:global(html[data-theme='dark']) .closeButton:focus-visible {
+  outline: 2px solid rgba(111, 213, 163, 0.72);
 }
 
 .closeButton svg {
@@ -106,7 +144,7 @@
   stroke: currentColor;
   stroke-width: 1.8;
   stroke-linecap: round;
-  vector-effect: non-scaling-stroke;
+
 }
 
 .content {
@@ -120,7 +158,10 @@
 }
 
 .content section + section {
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid #dad6cb;
+}
+:global(html[data-theme='dark']) .content section + section {
+  border-top: 1px solid #30483e;
 }
 
 .content h3 {
@@ -130,12 +171,18 @@
 
 .content p {
   margin: 0.45rem 0 0;
-  color: var(--color-text-muted);
+  color: #69716d;
   line-height: 1.65;
+}
+:global(html[data-theme='dark']) .content p {
+  color: #b2bcb6;
 }
 
 .content strong {
-  color: var(--color-text);
+  color: #1e2421;
+}
+:global(html[data-theme='dark']) .content strong {
+  color: #f4f1e9;
 }
 
 @media (max-width: 560px) {

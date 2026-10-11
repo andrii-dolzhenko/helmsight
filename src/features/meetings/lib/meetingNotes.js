@@ -11,6 +11,12 @@ export const MEETING_NOTE_LIMITS = Object.freeze({
 
 export const MEETING_NOTE_MIN_TEXT_LENGTH = 2
 
+// Meeting Notes normalize surrounding whitespace before validating and saving.
+// Counters must use the same length as the service, not the raw input length.
+export function meetingTextLength(value) {
+  return String(value ?? '').trim().length
+}
+
 export function isValidDateKey(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(String(value ?? ''))) return false
   const date = new Date(`${value}T00:00:00`)

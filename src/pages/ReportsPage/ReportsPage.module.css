@@ -1569,7 +1569,6 @@
     min-height: auto;
     grid-template-columns: auto minmax(0, 1fr) auto;
     padding: 7pt 8pt;
-    cursor: default;
   }
 
   .collapsibleTrigger:hover {

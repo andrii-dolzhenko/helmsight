@@ -711,8 +711,9 @@
 
 .card:target,
 .listRow:target {
+  --action-target-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
   border-color: color-mix(in srgb, var(--color-accent) 58%, var(--color-border));
-  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
+  box-shadow: var(--action-target-shadow);
 }
 
 /* Consistent button states. */
