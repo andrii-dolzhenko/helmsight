@@ -8,6 +8,10 @@ import { RouteLoadingFallback } from './RouteLoadingFallback.jsx'
 afterAll(() => router.dispose())
 
 describe('Stage 28 initial route fallback', () => {
+  it('uses the Vite public base for nested deployments', () => {
+    expect(router.basename).toBe(import.meta.env.BASE_URL)
+  })
+
   it.each([
     ['landing page', '/'],
     ['projects list', '/projects'],
