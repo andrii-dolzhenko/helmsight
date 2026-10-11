@@ -2,9 +2,11 @@
 
 HelmSight is a responsive project-delivery management application for Project Managers and Delivery Managers. It brings project health, governance, risks, milestones, Earned Value Management (EVM), management actions, reporting, and meeting notes into one workspace. The application is being developed in phases, with backend and API integration planned for future releases.
 
-**Live demo:** Link to be added after deployment.
+**Live demo (Vercel):** [helmsight.vercel.app](https://helmsight.vercel.app/)
 
-**Repository:** Link to be added after publication.
+**Backup demo (GitHub Pages):** [andrii-dolzhenko.github.io/helmsight](https://andrii-dolzhenko.github.io/helmsight/)
+
+**Repository:** [github.com/andrii-dolzhenko/helmsight](https://github.com/andrii-dolzhenko/helmsight)
 
 ## Features
 
@@ -168,7 +170,13 @@ The project includes `vercel.json` with a single-page-application rewrite to `in
 
 **Vercel settings:** Framework **Vite** · Build command `npm run build` · Output directory `dist`.
 
-After deployment, replace the placeholder demo/repository links near the top of this file.
+The primary public deployment is hosted on **Vercel**. A second, automatically deployed static build is hosted on **GitHub Pages**. The GitHub Pages build uses the `/helmsight/` public base path and a matching React Router basename; Vercel retains the root (`/`) base path.
+
+GitHub Pages includes a `404.html` SPA fallback for directly opening nested routes. Those deep links may return HTTP 404 while rendering the React application; Vercel is the canonical deployment for normal 200-status SPA rewrites.
+
+**Deployment guide:** [GitHub Pages backup, CI and verification](docs/GITHUB_PAGES_DEPLOYMENT.md).
+
+Browser-local data is scoped to each domain, so the backup demo does **not** synchronize project data with Vercel.
 
 ## Scope and limitations
 

@@ -72,4 +72,6 @@ export const router = createBrowserRouter([
     HydrateFallback: RouteLoadingFallback,
     lazy: loadPage(() => import('../../pages/NotFoundPage/NotFoundPage.jsx'), 'NotFoundPage'),
   },
-])
+], {
+  basename: import.meta.env.BASE_URL,
+})
