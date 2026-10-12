@@ -65,7 +65,9 @@ function clone(value) {
 function readMeetings() {
   const stored = storageAdapter.read(STORAGE_KEY)
   if (stored === null) {
-    const demo = clone(DEMO_MEETINGS)
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demo = demoWasDeleted ? [] : clone(DEMO_MEETINGS)
     storageAdapter.write(STORAGE_KEY, demo)
     return demo
   }

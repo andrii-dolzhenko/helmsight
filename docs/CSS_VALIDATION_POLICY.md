@@ -6,16 +6,43 @@
 
 ## 1. Non-negotiable quality objective
 
-At the end of **every upcoming phase (P1, P2 and P3)**, the **target acceptance result is 0 errors and 0 warnings** from the selected HTML/CSS validation profiles. This is a phase-level quality objective, with any validator-compatibility exception requiring an explicit decision and honest raw counts. For **P0.1**, the separately recorded Stage 44 decision accepts **0 errors with 39 reviewed warnings** in the Normal profile; this is **not** a 0/0 result or a silent waiver for P1–P3.
+At the end of every upcoming phase (P1, P2 and P3), the long-term HTML/CSS quality target remains **0 errors / 0 warnings**. Under ADR-042, the strict raw W3C target and the operational deployment decision are separate. Nonzero CSS warnings may be accepted for deployment only after documented risk review and completion of all other required quality checks. The historical P0.1 Stage 44 exception remains recorded separately.
 
 - Validate the **real production output** as well as the source CSS. A clean source file does not guarantee clean CSS after PostCSS/Vite transformations.
 - Audit **100% of the CSS assets in the current build**. Any `unverified`, `pending`, unselected, stale, or failed-to-fetch result blocks a claim of clean validation.
 - Record actual raw counts. **Never** relabel warnings as passes, lower warning severity to make the headline green, filter failing assets, or remove necessary styling/behavior just to satisfy an obsolete validator.
 - A 0/0 claim is valid only for a specified validator, version/profile, warning level, build, and full set of files. Keep separate results for `--warning=1` (normal) and `--warning=2` (all warnings).
-- If valid modern CSS is unsupported by the selected validator, mark the gate **BLOCKED — validator compatibility**, verify conformance using a suitable modern specification-aware tool and runtime checks, and document the decision. **Do not report 0/0** while raw W3C results still contain errors/warnings.
-- No new errors/warnings should be introduced during a phase. Existing P0 validation debt must be resolved or explicitly escalated before declaring P1/P2/P3 fully compliant with the 0/0 target.
+- If valid modern CSS is unsupported by the selected validator, record the compatibility limitation and obtain appropriate standards-aware or runtime evidence. The raw 0/0 target remains unmet; deployment eligibility is assessed separately under ADR-042. Never report nonzero raw W3C results as 0/0.
+- Introduce no new CSS errors. Investigate every new or changed warning category or regression; document its cause and impact before release. Existing warning debt remains open until resolved or explicitly adjudicated.
 
 The target is intentionally strict. Some existing warnings arise from compatibility fallbacks and dynamic CSS syntax that the historic `css3svg` profile cannot statically evaluate. A literal 0/0 under that profile may require a standards-aware validator update or a design trade-off. Neither is assumed to be solved today.
+
+### ADR-042 — Deployment eligibility with reviewed warnings (2026-10-12)
+
+**Status: Adopt.** This decision refines the operational deployment
+criteria; it does not supersede the strict 0/0 quality objective.
+
+Deployment requires:
+- Both W3C warning profiles evaluated on the current production build.
+- 100% of CSS assets verified, with 0 errors, 0 unverified and 0 pending.
+- Remaining warnings classified and reviewed for real browser, layout,
+  contrast, theme and accessibility impact.
+- No unresolved material defects, including defects detected outside W3C.
+- Required lint, tests, build, runtime, accessibility and applicable HTML
+  validation checks completed with recorded evidence.
+- Explicit release approval based on documented findings.
+
+A build meeting these conditions may receive the separate status
+**PASS WITH DOCUMENTED WARNINGS**. Its raw W3C 0/0 target remains
+**NOT MET** until warnings are eliminated.
+
+**P1 Safe Project Deletion checkpoint (2026-10-12):**
+27/27 production CSS assets verified in both profiles; 0 errors,
+0 unverified and 0 pending; 39 Normal warnings and 2,833 extended
+warnings. The warning review and complete release acceptance are not
+automatically approved by these numbers. See `docs/W3C_BATCH_AUDIT.md`.
+
+Source: ADR-042 — CSS Warning-Adjudicated Deployment Gate.
 
 ## 2. P0 historical baseline — 11 October 2026
 
@@ -115,7 +142,7 @@ P0.1 acceptance decision: **allow 39 disclosed compatibility/static-analysis war
 3. Run `npm run build` and inspect relevant generated CSS; check for empty or malformed declarations.
 4. Smoke-test on supported browsers, Light/Dark/System themes, desktop/tablet/mobile and keyboard/reduced-motion paths relevant to the change.
 5. For CSS changes, validate the affected new build CSS with W3C **without relying solely on a cached old SHA**. Do not wait for the phase-end batch to discover regressions.
-6. Resolve new errors and warnings or stop/raise a compatibility blocker. Add regression tests for any fixed class of failure.
+6. Fix new CSS errors before deployment. Investigate changed warnings and document accepted noncritical findings under ADR-042; unresolved material issues block release.
 
 ### At the end of P1, P2 and P3 (phase gate)
 
@@ -141,7 +168,7 @@ Review:
 - W3C HTML validation of the deployed/served markup (for rendered UI, inspect appropriate rendered snapshots where relevant)
 - Browser Console/DevTools Issues (application-origin errors and warnings), viewport and theme QA, keyboard/reduced-motion smoke tests
 
-**Mandatory acceptance checks for each W3C profile:** `total === verified`, `unverified === 0`, `pending === 0`, `errors === 0`, `warnings === 0`, and **every asset** must have `status: "pass"`. Verify the report's `generatedAt`, `profile`, `warningLevel`, and each asset's build hash. If any condition fails, the 0/0 gate is **not passed**.
+**Strict raw 0/0 target:** each W3C profile must have all assets verified, 0 unverified/pending, 0 errors, 0 warnings and every asset marked `pass`. This target is NOT MET if warnings remain. **ADR-042 deployment evaluation:** all emitted CSS assets must be verified in both profiles, with 0 errors and 0 unverified/pending. Nonzero warnings require documented classification and no unresolved material defects. Verify profile, warning level, timestamp and asset hashes.
 
 ### Phase completion matrix
 
@@ -150,23 +177,23 @@ Review:
 | ESLint | 0 errors / 0 warnings |
 | Vitest and standalone Node tests | 100% pass, 0 failures |
 | Production build | Successful, no invalid emitted declarations |
-| Production CSS W3C (normal + all warnings) | Target **0 errors / 0 warnings** across 100% verified assets |
+| Production CSS W3C (both profiles) | Strict target 0/0; deployment may be approved with 0 errors, complete coverage and adjudicated noncritical warnings under ADR-042 |
 | HTML validator | Target **0 errors / 0 warnings** for all agreed validated pages/snapshots |
 | Browser Console and DevTools Issues | 0 reproducible application-origin errors/warnings |
 | Responsive, themes, dynamic states, animations | No visual or functional regressions |
 | Accessibility checks | No unresolved critical/serious issues; keyboard and reduced-motion behavior verified |
 | Documentation | Current report, issue register, decision trail, and QA evidence updated |
 
-**Result statuses:** `PASS` only with complete evidence; `FAIL` for actual defects; `BLOCKED — VALIDATOR COMPATIBILITY` if the current profile cannot interpret standards-based CSS; `UNVERIFIED` for incomplete/network-failed audits. A blocked or unverified result is **not** 0/0 and must not be presented as a pass.
+**Result statuses:** Raw W3C `PASS` requires 0/0. `UNVERIFIED` means incomplete evidence; `FAIL` means actual defects. The separate deployment decision may be `PASS WITH DOCUMENTED WARNINGS` only after ADR-042 criteria and other release checks are satisfied. Do not relabel a warning-bearing W3C report as raw PASS.
 
 ## 6. Phase-by-phase commitments
 
 | Phase | Validation commitment | Evidence required |
 | --- | --- | --- |
 | **P0** (baseline) | Capture existing debt without disguising it; current measured raw result is **1 error / 49 warnings** | Historical report and known causes |
-| **P1** | Fix or adjudicate all baseline issues; keep new CSS free of additional warnings; run the full 0/0 acceptance gate | Fresh full-build raw reports and visual QA |
-| **P2** | Re-run exactly the same gate after additions and refactors; resolve regressions before release | Fresh full-build reports, tests and browser QA |
-| **P3** (final frontend phase) | Final 0/0 target plus end-to-end regression and deployed build validation | Signed-off validation evidence and final acceptance report |
+| **P1** | Preserve strict 0/0 target; apply ADR-042 warning-adjudicated deployment criteria | Fresh full-build reports, warning review and browser/accessibility QA |
+| **P2** | Re-run strict target and ADR-042 release evaluation; review warning changes | Fresh reports, tests and browser QA |
+| **P3** (final frontend phase) | Retain final 0/0 quality objective; any release with warnings requires ADR-042 adjudication | Signed-off validation evidence and release QA |
 
 The backlog owns the feature contents of P1–P3; this policy defines **quality requirements**, not feature promises or delivery dates. A prior phase's pass never substitutes for validating the current build.
 
@@ -174,7 +201,7 @@ The backlog owns the feature contents of P1–P3; this policy defines **quality 
 
 For each nonzero W3C message record: affected production asset/hash, source CSS selector/declaration, exact diagnostic, reproducer or isolation step, whether the source is standards-valid, runtime impact, chosen resolution, regression test and owner/status. Keep the original warning visible while the issue is open.
 
-Prioritize actual broken production output first, then real standards violations, then compatibility warnings and validator/parser limitations. Before accepting an exception, document the reason, alternate standards evidence, tested browsers, and approver; **the raw W3C gate remains nonzero and cannot be stamped as PASS**.
+Prioritize actual production defects and standards violations, then compatibility and parser advisories. Classify warnings by asset and category, inspect representative source rules, assess contrast/accessibility and document the rationale, testing evidence and reviewer. An approved deployment exception never changes the raw W3C warning count.
 
 Copy and fill this template at each phase review:
 
@@ -191,7 +218,8 @@ Build: PASS / FAIL
 Console / DevTools: errors / warnings
 Themes, breakpoints, keyboard, reduced motion: PASS / FAIL
 Unresolved items (with evidence):
-Gate decision: PASS / FAIL / BLOCKED / UNVERIFIED
+Raw W3C 0/0 target: MET / NOT MET / UNVERIFIED
+Deployment decision: PASS / PASS WITH DOCUMENTED WARNINGS / BLOCKED / FAIL / UNVERIFIED
 Reviewer / date:
 ```
 

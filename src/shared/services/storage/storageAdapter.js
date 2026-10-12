@@ -39,6 +39,31 @@ export const storageAdapter = {
     }
   },
 
+  listKeys(prefix = '') {
+    try {
+      const namespacePrefix = `${STORAGE_NAMESPACE}:`
+      const matchingKeys = []
+
+      for (let index = 0; index < window.localStorage.length; index += 1) {
+        const physicalKey = window.localStorage.key(index)
+
+        if (physicalKey?.startsWith(namespacePrefix)) {
+          const logicalKey = physicalKey.slice(namespacePrefix.length)
+
+          if (logicalKey.startsWith(prefix)) {
+            matchingKeys.push(logicalKey)
+          }
+        }
+      }
+
+      return matchingKeys
+    } catch (error) {
+      throw new StorageAdapterError('Failed to list local data keys.', {
+        cause: error,
+      })
+    }
+  },
+
   remove(key) {
     try {
       window.localStorage.removeItem(createKey(key))

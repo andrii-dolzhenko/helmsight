@@ -67,7 +67,9 @@ function readSuccessCriteria() {
   const storedCriteria = storageAdapter.read(SUCCESS_CRITERIA_STORAGE_KEY)
 
   if (storedCriteria === null) {
-    const demoCriteria = cloneDemoSuccessCriteria()
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demoCriteria = demoWasDeleted ? [] : cloneDemoSuccessCriteria()
     storageAdapter.write(SUCCESS_CRITERIA_STORAGE_KEY, demoCriteria)
     return demoCriteria
   }

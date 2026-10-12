@@ -64,3 +64,119 @@ Reference: https://github.com/w3c/css-validator/blob/main/validator.html.en (dir
 - Both audit modes maintain separate SHA-256 caches/reports and never reuse one mode’s result as a pass in the other mode.
 - Explicitly record `profile=css3svg; warning=1` when claiming the matching web-form 0/0; do not claim all-warnings compliance unless separately checked at `warning=2`.
 - Avoid removing valid responsive cascades or dark-theme overrides merely to silence `warning=2` redefinition advisories.
+
+## P1 Safe Project Deletion — CSS checkpoint (2026-10-12)
+
+**Scope:** `feature/p1-safe-project-deletion`, after the Archived
+Grid/List responsive correction and the targeted Portfolio text-contrast
+adjustment. Results refer to the latest local production build.
+
+| W3C css3svg metric | Normal (`warning=1`) | Extended (`warning=2`) |
+| --- | ---: | ---: |
+| Production CSS assets verified | 27/27 | 27/27 |
+| Errors | **0** | **0** |
+| Warnings | **39** | **2,833** |
+| Assets with 0 errors / 0 warnings | 18 | 0 |
+| Assets with issues | 9 | 27 |
+| Unverified | 0 | 0 |
+| Pending | 0 | 0 |
+
+### Production CSS artifact
+
+The current artifact is `ProjectsPage-IE4jF4q6.css`.
+
+- Normal: 0 errors, 9 warnings.
+- Extended: 0 errors, 190 warnings.
+- Both warning counts are unchanged from the preceding build,
+  `ProjectsPage-BRNnBOfG.css`.
+- An earlier responsive correction increased the extended count from
+  189 to 190. The specific diagnostic responsible for that earlier
+  difference has not been isolated.
+
+### Warning classification
+
+Normal-profile diagnostics:
+- 33 vendor-extension advisories for intentional `-webkit-*` CSS.
+- 6 notices that dynamic CSS variables cannot be statically checked.
+
+Extended-profile diagnostics:
+- 1,496 color/background cascading advisories.
+- 1,297 CSS property redefinition advisories.
+- 33 vendor-extension advisories.
+- 6 dynamic CSS-variable notices.
+- 1 generic font-family fallback advisory.
+
+The above categories account for all reported warnings. Classification
+is not proof that every individual warning is harmless.
+
+The source font stacks include generic fallbacks:
+`Inter, ui-sans-serif, system-ui, sans-serif` and
+`--font-display: Georgia, 'Times New Roman', serif`.
+The precise source of the single minified-bundle font advisory has
+not been independently isolated.
+
+The redefinition notices may arise from intentional responsive and
+theme cascades, but this explanation has not been established for
+every occurrence. Color/background advisories do not themselves
+measure computed-text contrast and must not be described as confirmed
+accessibility failures or automatically dismissed as safe.
+
+### Contrast and regression review
+
+Targeted contrast improvements were applied to:
+- `.header p`
+- `.metaGrid dt`
+- `.health_notAssessed`, `.health_loading`, `.health_unavailable`
+
+These use a theme-aware blend of muted and primary text colors.
+The changes do not alter global design tokens or Archived Grid/List
+action layouts.
+
+After the changes:
+- ESLint, 207/207 Vitest tests and production Vite build passed.
+- Both forced W3C CSS profiles completed with 0 errors and 0
+  unverified/pending assets.
+- The project owner visually reviewed the updated UI without
+  reporting regressions.
+- Earlier production preview startup and hard-reload checks passed.
+- Light/Dark/System, responsive and keyboard-dialog workflows were
+  manually reviewed; the new contrast styling was visually rechecked.
+- W3C Nu validated `dist/index.html`: 0 HTML errors and 0 warnings.
+  Dynamically rendered SPA markup was outside this specific check.
+- Manual Reduced Motion smoke review covered Portfolio, Radar,
+  Governance, mobile navigation and Reports. Computed CSS animation
+  timing reflected the reduced-motion rule; this is not an exhaustive
+  JavaScript-animation audit.
+
+These checks do not constitute a comprehensive automated WCAG
+contrast audit for every route and state.
+
+### Gate interpretation — ADR-042
+
+**W3C CSS Error Gate: PASS.**
+All 27 current production CSS assets were verified with 0 errors.
+
+**Strict raw W3C 0/0 target: NOT MET.**
+The raw Normal and Extended warning totals remain 39 and 2,833.
+No warnings were suppressed or relabeled as raw W3C PASS.
+
+**Deployment Gate: PENDING FINAL SIGN-OFF.**
+ADR-042 permits `PASS WITH DOCUMENTED WARNINGS` only after warning
+adjudication and the other applicable release checks are complete.
+Remaining review includes final warning-risk adjudication,
+any required dynamic-route HTML/accessibility checks and explicit
+release approval. The static HTML entry point and selected
+reduced-motion workflows have been verified. Zero CSS errors alone is not complete deployment approval.
+
+### Evidence
+
+Local generated reports, intentionally ignored by Git:
+- `w3c-audit/report-normal.json`
+- `w3c-audit/summary-normal.md`
+- `w3c-audit/report.json`
+- `w3c-audit/summary.md`
+
+The canonical policy is `docs/CSS_VALIDATION_POLICY.md`.
+The canonical decision is ADR-042 — CSS Warning-Adjudicated
+Deployment Gate. Preserve original diagnostics and asset hashes
+when reviewing future changes.

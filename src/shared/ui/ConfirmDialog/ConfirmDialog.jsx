@@ -69,15 +69,26 @@ export function ConfirmDialog({
   cancelLabel = 'Keep editing',
   confirmTone = 'danger',
   icon = null,
+  children,
+  confirmDisabled = false,
+  isPending = false,
   onConfirm,
   onCancel,
 }) {
   const dialogRef = useRef(null)
   const cancelRef = useRef(null)
 
+  const interactionRef = useRef({ onCancel, isPending })
+
+  useEffect(() => {
+    interactionRef.current = { onCancel, isPending }
+  }, [onCancel, isPending])
+
   const close = useCallback(() => {
-    onCancel()
-  }, [onCancel])
+    if (!interactionRef.current.isPending) {
+      interactionRef.current.onCancel()
+    }
+  }, [])
 
   useEffect(() => {
     if (!isOpen) {
@@ -93,6 +104,12 @@ export function ConfirmDialog({
       if (event.key === 'Escape') {
         event.preventDefault()
         close()
+        return
+      }
+
+      if (event.key === 'Tab' && interactionRef.current.isPending) {
+        event.preventDefault()
+        dialogRef.current?.focus()
         return
       }
 
@@ -127,6 +144,12 @@ export function ConfirmDialog({
     }
   }, [close, isOpen])
 
+  useEffect(() => {
+    if (isOpen && isPending) {
+      dialogRef.current?.focus()
+    }
+  }, [isOpen, isPending])
+
   if (!isOpen) {
     return null
   }
@@ -146,7 +169,9 @@ export function ConfirmDialog({
         ref={dialogRef}
         className={styles.dialog}
         role="alertdialog"
+        tabIndex={-1}
         aria-modal="true"
+        aria-busy={isPending}
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-message"
       >
@@ -158,17 +183,18 @@ export function ConfirmDialog({
               <h2 id="confirm-dialog-title">{title}</h2>
             </div>
           </div>
-          <button className={styles.closeButton} type="button" aria-label="Close dialog" onClick={close}>
+          <button className={styles.closeButton} type="button" aria-label="Close dialog" onClick={close} disabled={isPending}>
             <CloseIcon />
           </button>
         </div>
         <p id="confirm-dialog-message">{message}</p>
+        {children}
 
         <div className={styles.actions}>
-          <button ref={cancelRef} className={styles.secondaryButton} data-ui-button="secondary" type="button" onClick={close}>
+          <button ref={cancelRef} className={styles.secondaryButton} data-ui-button="secondary" type="button" onClick={close} disabled={isPending}>
             {cancelLabel}
           </button>
-          <button className={confirmClass} data-ui-button={confirmTone === 'primary' ? 'primary' : 'danger'} type="button" onClick={onConfirm}>
+          <button className={confirmClass} data-ui-button={confirmTone === 'primary' ? 'primary' : 'danger'} type="button" onClick={onConfirm} disabled={confirmDisabled || isPending}>
             {confirmLabel}
           </button>
         </div>
