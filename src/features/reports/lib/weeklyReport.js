@@ -1,3 +1,4 @@
+import { isValidCalendarDate } from '../../../shared/lib/calendarDate.js'
 import { buildProjectDashboard } from '../../dashboard/lib/projectDashboard.js'
 import { calculateEvmMetrics, sortSnapshotsByDate } from '../../evm/lib/evm.js'
 import {
@@ -31,8 +32,9 @@ const CRITERION_WEIGHT = Object.freeze({
 })
 
 function parseDateKey(value) {
-  const date = new Date(`${value}T00:00:00`)
-  return Number.isNaN(date.getTime()) ? null : date
+  if (!isValidCalendarDate(value)) return null
+
+  return new Date(`${value}T00:00:00`)
 }
 
 function toDateKey(date) {

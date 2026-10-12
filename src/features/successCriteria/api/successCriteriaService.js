@@ -1,3 +1,4 @@
+import { isValidCalendarDate } from '../../../shared/lib/calendarDate.js'
 import { storageAdapter } from '../../../shared/services/storage/storageAdapter.js'
 import {
   calculateCriterionCurrentValue,
@@ -128,6 +129,14 @@ function normalizeCalculatedInput(input) {
 }
 
 function normalizeCriterionInput(input) {
+  if (
+    input.targetDate != null &&
+    input.targetDate !== '' &&
+    !isValidCalendarDate(input.targetDate)
+  ) {
+    throw new SuccessCriteriaServiceError('Choose a valid target date.')
+  }
+
   const normalizedMetric =
     input.metricType === 'manual'
       ? normalizeManualInput(input)

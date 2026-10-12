@@ -57,3 +57,53 @@ describe('Success Criteria business rules', () => {
     ).toBe(SUCCESS_CRITERIA_STATUS.ON_TRACK)
   })
 })
+
+describe('Success Criteria calendar-day boundaries across DST', () => {
+  const criterion = {
+    unit: 'percentage',
+    target: 80,
+    currentValue: 70,
+    direction: 'atLeast',
+  }
+
+  it.each([
+    [
+      'marks yesterday as missed after the spring DST transition',
+      '2026-03-30T12:00:00',
+      '2026-03-29',
+      SUCCESS_CRITERIA_STATUS.MISSED,
+    ],
+    [
+      'marks a deadline exactly 14 calendar days away as at risk after the autumn DST transition',
+      '2026-10-25T12:00:00',
+      '2026-11-08',
+      SUCCESS_CRITERIA_STATUS.AT_RISK,
+    ],
+  ])('%s', (_description, today, targetDate, expected) => {
+    expect(
+      evaluateSuccessCriterion(
+        { ...criterion, targetDate },
+        new Date(today),
+      ),
+    ).toBe(expected)
+  })
+})
+
+describe('Success Criteria early-year calendar boundaries', () => {
+  it('treats the transition from year 0099 to 0100 as one calendar day', () => {
+    const criterion = {
+      unit: 'percentage',
+      target: 80,
+      currentValue: 70,
+      direction: 'atLeast',
+      targetDate: '0100-01-01',
+    }
+
+    expect(
+      evaluateSuccessCriterion(
+        criterion,
+        new Date('0099-12-31T12:00:00'),
+      ),
+    ).toBe(SUCCESS_CRITERIA_STATUS.AT_RISK)
+  })
+})
