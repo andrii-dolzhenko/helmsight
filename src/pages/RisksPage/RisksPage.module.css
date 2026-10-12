@@ -577,8 +577,11 @@
 }
 
 .listIdentity p {
+  display: block;
   font-size: var(--ui-list-description-size);
-  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .listMeta {

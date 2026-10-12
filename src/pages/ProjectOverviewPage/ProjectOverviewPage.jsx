@@ -58,6 +58,9 @@ import {
   buildProjectDashboard,
 } from '../../features/dashboard/lib/projectDashboard.js'
 import styles from './ProjectOverviewPage.module.css'
+import { registerRadarWaveRadius } from './registerRadarWaveRadius.js'
+
+registerRadarWaveRadius()
 
 function formatDate(value) {
   if (!value) return '—'

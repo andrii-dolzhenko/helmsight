@@ -342,7 +342,7 @@ test('Stage 9: status badge semantics and legacy multiline clipping remain uncha
 test('Stage 10: five hybrid page modules resolve static theme tokens but preserve exact live values', () => {
   const plugin = w3cApprovedCssPilots()
   const cases = [
-    ['ActionsPage', 97, 43, ['--action-target-shadow']],
+    ['ActionsPage', 98, 43, []],
     ['MeetingsPage', 60, 32, ['color-mix(in srgb, currentColor 4%, transparent)']],
     ['MilestonesPage', 81, 41, ['--roadmap-position', '--roadmap-item-width', '--roadmap-edge-width']],
     ['GovernancePage', 78, 42, ['--charter-grid-gap', '--charter-card-padding']],
@@ -364,7 +364,8 @@ test('Stage 10: five hybrid page modules resolve static theme tokens but preserv
     const report = transform(source, file, tokens).report
     assert.equal(report.changed, staticValues, `${name}: static substitutions count`)
     assert.equal(report.darkRules, darkRules, `${name}: dark rules count`)
-    assert.ok(report.unhandled > 0, `${name}: only documented live declarations may remain`)
+    if (liveTokens.length) assert.ok(report.unhandled > 0, `${name}: documented live declarations remain`)
+    else assert.equal(report.unhandled, 0, `${name}: all declarations must resolve`);
   }
 })
 
@@ -378,14 +379,29 @@ test('Stage 10 fails closed if a hybrid module acquires unknown or changed dynam
   assert.ok(call(source))
   assert.throws(
     () => call(source + '\n.newDynamicProperty { opacity: var(--surprise-opacity); }\n'),
-    /W3C pilot .*ActionsPage\.module\.css left 2 unresolved declarations/,
+    /W3C pilot .*ActionsPage\.module\.css left 1 unresolved declarations/,
   )
   assert.throws(
-    () => call(source.replace('var(--action-target-shadow)', 'var(--wrong-shadow)')),
+    () => call(source.replace('color-mix(in srgb, var(--color-accent) 12%, transparent)', 'color-mix(in srgb, var(--wrong-shadow) 12%, transparent)')),
     /W3C pilot .*ActionsPage\.module\.css left 1 unresolved declarations/,
   )
 })
 
+
+test('Stage 43: Actions target highlight resolves equal Light/Dark box shadows without runtime token', () => {
+  const file = resolve(import.meta.dirname, '../src/pages/ActionsPage/ActionsPage.module.css')
+  const source = readFileSync(file, 'utf8')
+  const tokens = buildThemeTokens(allCss(resolve(import.meta.dirname, '../src')))
+  const report = transform(source, file, tokens)
+  assert.equal(report.report.unhandled, 0)
+  assert.doesNotMatch(source, /--action-target-shadow/)
+  assert.match(source, /box-shadow:\s*0 0 0 0\.2rem color-mix\(in srgb, var\(--color-accent\) 12%, transparent\), var\(--shadow-card\);/)
+  assert.match(report.css, /box-shadow:\s*0 0 0 0\.2rem rgb\(23 122 88 \/ 0\.12\), 0 1\.2rem 3\.5rem rgb\(30 36 32 \/ 7%\);/)
+  assert.match(report.css, /box-shadow:\s*0 0 0 0\.2rem rgb\(111 213 163 \/ 0\.12\), 0 1\.2rem 3\.5rem rgb\(0 0 0 \/ 22%\);/)
+  const plugin = w3cApprovedCssPilots()
+  const emitted = plugin.transform.call({ error: (msg) => { throw new Error(msg) } }, source, file)
+  assert.equal(emitted.code, report.css)
+})
 
 test('Stage 11: Meeting Notes primary button retains solid two-theme fill and a 1px border', () => {
   const file = resolve(import.meta.dirname, '../src/pages/MeetingsPage/MeetingsPage.module.css')
@@ -540,7 +556,7 @@ test('Stage 13 preserves dashboard status, ring progress, and radar animation se
     assert.ok(overview.includes(`var(${token})`), `live ${token} remains`)
   }
   assert.match(overview, /@keyframes radarWavePulse/)
-  assert.match(overview, /@property --radar-wave-radius/)
+  assert.doesNotMatch(overview, /@property\s+--radar-wave-radius/)
 })
 
 // Stage 16 keeps the exact color calculations; only their CSS representation
@@ -670,7 +686,7 @@ test('Stage 22: radar SVG mask has complete prefixed and standard longhands', ()
   assert.match(declarations.get('background-image'), /var\(--radar-wave-radius\)/)
   assert.equal(declarations.get('mix-blend-mode'), 'screen')
   assert.equal(declarations.get('pointer-events'), 'none')
-  assert.match(source, /@property --radar-wave-radius\s*\{\s*syntax:\s*'<percentage>';/)
+  assert.doesNotMatch(source, /@property\s+--radar-wave-radius/)
   assert.match(source, /@keyframes radarWavePulse/)
   assert.match(source, /prefers-reduced-motion:\s*no-preference/)
 })
@@ -694,7 +710,7 @@ test('Stage 22: approved CSS transform preserves both families of radar mask lon
     assert.ok(values.get(name), `${name} must have a nonempty value`)
     assert.equal(values.get(`-webkit-${name}`), values.get(name), `WebKit ${name} matches standard`)
   }
-  assert.match(result.code, /@property --radar-wave-radius/)
+  assert.doesNotMatch(result.code, /@property\s+--radar-wave-radius/)
 })
 
 // Stage 27: the W3C-accepted split must retain the same visual order:
@@ -728,7 +744,7 @@ test('Stage 27 keeps separated indexGauge backgrounds live and correctly layered
   assert.equal(card.get('--gauge-surface-start'),
     'color-mix(in srgb, var(--color-surface) 76%, var(--color-canvas))')
   assert.equal(card.get('--gauge-accent'), 'var(--color-border)')
-  assert.match(source, /@property --radar-wave-radius/)
+  assert.doesNotMatch(source, /@property\s+--radar-wave-radius/)
   const transformed = w3cApprovedCssPilots().transform.call(
     { error: (message) => { throw Error(message) } }, source, file,
   )

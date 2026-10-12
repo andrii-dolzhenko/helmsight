@@ -159,7 +159,8 @@
   isolation: isolate;
   min-width: 0;
   min-height: calc(100dvh - 4.5rem);
-  overflow: hidden;
+  /* Clip the decorative overscan without creating a programmatically scrollable ancestor. */
+  overflow: clip;
   background: var(--workspace-pattern-base);
   padding: clamp(1.25rem, 2.2vw, 2.25rem) clamp(1.25rem, 3vw, 3rem);
   transition: background-color 180ms ease;

@@ -37,6 +37,13 @@ for (const prefix of ['mask', '-webkit-mask']) {
   assert.match(standardOrPrefixed ?? '', svg,
     `${prefix} must contain the emitted radar SVG URL in the production CSS`)
 }
-assert.match(css, /@property\s+--radar-wave-radius\s*\{/, 'typed radar animation token preserved')
+assert.doesNotMatch(css, /@property\s+--radar-wave-radius\s*\{/, 'no legacy-validator @property error in CSS')
+const assetsDir = resolve(import.meta.dirname, '../dist/assets')
+const overviewChunks = readdirSync(assetsDir).filter((entry) => /^ProjectOverviewPage-.*\.js$/.test(entry))
+assert.equal(overviewChunks.length, 1, 'expected one production ProjectOverviewPage JS chunk')
+const js = readFileSync(join(assetsDir, overviewChunks[0]), 'utf8')
+assert.match(js, /registerProperty/, 'radar property must be registered in production JS')
+assert.match(js, /--radar-wave-radius/, 'radar custom property name must be retained in JS')
+assert.match(js, /initialValue/, 'typed radar custom property initial value must be retained')
 assert.match(css, /@keyframes\s+_?radarWavePulse_/, 'radar animation keyframes preserved')
-console.log(`PASS: radar SVG mask and registered animation preserved in ${file}`)
+console.log(`PASS: radar SVG mask, keyframes and JS custom-property registration preserved in ${file}`)

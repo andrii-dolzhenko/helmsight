@@ -146,7 +146,6 @@
 }
 
 .tab.active {
-  border-color: var(--color-text);
   background: var(--color-text);
   color: var(--color-canvas);
   box-shadow: 0 0.35rem 0.9rem rgb(0 0 0 / 8%);

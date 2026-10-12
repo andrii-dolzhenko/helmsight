@@ -10,10 +10,10 @@ export function useHashTarget(readyKey) {
   const location = useLocation()
   const { hash, pathname, state } = location
   const stateTargetId = typeof state?.focusTargetId === 'string' ? state.focusTargetId : ''
+  const hashTargetId = hash ? decodeURIComponent(hash.slice(1)) : ''
+  const targetId = stateTargetId || hashTargetId
 
   useEffect(() => {
-    const hashTargetId = hash ? decodeURIComponent(hash.slice(1)) : ''
-    const targetId = stateTargetId || hashTargetId
 
     if (!targetId) return undefined
 
@@ -94,5 +94,7 @@ export function useHashTarget(readyKey) {
       if (timeoutId !== null) window.clearTimeout(timeoutId)
       disconnectObserver()
     }
-  }, [hash, location.key, pathname, readyKey, stateTargetId])
+  }, [hash, location.key, pathname, readyKey, stateTargetId, targetId])
+
+  return targetId
 }

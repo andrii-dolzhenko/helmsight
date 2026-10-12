@@ -29,7 +29,6 @@
 }
 
 :root [data-ui-button='primary'][data-ui-button] {
-  border-color: var(--color-inverse-surface);
   background: var(--color-inverse-surface);
   color: var(--color-inverse-text);
 }
@@ -59,7 +58,6 @@
 }
 
 :root [data-ui-button='primary']:not(:disabled):hover {
-  border-color: color-mix(in srgb, var(--color-inverse-surface) 88%, var(--color-accent));
   background: color-mix(in srgb, var(--color-inverse-surface) 88%, var(--color-accent));
   color: var(--color-inverse-text);
   filter: none;
