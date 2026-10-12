@@ -163,21 +163,21 @@ function criterionTargetSatisfied(criterion) {
 }
 
 function toLocalDateKey(date) {
-  const year = date.getFullYear()
+  const year = String(date.getFullYear()).padStart(4, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
   const day = String(date.getDate()).padStart(2, '0')
   return `${year}-${month}-${day}`
 }
 
 function daysUntilDate(targetDate, today) {
-  const start = new Date(`${toLocalDateKey(today)}T00:00:00`)
-  const end = new Date(`${targetDate}T00:00:00`)
+  const startDay = Date.parse(`${toLocalDateKey(today)}T00:00:00Z`)
+  const endDay = Date.parse(`${targetDate}T00:00:00Z`)
 
-  if (Number.isNaN(end.getTime())) {
+  if (Number.isNaN(endDay)) {
     return Number.POSITIVE_INFINITY
   }
 
-  return Math.ceil((end.getTime() - start.getTime()) / 86_400_000)
+  return (endDay - startDay) / 86_400_000
 }
 
 export function evaluateSuccessCriterion(criterion, today = new Date()) {
