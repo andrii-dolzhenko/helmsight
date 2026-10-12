@@ -47,6 +47,17 @@ describe('reportsService', () => {
     expect(afterIntentionalRemoval).toEqual([])
   })
 
+  it('rejects a non-existent reporting date without saving a report', async () => {
+    await expect(
+      reportsService.create({
+        ...input,
+        periodEnd: '2026-02-30',
+      }),
+    ).rejects.toThrow('Choose a valid Week ending date.')
+
+    expect(storageAdapter.read('weeklyReports')).toEqual([])
+  })
+
   it('creates version one and reuses an existing project/reporting-period record', async () => {
     const created = await reportsService.create(input)
     const duplicate = await reportsService.create(input)

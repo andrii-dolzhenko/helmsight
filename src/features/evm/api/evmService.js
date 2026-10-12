@@ -1,3 +1,4 @@
+import { isValidCalendarDate } from '../../../shared/lib/calendarDate.js'
 import { storageAdapter } from '../../../shared/services/storage/storageAdapter.js'
 import {
   calculateBaselineBAC,
@@ -113,10 +114,24 @@ function writeData(data) {
   return data
 }
 
+function validateSnapshotDate(value) {
+  if (!value) {
+    throw new EvmServiceError('Reporting date is required.')
+  }
+
+  if (!isValidCalendarDate(value)) {
+    throw new EvmServiceError('Choose a valid reporting date.')
+  }
+}
+
 function normalizePackage(item) {
   const budgetValue = Number(item.budgetValue)
   if (!item.title?.trim()) throw new EvmServiceError('Every work package needs a title.')
-  if (!item.startDate || !item.endDate || item.startDate > item.endDate) {
+  if (
+    !isValidCalendarDate(item.startDate) ||
+    !isValidCalendarDate(item.endDate) ||
+    item.startDate > item.endDate
+  ) {
     throw new EvmServiceError('Every work package needs a valid start and end date.')
   }
   if (countWorkingDaysInclusive(item.startDate, item.endDate) <= 0) {
@@ -256,7 +271,7 @@ export const evmService = {
   async createSnapshot(input) {
     const data = readData()
     const baseline = ensureBaseline(data, input.projectId)
-    if (!input.snapshotDate) throw new EvmServiceError('Reporting date is required.')
+    validateSnapshotDate(input.snapshotDate)
     if (data.snapshots.some((snapshot) => snapshot.projectId === input.projectId && snapshot.snapshotDate === input.snapshotDate)) {
       throw new EvmServiceError('A weekly snapshot already exists for this reporting date.')
     }
@@ -282,6 +297,7 @@ export const evmService = {
     if (index === -1) throw new EvmServiceError('EVM snapshot not found.')
     const existing = data.snapshots[index]
     const baseline = ensureBaseline(data, existing.projectId)
+    validateSnapshotDate(input.snapshotDate)
 
     if (data.snapshots.some((snapshot) => snapshot.projectId === existing.projectId && snapshot.id !== snapshotId && snapshot.snapshotDate === input.snapshotDate)) {
       throw new EvmServiceError('A weekly snapshot already exists for this reporting date.')

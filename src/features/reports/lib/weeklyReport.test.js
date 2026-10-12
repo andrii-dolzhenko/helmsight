@@ -107,3 +107,9 @@ describe('weekly report domain', () => {
     expect(snapshot.upcomingItems.map((item) => item.title)).toEqual(['Action', 'Milestone'])
   })
 })
+
+describe('weekly report calendar date validation', () => {
+  it('rejects a non-existent reporting period end date', () => {
+    expect(getReportPeriod('2026-02-30')).toBeNull()
+  })
+})
