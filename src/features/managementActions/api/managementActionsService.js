@@ -66,7 +66,9 @@ function migrateLegacyStatuses(actions) {
 function readActions() {
   const stored = storageAdapter.read(STORAGE_KEY)
   if (stored === null) {
-    const demo = DEMO_ACTIONS.map((item) => ({ ...item }))
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demo = demoWasDeleted ? [] : DEMO_ACTIONS.map((item) => ({ ...item }))
     storageAdapter.write(STORAGE_KEY, demo)
     return demo
   }

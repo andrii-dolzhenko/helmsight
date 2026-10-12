@@ -139,7 +139,9 @@ function readReports() {
   const stored = storageAdapter.read(REPORTS_STORAGE_KEY)
 
   if (stored === null) {
-    const demo = cloneDemoReports()
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demo = demoWasDeleted ? [] : cloneDemoReports()
     storageAdapter.write(REPORTS_STORAGE_KEY, demo)
     storageAdapter.write(REPORTS_DEMO_SEED_VERSION_KEY, REPORTS_DEMO_SEED_VERSION)
     return demo
@@ -153,7 +155,9 @@ function readReports() {
   const seedVersion = Number(storageAdapter.read(REPORTS_DEMO_SEED_VERSION_KEY) ?? 0)
 
   if (seedVersion < REPORTS_DEMO_SEED_VERSION) {
-    normalized = mergeMissingDemoReports(normalized)
+    if (storageAdapter.read('deletedDemoProject:demo-project') !== true) {
+      normalized = mergeMissingDemoReports(normalized)
+    }
     storageAdapter.write(REPORTS_STORAGE_KEY, normalized)
     storageAdapter.write(REPORTS_DEMO_SEED_VERSION_KEY, REPORTS_DEMO_SEED_VERSION)
   }

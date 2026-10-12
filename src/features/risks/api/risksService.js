@@ -72,7 +72,9 @@ function readRisks() {
   const storedRisks = storageAdapter.read(RISKS_STORAGE_KEY)
 
   if (storedRisks === null) {
-    const demoRisks = cloneDemoRisks()
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demoRisks = demoWasDeleted ? [] : cloneDemoRisks()
     storageAdapter.write(RISKS_STORAGE_KEY, demoRisks)
     return demoRisks
   }

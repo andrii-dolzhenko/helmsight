@@ -102,7 +102,11 @@ function validateStoredData(value) {
 function readData() {
   const stored = storageAdapter.read(EVM_STORAGE_KEY)
   if (stored === null) {
-    const demo = cloneDemoData()
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demo = demoWasDeleted
+      ? { baselines: [], snapshots: [] }
+      : cloneDemoData()
     storageAdapter.write(EVM_STORAGE_KEY, demo)
     return demo
   }

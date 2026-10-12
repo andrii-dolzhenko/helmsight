@@ -259,9 +259,12 @@ function readProjects() {
   const storedProjects = storageAdapter.read(PROJECTS_STORAGE_KEY)
 
   if (storedProjects === null) {
-    const demoProjects = cloneDemoProjects()
-    storageAdapter.write(PROJECTS_STORAGE_KEY, demoProjects)
-    return demoProjects
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+
+    const initialProjects = demoWasDeleted ? [] : cloneDemoProjects()
+    storageAdapter.write(PROJECTS_STORAGE_KEY, initialProjects)
+    return initialProjects
   }
 
   if (!Array.isArray(storedProjects)) {

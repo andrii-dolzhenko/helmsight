@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSelector, createSlice } from '@reduxjs/toolkit'
 import { projectsService } from '../api/projectsService.js'
+import { projectDeletionService } from '../api/projectDeletionService.js'
 
 function getErrorMessage(error) {
   return error instanceof Error ? error.message : 'Something went wrong. Please try again.'
@@ -66,6 +67,21 @@ export const restoreProject = createAsyncThunk(
   async (projectId, { rejectWithValue }) => {
     try {
       return await projectsService.restore(projectId)
+    } catch (error) {
+      return rejectWithValue(getErrorMessage(error))
+    }
+  },
+)
+
+export const deleteProject = createAsyncThunk(
+  'projects/deleteProject',
+  async ({ projectId, confirmationName }, { rejectWithValue }) => {
+    try {
+      await projectDeletionService.deleteArchivedProject({
+        projectId,
+        confirmationName,
+      })
+      return projectId
     } catch (error) {
       return rejectWithValue(getErrorMessage(error))
     }
@@ -140,6 +156,23 @@ const projectsSlice = createSlice({
           state.mutationError = action.payload ?? 'Unable to save project changes.'
         })
     }
+
+    builder
+      .addCase(deleteProject.pending, (state) => {
+        state.mutationStatus = 'loading'
+        state.mutationError = null
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.mutationStatus = 'succeeded'
+        state.items = state.items.filter(
+          (project) => project.id !== action.payload,
+        )
+      })
+      .addCase(deleteProject.rejected, (state, action) => {
+        state.mutationStatus = 'failed'
+        state.mutationError =
+          action.payload ?? 'Unable to delete project.'
+      })
   },
 })
 

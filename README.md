@@ -182,7 +182,20 @@ Browser-local data is scoped to each domain, so the backup demo does **not** syn
 
 **P0 — implemented:** project portfolio and workspace, Project Overview, governance, success criteria, risks, milestones, management actions, EVM and trends, weekly reports, meeting notes, and portfolio health. The current release is a working client-side application backed by versioned browser storage.
 
-**P1–P3 — planned:** incremental delivery of the next project capabilities, with the scope of each phase managed in the project backlog. The architecture is prepared for gradual backend/API integration, but those services are not part of P0.
+### P1 Safe Project Deletion — unreleased
+
+Implemented in `feature/p1-safe-project-deletion`; not yet merged or deployed:
+
+- Delete permanently is available only in Portfolio → Archived, in Grid and List views.
+- Confirmation requires the exact project name, including case and whitespace.
+- Deletion removes the project, its related records, EVM data and owned form drafts. There is no Trash or Undo.
+- A persisted deletion journal supports recovery after interrupted operations. Startup recovery runs before application state initialization; an unrecoverable failure blocks normal startup.
+- A deletion marker prevents the Atlas demo project from being recreated after permanent deletion.
+- Deletion affects browser-local storage for the current origin only. It is not a backend or cross-device operation.
+
+Release validation and remaining checks are tracked in [P1 Backlog](docs/P1_BACKLOG.md).
+
+**Other P1–P3 capabilities — planned:** incremental delivery remains governed by the project backlog. Backend/API integration is not part of the current client-side implementation.
 
 **Current limitations:** no server API, shared database, sign-in/authorization, real-time multi-user collaboration, external integrations, AI features, or full resource/critical-path planning. Browser-local data does not synchronize across users or devices. These are current implementation limits, not permanent product boundaries.
 

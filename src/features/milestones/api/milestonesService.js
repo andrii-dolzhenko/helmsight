@@ -54,7 +54,9 @@ function readMilestones() {
   const storedMilestones = storageAdapter.read(MILESTONES_STORAGE_KEY)
 
   if (storedMilestones === null) {
-    const demoMilestones = cloneDemoMilestones()
+    const demoWasDeleted =
+      storageAdapter.read('deletedDemoProject:demo-project') === true
+    const demoMilestones = demoWasDeleted ? [] : cloneDemoMilestones()
     storageAdapter.write(MILESTONES_STORAGE_KEY, demoMilestones)
     return demoMilestones
   }

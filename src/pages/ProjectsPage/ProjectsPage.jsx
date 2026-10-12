@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks.js'
 import {
@@ -7,6 +7,8 @@ import {
   updateProjectsViewMode,
 } from '../../features/preferences/model/preferencesSlice.js'
 import {
+  clearProjectMutationState,
+  deleteProject,
   loadProjects,
   restoreProject,
   selectActiveProjects,
@@ -53,8 +55,13 @@ import {
   formatProjectTimestamp,
   getProjectStatusLabel,
 } from '../../features/projects/lib/projectPresentation.js'
+import { DeleteProjectDialog } from '../../features/projects/ui/DeleteProjectDialog.jsx'
+import { storageAdapter } from '../../shared/services/storage/storageAdapter.js'
+import { StatusToast } from '../../shared/ui/StatusToast/StatusToast.jsx'
 import { getDailyInsight } from './dailyInsights.js'
 import styles from './ProjectsPage.module.css'
+
+const DELETION_TOAST_KEY = 'helmsight:project-deleted-toast'
 
 const PROJECT_VIEWS = Object.freeze({
   active: 'active',
@@ -157,9 +164,15 @@ function PortfolioHealthBadge({ health, compact = false }) {
   )
 }
 
-function ProjectActions({ project, archived, onRestore }) {
+function ProjectActions({ project, archived, onRestore, onDelete }) {
   return (
-    <div className={styles.projectActions}>
+    <div
+      className={
+        archived
+          ? `${styles.projectActions} ${styles.archivedActions}`
+          : styles.projectActions
+      }
+    >
       <Link className={styles.cardLink} data-ui-button="secondary" data-ui-size="sm" to={`/projects/${project.id}`}>
         Open project <span aria-hidden="true">→</span>
       </Link>
@@ -172,11 +185,22 @@ function ProjectActions({ project, archived, onRestore }) {
           Restore
         </button>
       ) : null}
+      {archived ? (
+        <button
+          className={`${styles.restoreButton} ${styles.deleteButton}`}
+          data-ui-button="danger"
+          data-ui-size="sm"
+          type="button"
+          onClick={() => onDelete(project)}
+        >
+          Delete permanently
+        </button>
+      ) : null}
     </div>
   )
 }
 
-function ProjectCard({ project, archived = false, onRestore, health }) {
+function ProjectCard({ project, archived = false, onRestore, onDelete, health }) {
   const cardClassName = archived
     ? `${styles.projectCard} ${styles.archivedProjectCard}`
     : styles.projectCard
@@ -218,12 +242,12 @@ function ProjectCard({ project, archived = false, onRestore, health }) {
         </div>
       </dl>
 
-      <ProjectActions project={project} archived={archived} onRestore={onRestore} />
+      <ProjectActions project={project} archived={archived} onRestore={onRestore} onDelete={onDelete} />
     </article>
   )
 }
 
-function ProjectListRow({ project, archived = false, onRestore, health }) {
+function ProjectListRow({ project, archived = false, onRestore, onDelete, health }) {
   const metaClassName = archived
     ? `${styles.listMeta} ${styles.listMetaArchived}`
     : `${styles.listMeta} ${styles.listMetaActive}`
@@ -268,7 +292,7 @@ function ProjectListRow({ project, archived = false, onRestore, health }) {
         </div>
       </dl>
 
-      <ProjectActions project={project} archived={archived} onRestore={onRestore} />
+      <ProjectActions project={project} archived={archived} onRestore={onRestore} onDelete={onDelete} />
     </article>
   )
 }
@@ -329,7 +353,7 @@ function ProjectViewTabs({ activeView, activeCount, archivedCount, onChange }) {
   )
 }
 
-function ProjectsCollection({ projects, displayMode, archived = false, onRestore, healthByProject = {} }) {
+function ProjectsCollection({ projects, displayMode, archived = false, onRestore, onDelete, healthByProject = {} }) {
   if (displayMode === DISPLAY_MODES.list) {
     return (
       <div className={styles.projectList}>
@@ -339,6 +363,7 @@ function ProjectsCollection({ projects, displayMode, archived = false, onRestore
             project={project}
             archived={archived}
             onRestore={onRestore}
+            onDelete={onDelete}
             health={healthByProject[project.id]}
           />
         ))}
@@ -354,6 +379,7 @@ function ProjectsCollection({ projects, displayMode, archived = false, onRestore
           project={project}
           archived={archived}
           onRestore={onRestore}
+          onDelete={onDelete}
           health={healthByProject[project.id]}
         />
       ))}
@@ -387,6 +413,24 @@ export function ProjectsPage() {
   const evmBaselines = useAppSelector((state) => state.evm.baselines)
   const evmSnapshots = useAppSelector((state) => state.evm.snapshots)
   const [searchParams, setSearchParams] = useSearchParams()
+  const [projectToDelete, setProjectToDelete] = useState(null)
+  const [deletionToast, setDeletionToast] = useState(() => {
+    try {
+      return window.sessionStorage.getItem(DELETION_TOAST_KEY) === '1'
+        ? 'Project deleted permanently.'
+        : null
+    } catch {
+      return null
+    }
+  })
+
+  useEffect(() => {
+    try {
+      window.sessionStorage.removeItem(DELETION_TOAST_KEY)
+    } catch {
+      // Notifications must never prevent the application from loading.
+    }
+  }, [])
   const activeView =
     searchParams.get('view') === PROJECT_VIEWS.archived
       ? PROJECT_VIEWS.archived
@@ -481,6 +525,42 @@ export function ProjectsPage() {
     }
   }
 
+  const handleDeleteRequest = (project) => {
+    dispatch(clearProjectMutationState())
+    setProjectToDelete(project)
+  }
+
+  const handleDelete = async ({ projectId, confirmationName }) => {
+    let requiresReload
+
+    try {
+      await dispatch(deleteProject({ projectId, confirmationName })).unwrap()
+      requiresReload = true
+
+      try {
+        window.sessionStorage.setItem(DELETION_TOAST_KEY, '1')
+      } catch {
+        // A notification storage failure must not prevent the reload.
+      }
+    } catch {
+      try {
+        requiresReload =
+          storageAdapter.read('pendingProjectDeletion') !== null
+      } catch {
+        // If journal state cannot be read, recover before continuing.
+        requiresReload = true
+      }
+    }
+
+    if (requiresReload) {
+      window.location.reload()
+      return
+    }
+
+    // Redux exposes the rejected deletion error in Portfolio.
+    setProjectToDelete(null)
+  }
+
   const handleDisplayModeChange = (nextMode) => {
     if (nextMode !== displayMode) {
       dispatch(updateProjectsViewMode(nextMode))
@@ -515,6 +595,10 @@ export function ProjectsPage() {
 
   return (
     <section className={styles.root}>
+      <StatusToast
+        message={deletionToast}
+        onDismiss={() => setDeletionToast(null)}
+      />
       <ProjectsHeroBanner
         activeProjectsCount={activeProjects.length}
         onViewProjects={handleViewProjects}
@@ -638,6 +722,7 @@ export function ProjectsPage() {
                   displayMode={displayMode}
                   archived
                   onRestore={handleRestore}
+                  onDelete={handleDeleteRequest}
                   healthByProject={displayedPortfolioHealth}
                 />
               ) : (
@@ -650,6 +735,13 @@ export function ProjectsPage() {
             </div>
           )}
         </div>
+      ) : null}
+      {projectToDelete ? (
+        <DeleteProjectDialog
+          project={projectToDelete}
+          onCancel={() => setProjectToDelete(null)}
+          onConfirm={handleDelete}
+        />
       ) : null}
     </section>
   )
