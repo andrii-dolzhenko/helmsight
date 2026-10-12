@@ -1243,12 +1243,6 @@
 }
 
 
-@property --radar-wave-radius {
-  syntax: '<percentage>';
-  inherits: false;
-  initial-value: 8%;
-}
-
 .radarPulse {
   --radar-wave-radius: 8%;
   position: absolute;

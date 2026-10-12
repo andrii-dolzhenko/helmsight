@@ -67,9 +67,6 @@ const approvedFiles = new Map(
 // Each key is a property plus the *exact* preview reason, including duplicates.
 // New/deleted/changed unresolved declarations fail the production build.
 const expectedLiveDeclarations = new Map([
-  ['pages/ActionsPage/ActionsPage.module.css', [
-    ['box-shadow', 'scoped token --action-target-shadow; unresolved function'],
-  ]],
   ['pages/MeetingsPage/MeetingsPage.module.css', [
     ['box-shadow', 'unresolved color-mix: color-mix(in srgb, currentColor 4%, transparent); unresolved function'],
   ]],

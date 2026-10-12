@@ -710,10 +710,11 @@
 }
 
 .card:target,
-.listRow:target {
-  --action-target-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
+.card[data-hash-target='true'],
+.listRow:target,
+.listRow[data-hash-target='true'] {
   border-color: color-mix(in srgb, var(--color-accent) 58%, var(--color-border));
-  box-shadow: var(--action-target-shadow);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 12%, transparent), var(--shadow-card);
 }
 
 /* Consistent button states. */

@@ -6,7 +6,7 @@
 
 ## 1. Non-negotiable quality objective
 
-At the end of **every upcoming phase (P1, P2 and P3)**, the **target acceptance result is 0 errors and 0 warnings** from the selected HTML/CSS validation profiles. This is a phase-level release criterion, not a cleanup activity postponed until the final release.
+At the end of **every upcoming phase (P1, P2 and P3)**, the **target acceptance result is 0 errors and 0 warnings** from the selected HTML/CSS validation profiles. This is a phase-level quality objective, with any validator-compatibility exception requiring an explicit decision and honest raw counts. For **P0.1**, the separately recorded Stage 44 decision accepts **0 errors with 39 reviewed warnings** in the Normal profile; this is **not** a 0/0 result or a silent waiver for P1–P3.
 
 - Validate the **real production output** as well as the source CSS. A clean source file does not guarantee clean CSS after PostCSS/Vite transformations.
 - Audit **100% of the CSS assets in the current build**. Any `unverified`, `pending`, unselected, stale, or failed-to-fetch result blocks a claim of clean validation.
@@ -48,6 +48,39 @@ This is **measured historical status**, not proof that the 0/0 release target ha
 The 49-warning total is from the **normal** profile. The `--warning=2` audit may return additional notices; it must be recorded separately, not compared as the same metric.
 
 Baseline evidence: `w3c-audit/summary-normal.md` and `w3c-audit/report-normal.json` generated locally (these outputs are ignored by Git). For persistent history, preserve the aggregate numbers here and reference `docs/W3C_STAGE27.md` and `docs/W3C_BATCH_AUDIT.md`. P0 application checks and browser QA were successful, but **P0 did not achieve the raw W3C 0/0 target**.
+
+
+### P0.1 update — Stage 40 compatibility decision (2026-10-11)
+
+The **historical P0 baseline above remains 1 error / 49 warnings**. After verified Stages 37–39, the latest *normal-profile* production audit is **26/26 checked, 18/26 literal 0/0, 1 error / 41 warnings, 0 unverified, 0 pending** (Stage 39, 2026-10-11). Do not confuse this later state with the original baseline.
+
+**Approved `DEC-P01-40-A`: preserve browser compatibility and existing CSS fallbacks.** No removal of prefixed `mask-*`, legacy `-webkit-line-clamp` behavior, dynamic custom properties, or the standards-defined radar `@property` merely to silence the legacy validator; no change to browser transformation targets. CSS `build.cssTarget` in Vite is **not** an independently verified browser-support promise. Firefox 114 predates support for `@property`, so radar animation parity in older Firefox is not assumed and must be checked as progressive enhancement.
+
+**Recorded W3C decision:** `BLOCKED — VALIDATOR COMPATIBILITY` for **literal 0/0 under the current `css3svg`, warning=1 profile**. This is *not* a W3C PASS, not a blanket declaration that all emitted CSS is independently standards-validated, and not evidence that all older browsers have passed QA. Keep original diagnostics and separate normal vs all-warnings profiles. The strict 0/0 release objective for P1–P3 remains in force, subject to documented adjudication rather than suppression. Details and pending browser-test matrix: [`docs/W3C_P01_STAGE40_COMPATIBILITY.md`](W3C_P01_STAGE40_COMPATIBILITY.md).
+
+### P0.1 measured update — Stages 44–45 (2026-10-12)
+
+**Status: CSS ERROR GATE PASSED; full P0.1 release acceptance pending.** Stage 40 and Stage 41 figures above are retained as historical snapshots, **not** the current W3C result. From the user-provided forced normal-profile audit after Stage 45 (`2026-10-12T06:30:10.617Z`):
+
+| Measurement | Latest Stage 45 production result |
+| --- | ---: |
+| W3C validator / scope | `css3svg`, `--warning=1 --force` |
+| CSS assets checked | **26/26** |
+| **W3C Errors** | **0** |
+| **W3C Warnings** | **39** |
+| Literal error- and warning-free assets | **18/26** |
+| Assets with warnings | **8/26** |
+| Unverified / pending | **0 / 0** |
+| ESLint / Vite production build / radar guard | **PASS / PASS / PASS** |
+| Vitest / standalone Node tests | **126/126 / 74/74** |
+
+This means the **zero-CSS-errors goal is achieved in the audited local production build**, not that every CSS file is 0/0 or that the deployed sites have been updated. Do not describe this as an unqualified W3C 0/0 PASS. The **39 warnings** remain recorded as 18 vendor-prefixed masking, 15 vendor-prefixed multiline-clamp and 6 runtime-variable static-analysis notices. Preserve prefixed fallbacks and true dynamic variables under compatibility decision `DEC-P01-40-A`; do not change the warning level, suppress messages or omit assets.
+
+Stage 44 replaced the CSS `@property --radar-wave-radius` registration with the standard JS `CSS.registerProperty()` API. Its behavior has been tested in Chromium and the 74 Node tests, and a user video shows desktop Light/Dark radar animation. This **supersedes only** the earlier Stage 40 instruction to retain registration specifically as a CSS at-rule; preserving the radar, accessibility rules and compatibility fallbacks remains mandatory. The older-browser matrix, full reduced-motion QA after the patch, `--warning=2` audit, and `data-hash-target` List-mode QA are **not independently closed** by the above result.
+
+Stage 45 changes `.main` from `overflow: hidden` to `overflow: clip`, preventing `scrollIntoView()` from scrolling a hidden internal container. The user supplied two browser QA videos with no reproduced freeze, and the subsequent complete run passed **126/126 Vitest, 74/74 Node tests (including the new scroll regression guard), radar guard, 26/26 forced CSS audit with 0 Errors / 39 Warnings, and `git diff --check`**. The hash-target explicit marker in Management Actions remains a **separate OPEN browser gate**; the scroll fix does not prove it works.
+
+P0.1 acceptance decision: **allow 39 disclosed compatibility/static-analysis warnings for this phase** once functional, Git and deployment release gates are met. The original P1–P3 0/0 objective remains a future quality target, subject to explicit review rather than automatic inheritance of this P0.1 exception. See [`W3C_P01_STAGE44_JS_PROPERTY_PILOT.md`](W3C_P01_STAGE44_JS_PROPERTY_PILOT.md) and [`P01_RELEASE_GATE.md`](P01_RELEASE_GATE.md).
 
 ## 3. Lessons learned from CSS validation (Stages 13–27)
 

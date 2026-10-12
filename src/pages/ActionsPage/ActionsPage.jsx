@@ -72,9 +72,9 @@ function ActionControls({ action, archived, disabled, onDelete, onStatusChange }
   </div>
 }
 
-function ActionCard({ action, archived, disabled, onDelete, onStatusChange }) {
+function ActionCard({ action, archived, disabled, onDelete, onStatusChange, hashTargetId }) {
   const attention = getActionAttentionState(action)
-  return <article className={styles.card} id={`action-${action.id}`} tabIndex={-1}>
+  return <article className={styles.card} id={`action-${action.id}`} data-hash-target={hashTargetId === `action-${action.id}` ? 'true' : undefined} tabIndex={-1}>
     <div className={styles.cardHeader}>
       <div className={styles.badges}><span className={`${styles.priorityBadge} ${styles[action.priority] ?? ''}`}>{getActionPriorityLabel(action.priority)}</span><span className={`${styles.attentionBadge} ${styles[attention] ?? ''}`}>{getActionAttentionLabel(attention)}</span></div>
       <span className={styles.sourceBadge}>Source: {getActionSourceLabel(action.source)}</span>
@@ -85,9 +85,9 @@ function ActionCard({ action, archived, disabled, onDelete, onStatusChange }) {
   </article>
 }
 
-function ActionListRow({ action, archived, disabled, onDelete, onStatusChange }) {
+function ActionListRow({ action, archived, disabled, onDelete, onStatusChange, hashTargetId }) {
   const attention = getActionAttentionState(action)
-  return <article className={styles.listRow} id={`action-${action.id}`} tabIndex={-1}>
+  return <article className={styles.listRow} id={`action-${action.id}`} data-hash-target={hashTargetId === `action-${action.id}` ? 'true' : undefined} tabIndex={-1}>
     <div className={styles.listIdentity}>
       <div className={styles.listTitleLine}><span className={`${styles.priorityBadge} ${styles[action.priority] ?? ''}`}>{getActionPriorityLabel(action.priority)}</span><h4>{action.title}</h4></div>
       <p>{action.description || 'No additional description.'}</p>
@@ -115,7 +115,7 @@ export function ActionsPage() {
   const actions = useAppSelector((state) => selectManagementActionsByProject(state, project.id))
   const [pendingDelete, setPendingDelete] = useState(null)
 
-  useHashTarget(status)
+  const hashTargetId = useHashTarget(status)
 
   useEffect(() => { if (status === 'idle') dispatch(loadManagementActions()) }, [dispatch, status])
 
@@ -170,7 +170,7 @@ export function ActionsPage() {
 
     {displayModeError ? <p className={styles.viewModeError} role="status">View preference could not be saved.</p> : null}
 
-    {actions.length === 0 ? <div className={styles.emptyState}><strong>No management actions yet.</strong><p>Create the first accountable PM/Delivery follow-up for this project.</p>{!project.archivedAt ? <Link to="new">Create first action</Link> : null}</div> : displayMode === DISPLAY_MODES.grid ? <div className={styles.grid}>{ordered.map((action) => <ActionCard key={action.id} action={action} archived={Boolean(project.archivedAt)} disabled={mutationPending} onDelete={setPendingDelete} onStatusChange={handleStatusChange}/>)}</div> : <div className={styles.list}>{ordered.map((action) => <ActionListRow key={action.id} action={action} archived={Boolean(project.archivedAt)} disabled={mutationPending} onDelete={setPendingDelete} onStatusChange={handleStatusChange}/>)}</div>}
+    {actions.length === 0 ? <div className={styles.emptyState}><strong>No management actions yet.</strong><p>Create the first accountable PM/Delivery follow-up for this project.</p>{!project.archivedAt ? <Link to="new">Create first action</Link> : null}</div> : displayMode === DISPLAY_MODES.grid ? <div className={styles.grid}>{ordered.map((action) => <ActionCard key={action.id} action={action} hashTargetId={hashTargetId} archived={Boolean(project.archivedAt)} disabled={mutationPending} onDelete={setPendingDelete} onStatusChange={handleStatusChange}/>)}</div> : <div className={styles.list}>{ordered.map((action) => <ActionListRow key={action.id} action={action} hashTargetId={hashTargetId} archived={Boolean(project.archivedAt)} disabled={mutationPending} onDelete={setPendingDelete} onStatusChange={handleStatusChange}/>)}</div>}
 
     {mutationError ? <div className={styles.mutationError} role="alert">{mutationError}</div> : null}
     <ConfirmDialog isOpen={Boolean(pendingDelete)} eyebrow="Action Register" title="Delete management action?" message={pendingDelete ? `“${pendingDelete.title}” will be removed from this local Action Register. Completed work should normally remain as Done; delete only records created by mistake.` : ''} confirmLabel={mutationPending ? 'Deleting…' : 'Delete action'} cancelLabel="Keep action" onConfirm={handleDelete} onCancel={() => setPendingDelete(null)}/>

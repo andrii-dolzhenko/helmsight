@@ -185,19 +185,6 @@
   color-scheme: dark;
 }
 
-.field input[type='date']::-webkit-calendar-picker-indicator {
-  border-radius: 0.45rem;
-  cursor: pointer;
-  opacity: 0.72;
-  padding: 0.3rem;
-  transition: background-color 150ms ease, opacity 150ms ease;
-}
-
-.field input[type='date']:hover::-webkit-calendar-picker-indicator {
-  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
-  opacity: 1;
-}
-
 .field input[type='date']:focus-visible {
   border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-border));
   background-color: var(--color-surface);
