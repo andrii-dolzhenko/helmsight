@@ -180,3 +180,24 @@ The canonical policy is `docs/CSS_VALIDATION_POLICY.md`.
 The canonical decision is ADR-042 — CSS Warning-Adjudicated
 Deployment Gate. Preserve original diagnostics and asset hashes
 when reviewing future changes.
+
+## P1 post-merge and production verification (2026-10-13)
+
+- PR #4 was merged into `main` on 2026-10-12 at
+  22:49:23 UTC+03:00 (merge commit `d29253c`).
+- GitHub CI completed successfully for the PR.
+- Vercel Preview functional smoke test passed: project creation,
+  archiving, exact-name safeguard, permanent deletion and
+  persistence after reload.
+- Production application load and the deletion/reload workflow
+  were confirmed by the project owner.
+- Lighthouse Desktop Accessibility reported 100 on the
+  production Archived Projects page. This is not a full WCAG audit.
+- The latest recorded W3C CSS validation covered 27/27 assets
+  with zero errors in both profiles.
+- Strict raw W3C 0/0 remains NOT MET: 39 Normal warnings and
+  2,833 Extended warnings.
+- Merge and deployment occurred before formal ADR-042
+  warning-risk adjudication and release sign-off. These remain
+  open as post-release follow-up; deployment does not constitute
+  retroactive approval.
