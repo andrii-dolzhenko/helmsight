@@ -146,6 +146,14 @@ export function AppLayout() {
           >
             Projects
           </NavLink>
+          <NavLink
+            to="/actions"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ""}`
+            }
+          >
+            Actions
+          </NavLink>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -224,6 +232,15 @@ export function AppLayout() {
                 onClick={(event) => handleProjectsNavigation(event, { closeMobile: true })}
               >
                 Projects
+              </NavLink>
+              <NavLink
+                to="/actions"
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ""}`
+                }
+                onClick={() => closeMobileNav()}
+              >
+                Actions
               </NavLink>
             </nav>
 

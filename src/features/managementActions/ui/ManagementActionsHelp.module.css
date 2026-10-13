@@ -131,3 +131,16 @@
     border-radius: 0;
   }
 }
+
+.helpButton:focus-visible,
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (min-width: 760px) {
+  .portfolioDialog .dialogHeader h2 {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
