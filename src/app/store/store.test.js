@@ -8,6 +8,7 @@ describe('app store preload', () => {
   })
 
   it('hydrates saved display preferences and project data before the first React render', () => {
+    storageAdapter.write('profile', { displayName: 'Alex Morgan' })
     storageAdapter.write('preferences', {
       themeMode: 'dark',
       projectsViewMode: 'list',
@@ -76,6 +77,7 @@ describe('app store preload', () => {
 
     const preloadedState = createAppPreloadedState()
 
+    expect(preloadedState.profile).toMatchObject({ firstName: 'Alex', lastName: 'Morgan' })
     expect(preloadedState.preferences).toMatchObject({
       themeMode: 'dark',
       projectsViewMode: 'list',

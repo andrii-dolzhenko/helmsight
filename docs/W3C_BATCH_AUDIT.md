@@ -201,3 +201,24 @@ when reviewing future changes.
   warning-risk adjudication and release sign-off. These remain
   open as post-release follow-up; deployment does not constitute
   retroactive approval.
+
+## P2-B local production CSS audit — 2026-10-13 (feature branch, before PR)
+
+This section **supersedes only the earlier numerical snapshots for the current P2-B checkout**. P0.1/P1 history above remains unchanged. The project owner ran `npm run check` and forced W3C validation against the freshly built CSS. Source commit/PR and deployed versions have **not** been verified.
+
+| Metric | Normal `--warning=1 --force` | Extended `--warning=2 --force` |
+| --- | ---: | ---: |
+| Production CSS assets verified | **28 / 28** | **28 / 28** |
+| W3C errors | **0** | **0** |
+| W3C warnings | **76** | **2,918** |
+| Assets with raw 0/0 | **18 / 28** | **0 / 28** |
+| Assets with diagnostics | **10 / 28** | **28 / 28** |
+| Unverified / pending | **0 / 0** | **0 / 0** |
+
+Normal-level diagnostics are **43 dynamic CSS-variable static-analysis notices**, **18 `-webkit-mask-*` compatibility notices**, and **15 `-webkit-line-clamp` / `-webkit-box-*` notices**. The most affected P2-B chunk (`SettingsPage`) has 27 normal warnings, all dynamic-variable notices. These warnings were not removed by changing theme tokens or dropping compatibility CSS solely to make the report green.
+
+Extended diagnostics are substantially more verbose; typical examples are media-query/theming property redefinitions and rules that specify a text or background color without an explicit matching declaration. W3C cannot establish the final computed contrast across all dynamic themes, so neither the warnings nor their absence would alone certify accessible contrast. Extended warning counts must **not** be compared to Normal counts as a trend or relabeled as source errors.
+
+**Quality status:** zero-error CSS gate **PASS for the audited local build**, strict raw 0/0 **NOT MET** at both levels. W3C warning-risk adjudication and formal ADR-042 sign-off remain **OPEN**. Revisit outstanding diagnostic risk independently before claiming a release gate is fully satisfied. The project owner also reported ESLint clean, Vitest **228/228** across **55** test files and Vite build **185** transformed modules. The P2-B avatar and navigation visual flow was accepted in recorded browser QA, but no comprehensive cross-browser/accessibility certification or public deployment verification is implied.
+
+Generated reports are not committed: `w3c-audit/summary-normal.md`, `w3c-audit/report-normal.json`, `w3c-audit/summary.md`, `w3c-audit/report.json`. Keep the files or relevant run excerpts with the feature-review evidence. This snapshot does not alter the documented strict CSS target or waive warnings.

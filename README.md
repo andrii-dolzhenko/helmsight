@@ -17,6 +17,7 @@ HelmSight is a responsive project-delivery management application for Project Ma
 - Derived portfolio health: **Healthy / Watch / Needs attention / Not assessed**.
 - Project Overview with delivery signals, upcoming milestones, success criteria, management actions, and performance indicators.
 - Responsive desktop, tablet, and mobile layouts; persistent **Light / Dark / System** appearance settings.
+- **P2-B feature branch (not yet released):** local profile details, saved avatar photos, and a time-of-day portfolio greeting using the first name. See [P2-B profile documentation](docs/P2_LOCAL_PROFILE.md).
 
 ### Governance and delivery controls
 
@@ -48,6 +49,7 @@ HelmSight is a responsive project-delivery management application for Project Ma
 - Branded landing page, contextual guidance, responsive navigation, and custom 404 page.
 - Semantic controls, keyboard interactions, visible focus states, and reduced-motion support.
 - Lazy-loaded routes with a loading fallback for initial navigation.
+- **P2-B feature branch:** desktop profile menu; mobile/tablet profile and theme controls in the navigation drawer; `Exit workspace` returns to the landing page without signing out or clearing data.
 
 ## Technology stack
 
@@ -85,7 +87,7 @@ scripts/             # CSS/W3C diagnostics and Node tests
 docs/                # Supporting technical documentation
 ```
 
-**Current P0 architecture:** data and preferences are stored in the browser. Backend services, a database, authentication, and multi-user synchronization are not implemented yet. The feature-service boundary is intended to support later API integration without coupling persistence to React components.
+**Current client-side architecture:** data, profile and preferences are stored in the browser. Backend services, a database, authentication, and multi-user synchronization are not implemented yet. The feature-service boundary is intended to support later API integration without coupling persistence to React components.
 
 ## Getting started
 
@@ -123,6 +125,8 @@ npm run w3c:audit -- --warning=2 --force
 
 W3C requests need network access. Reports are written to ignored `w3c-audit/`; theme previews to ignored `w3c-preview/`. An unavailable validator is **unverified**, never a pass. Some modern standards-based CSS can be rejected by the older `css3svg` validator; such results are investigated and documented rather than silenced or hidden.
 
+**P2-B local evidence (2026-10-13, before PR/merge):** `npm run check` passed (ESLint clean, 228/228 Vitest across 55 files, Vite build with 185 modules). Forced W3C `css3svg` audits verified all 28 production CSS assets with **0 errors** and **0 unverified/pending**. Normal (`warning=1`): **76 warnings** across 10 assets; Extended (`warning=2`): **2,918 warnings** across 28 assets. Strict raw 0/0 remains **NOT MET**. These local results are not evidence for production deployments or formal ADR-042 sign-off. Details: [batch audit](docs/W3C_BATCH_AUDIT.md).
+
 **Canonical policy and phase acceptance checklist:** [CSS Validation & Quality Gates](docs/CSS_VALIDATION_POLICY.md). See also [W3C compatibility plan](docs/W3C_COMPATIBILITY_PLAN.md) and [batch audit notes](docs/W3C_BATCH_AUDIT.md).
 
 ## Main routes
@@ -132,6 +136,7 @@ The URLs below are client-side routes; `:projectId` and similar segments are dyn
 ```text
 /
 /projects
+/settings                         # P2-B: local profile (pending merge)
 /projects/new
 /projects/:projectId
 /projects/:projectId/edit
@@ -182,18 +187,21 @@ Browser-local data is scoped to each domain, so the backup demo does **not** syn
 
 **P0 — implemented:** project portfolio and workspace, Project Overview, governance, success criteria, risks, milestones, management actions, EVM and trends, weekly reports, meeting notes, and portfolio health. The current release is a working client-side application backed by versioned browser storage.
 
-### P1 Safe Project Deletion — unreleased
+### P1 Safe Project Deletion — merged and deployed
 
-Implemented in `feature/p1-safe-project-deletion`; not yet merged or deployed:
+Merged to `main` via PR #4 (`d29253c`), with Vercel functional smoke checks recorded in [P1 Backlog](docs/P1_BACKLOG.md):
 
-- Delete permanently is available only in Portfolio → Archived, in Grid and List views.
+- **Delete permanently** is available only for archived projects (Grid and List).
 - Confirmation requires the exact project name, including case and whitespace.
-- Deletion removes the project, its related records, EVM data and owned form drafts. There is no Trash or Undo.
-- A persisted deletion journal supports recovery after interrupted operations. Startup recovery runs before application state initialization; an unrecoverable failure blocks normal startup.
-- A deletion marker prevents the Atlas demo project from being recreated after permanent deletion.
-- Deletion affects browser-local storage for the current origin only. It is not a backend or cross-device operation.
+- A journaled cascade removes the project, related feature records, EVM records and owned form drafts. There is no Trash or Undo.
+- An anti-reseed marker prevents deleted Atlas demo records from being restored automatically.
+- This deletion is browser-local, not backend- or cross-device-wide.
 
-Release validation and remaining checks are tracked in [P1 Backlog](docs/P1_BACKLOG.md).
+ADR-042 warning-risk adjudication and formal sign-off remain open; deployment did not retroactively close that decision.
+
+### P2-B Local Profile & Settings — implemented on feature branch
+
+`feature/p2-local-profile-settings` contains the local profile page, optional cropped image, immediate photo removal, first-name greeting, desktop avatar menu and mobile drawer integration. `Exit workspace` is a navigation action, **not** authentication or session termination. The feature is **not yet merged or verified on public deployments**. See [P2-B acceptance evidence and limitations](docs/P2_LOCAL_PROFILE.md).
 
 **Other P1–P3 capabilities — planned:** incremental delivery remains governed by the project backlog. Backend/API integration is not part of the current client-side implementation.
 

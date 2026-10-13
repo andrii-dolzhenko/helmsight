@@ -885,6 +885,8 @@
 }
 
 .projectsHeroMain h2 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   margin: 0;
   font-family: var(--font-display);
   font-size: clamp(2.65rem, 5vw, 4.1rem);

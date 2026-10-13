@@ -19,6 +19,10 @@ export const router = createBrowserRouter([
     HydrateFallback: RouteLoadingFallback,
     children: [
       {
+        path: '/settings',
+        lazy: loadPage(() => import('../../pages/SettingsPage/SettingsPage.jsx'), 'SettingsPage'),
+      },
+      {
         path: '/projects',
         lazy: loadPage(() => import('../../pages/ProjectsPage/ProjectsPage.jsx'), 'ProjectsPage'),
       },

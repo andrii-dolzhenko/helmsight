@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { act, fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import preferencesReducer from '../../features/preferences/model/preferencesSlice.js'
+import profileReducer from '../../features/profile/model/profileSlice.js'
 import { AppLayout } from './AppLayout.jsx'
 
 function renderLayout() {
   const store = configureStore({
     reducer: {
       preferences: preferencesReducer,
+      profile: profileReducer,
     },
   })
 
@@ -36,10 +38,43 @@ function renderLayout() {
 }
 
 describe('AppLayout mobile navigation', () => {
+  it('keeps desktop controls in the header and opens an accessible profile menu', async () => {
+    const user = userEvent.setup()
+    const { container } = renderLayout()
+    const desktopHeader = container.querySelectorAll('header')[1]
+    expect(within(desktopHeader).queryByRole('link', { name: 'Profile settings' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Settings' })).not.toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Open profile menu' }))
+    const menu = screen.getByRole('menu', { name: 'Profile actions' })
+    expect(within(menu).getByRole('menuitem', { name: 'Profile & Settings' }))
+      .toHaveAttribute('href', '/settings')
+    expect(within(menu).getByRole('menuitem', { name: 'Exit workspace' })).toHaveAttribute('href', '/')
+    await user.keyboard('{Escape}')
+    expect(screen.queryByRole('menu', { name: 'Profile actions' })).not.toBeInTheDocument()
+    expect(screen.getAllByRole('link', { name: 'HelmSight home' }).every((link) => link.getAttribute('href') === '/projects')).toBe(true)
+  })
+
   afterEach(() => {
     document.body.style.overflow = ''
     document.body.scrollTop = 0
     document.documentElement.scrollTop = 0
+  })
+
+  it('keeps theme, one profile entry and Exit workspace in the mobile drawer', async () => {
+    const user = userEvent.setup()
+    const { container } = renderLayout()
+    const mobileHeader = container.querySelector('header')
+    // Mobile-only markup is hidden by the desktop CSS default in jsdom.
+    expect(within(mobileHeader).queryByRole('button', { name: /Theme:/, hidden: true })).not.toBeInTheDocument()
+    expect(within(mobileHeader).queryByRole('link', { name: 'Profile settings', hidden: true })).not.toBeInTheDocument()
+    expect(within(mobileHeader).queryByRole('button', { name: 'Open profile menu', hidden: true })).not.toBeInTheDocument()
+    await user.click(within(mobileHeader).getByRole('button', { name: 'Open navigation menu', hidden: true }))
+    const drawer = screen.getByRole('complementary', { name: 'Mobile navigation', hidden: true })
+    expect(within(drawer).getByRole('button', { name: /Theme:/, hidden: true })).toBeInTheDocument()
+    expect(within(drawer).getByRole('link', { name: 'Profile settings', hidden: true })).toHaveAttribute('href', '/settings')
+    expect(within(drawer).queryByRole('link', { name: 'Profile & Settings', hidden: true })).not.toBeInTheDocument()
+    expect(within(drawer).getAllByRole('link', { hidden: true }).filter((link) => link.getAttribute('href') === '/settings')).toHaveLength(1)
+    expect(within(drawer).getByRole('link', { name: 'Exit workspace', hidden: true })).toHaveAttribute('href', '/')
   })
 
   it('opens from the hamburger control and closes with Escape', async () => {

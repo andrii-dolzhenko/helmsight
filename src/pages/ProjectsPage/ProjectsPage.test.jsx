@@ -30,6 +30,24 @@ describe('ProjectsPage view modes', () => {
     window.scrollTo = vi.fn()
   })
 
+  it('greets with first name only and migrates old saved display names', async () => {
+    const first = renderProjectsPage()
+    await screen.findByText('Atlas Modernization')
+    expect(screen.getByRole('heading', { name: /Good (morning|afternoon|evening), Andrii\./ })).toBeInTheDocument()
+
+    first.unmount()
+    storageAdapter.write('profile', { displayName: 'Alex Morgan' })
+    renderProjectsPage()
+    await screen.findByText('Atlas Modernization')
+    expect(screen.getByRole('heading', { name: /Good (morning|afternoon|evening), Alex\./ })).toBeInTheDocument()
+  })
+
+  it('uses the generic greeting for an explicitly cleared name', () => {
+    storageAdapter.write('profile', { displayName: '' })
+    renderProjectsPage()
+    expect(screen.getByRole('heading', { name: /^Good (morning|afternoon|evening)\.$/ })).toBeInTheDocument()
+  })
+
   it('switches to list view and persists the presentation preference', async () => {
     const user = userEvent.setup()
     renderProjectsPage()
