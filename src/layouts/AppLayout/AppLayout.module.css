@@ -135,23 +135,18 @@
 .accountArea {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
 }
 
-.avatarBadge {
-  width: 2.7rem;
-  height: 2.7rem;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  border: 1px solid var(--color-border);
+.avatarLink {
+  display: inline-flex;
   border-radius: 50%;
-  background: var(--color-inverse-surface);
-  color: var(--color-inverse-text);
-  box-shadow: 0 0.35rem 1rem rgb(0 0 0 / 8%);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+}
+
+.avatarLink:focus-visible,
+.accountSummary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
 .main {
@@ -250,9 +245,12 @@
 }
 
 .accountSummary {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  color: inherit;
+  text-decoration: none;
 }
 
 .accountCopy {
@@ -262,6 +260,11 @@
 }
 
 .accountCopy strong {
+  display: block;
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 0.85rem;
 }
 
@@ -326,10 +329,11 @@
     position: absolute;
     inset: 0 0 0 auto;
     width: min(20rem, 86vw);
-    min-height: 100dvh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
+    overflow-y: auto;
     border-left: 1px solid var(--color-border);
     background: var(--color-surface);
     box-shadow: -1.5rem 0 4rem rgb(0 0 0 / 18%);
@@ -388,5 +392,68 @@
 @media (prefers-reduced-motion: reduce) {
   .mobileNavPanel {
     animation: none;
+  }
+}
+
+.mobileExitLink:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.mobileActions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.mobileExitLink {
+  min-height: 2.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.mobileExitLink {
+  min-height: 2.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0.7rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.mobileExitLink {
+  justify-content: center;
+  margin-top: 0.1rem;
+  border-color: color-mix(in srgb, var(--color-accent) 19%, var(--color-border));
+  background: color-mix(in srgb, var(--color-accent) 14%, var(--color-surface));
+  color: var(--color-text);
+}
+
+.mobileExitLink:hover {
+  background: color-mix(in srgb, var(--color-accent) 24%, var(--color-surface));
+}
+
+@media (max-width: 780px) {
+  .mobileHeader {
+    gap: 0.35rem;
+    padding-inline: 0.75rem;
+  }
+
+  .mobileActions .mobileMenuButton {
+    width: 2.7rem;
+    height: 2.7rem;
   }
 }

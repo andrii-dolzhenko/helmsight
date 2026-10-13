@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks.js'
+import { selectProfileFirstName } from '../../features/profile/model/profileSlice.js'
 import {
   selectProjectsViewMode,
   selectProjectsViewModeError,
@@ -105,7 +106,9 @@ function getPortfolioGreeting() {
 
 function ProjectsHeroBanner({ activeProjectsCount, onViewProjects }) {
   const activeProjectLabel = activeProjectsCount === 1 ? 'active project' : 'active projects'
+  const firstName = useAppSelector(selectProfileFirstName)
   const greeting = getPortfolioGreeting()
+  const greetingText = `${greeting}${firstName ? `, ${firstName}` : ''}.`
   const dailyInsight = getDailyInsight()
 
   return (
@@ -116,7 +119,7 @@ function ProjectsHeroBanner({ activeProjectsCount, onViewProjects }) {
 
       <div className={styles.projectsHeroMain}>
         <span className={styles.projectsHeroEyebrow}>Portfolio briefing</span>
-        <h2 id="projects-hero-title">{greeting}.</h2>
+        <h2 id="projects-hero-title">{greetingText}</h2>
         <p>
           You have <strong>{activeProjectsCount}</strong> {activeProjectLabel} in the portfolio.
           Keep delivery context visible and move from signal to decision with less noise.

@@ -2,6 +2,11 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { Brand } from '../../shared/ui/Brand/Brand.jsx'
 import { ThemeControl } from '../../features/preferences/ui/ThemeControl.jsx'
+import { ProfileAvatar } from '../../features/profile/ui/ProfileAvatar.jsx'
+import { ProfileMenu } from '../../features/profile/ui/ProfileMenu.jsx'
+import { selectProfile } from '../../features/profile/model/profileSlice.js'
+import { getProfileFullName } from '../../features/profile/lib/profile.js'
+import { useAppSelector } from '../../app/store/hooks.js'
 import styles from './AppLayout.module.css'
 
 function MenuIcon() {
@@ -20,17 +25,23 @@ function CloseIcon() {
   )
 }
 
-function AccountSummary() {
+function AccountSummary({ onNavigate }) {
+  const profile = useAppSelector(selectProfile)
+  const displayName = getProfileFullName(profile)
+
   return (
-    <div className={styles.accountSummary} aria-label="Current workspace profile">
-      <span className={styles.avatarBadge} aria-hidden="true">
-        PM
-      </span>
+    <NavLink
+      to="/settings"
+      className={styles.accountSummary}
+      aria-label="Profile settings"
+      onClick={onNavigate}
+    >
+      <ProfileAvatar />
       <span className={styles.accountCopy}>
-        <strong>Project Manager</strong>
-        <span>Local workspace</span>
+        <strong title={displayName}>{displayName || 'Local profile'}</strong>
+        <span>{profile.role}</span>
       </span>
-    </div>
+    </NavLink>
   )
 }
 
@@ -123,7 +134,7 @@ export function AppLayout() {
   return (
     <div className={styles.shell} data-app-shell="true">
       <aside className={styles.sidebar} data-print-hide="true">
-        <Brand />
+        <Brand to="/projects" />
 
         <nav className={styles.navigation} aria-label="Main navigation">
           <NavLink
@@ -147,18 +158,20 @@ export function AppLayout() {
 
       <div className={styles.workspace}>
         <header className={styles.mobileHeader} data-print-hide="true">
-          <Brand />
-          <button
-            ref={mobileMenuButtonRef}
-            className={styles.mobileMenuButton}
-            type="button"
-            aria-label="Open navigation menu"
-            aria-controls="mobile-navigation"
-            aria-expanded={isMobileNavOpen}
-            onClick={() => setIsMobileNavOpen(true)}
-          >
-            <MenuIcon />
-          </button>
+          <Brand to="/projects" />
+          <div className={styles.mobileActions}>
+            <button
+              ref={mobileMenuButtonRef}
+              className={styles.mobileMenuButton}
+              type="button"
+              aria-label="Open navigation menu"
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileNavOpen}
+              onClick={() => setIsMobileNavOpen(true)}
+            >
+              <MenuIcon />
+            </button>
+          </div>
         </header>
 
         <header className={styles.topbar} data-print-hide="true">
@@ -166,9 +179,7 @@ export function AppLayout() {
 
           <div className={styles.accountArea}>
             <ThemeControl />
-            <span className={styles.avatarBadge} aria-label="Project Manager profile">
-              PM
-            </span>
+            <ProfileMenu />
           </div>
         </header>
 
@@ -192,7 +203,7 @@ export function AppLayout() {
             aria-label="Mobile navigation"
           >
             <div className={styles.mobileNavHeader}>
-              <Brand />
+              <Brand to="/projects" />
               <button
                 ref={mobileCloseButtonRef}
                 className={styles.mobileMenuButton}
@@ -221,7 +232,10 @@ export function AppLayout() {
                 <span>Appearance</span>
                 <ThemeControl />
               </div>
-              <AccountSummary />
+              <AccountSummary onNavigate={() => closeMobileNav()} />
+              <NavLink to="/" className={styles.mobileExitLink} onClick={() => closeMobileNav()}>
+                Exit workspace
+              </NavLink>
             </div>
           </aside>
         </div>

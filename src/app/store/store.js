@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
+import { profileService } from '../../features/profile/api/profileService.js'
+import profileReducer, { createProfileInitialState } from '../../features/profile/model/profileSlice.js'
 import { preferencesService } from '../../features/preferences/api/preferencesService.js'
 import preferencesReducer, {
   createPreferencesInitialState,
@@ -26,6 +28,16 @@ import meetingsReducer, { createMeetingsInitialState } from '../../features/meet
 
 export function createAppPreloadedState() {
   const preloadedState = {}
+
+  try {
+    const profileSnapshot = profileService.getSnapshot()
+
+    if (profileSnapshot !== null) {
+      preloadedState.profile = createProfileInitialState(profileSnapshot)
+    }
+  } catch {
+    // The demo profile remains usable if stored profile data is unavailable.
+  }
 
   try {
     const preferencesSnapshot = preferencesService.getSnapshot()
@@ -140,6 +152,7 @@ export function createAppPreloadedState() {
 export function createAppStore(preloadedState = createAppPreloadedState()) {
   return configureStore({
     reducer: {
+      profile: profileReducer,
       preferences: preferencesReducer,
       projects: projectsReducer,
       successCriteria: successCriteriaReducer,

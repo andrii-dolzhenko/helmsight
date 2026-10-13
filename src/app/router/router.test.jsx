@@ -15,6 +15,7 @@ describe('Stage 28 initial route fallback', () => {
   it.each([
     ['landing page', '/'],
     ['projects list', '/projects'],
+    ['workspace settings', '/settings'],
     ['project overview', '/projects/demo-project'],
     ['nested metrics page', '/projects/demo-project/metrics'],
     ['unmatched URL', '/does-not-exist'],

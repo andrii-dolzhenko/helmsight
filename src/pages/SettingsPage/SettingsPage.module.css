@@ -1,0 +1,220 @@
+.page {
+  width: min(100%, 58rem);
+  display: grid;
+  gap: 1.5rem;
+}
+
+.heading,
+.sectionHeading {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.heading h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.heading p,
+.sectionHeading p {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.card {
+  min-width: 0;
+  display: grid;
+  gap: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: minmax(9rem, 11rem) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1rem, 3vw, 2rem);
+}
+
+.photoField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.65rem;
+}
+
+.photoField > :first-child {
+  width: 6rem;
+  height: 6rem;
+}
+
+.fields,
+.form,
+.field {
+  min-width: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.field {
+  align-content: start;
+  gap: 0.4rem;
+}
+
+.nameFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field label {
+  font-weight: 750;
+  font-size: 0.9rem;
+}
+
+.field label span:not(.optional) {
+  color: var(--color-danger);
+}
+
+.optional {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-canvas);
+  color: var(--color-text);
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+}
+
+.field input[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+.hint,
+.error,
+.success {
+  margin: 0;
+  font-size: 0.79rem;
+  line-height: 1.4;
+}
+
+.hint {
+  color: var(--color-text-muted);
+}
+
+.photoSizeHint {
+  display: block;
+}
+
+.error {
+  color: var(--color-danger);
+}
+
+.success {
+  color: var(--color-accent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.saveButton,
+.secondaryButton {
+  min-height: 2.65rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.95rem;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.saveButton {
+  border-color: transparent;
+  background: var(--color-inverse-surface);
+  color: var(--color-inverse-text);
+}
+
+.secondaryButton {
+  background: var(--color-surface-elevated);
+  color: var(--color-text);
+}
+
+.secondaryButton:disabled,
+.saveButton:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.textButton {
+  border: 0;
+  background: transparent;
+  color: var(--color-accent);
+  padding: 0;
+  font: inherit;
+  font-size: 0.79rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.page button:focus-visible,
+.field input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+@media (max-width: 650px) {
+  .profileGrid,
+  .nameFields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .photoField {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.textButton:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
