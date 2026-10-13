@@ -1,13 +1,13 @@
 # HelmSight — P1 Functional Backlog
 
-Status: **P1-PL-01 implemented in feature branch; release validation pending**
-Updated: 2026-10-12
+Status: **P1-PL-01 merged and deployed; post-release review pending**
+Updated: 2026-10-13
 Scope owner: Project roadmap (separate from P0.1 CSS Validation Closure)
 
 ## P1-PL-01 — Project Lifecycle: Safe Project Deletion
 
 - **Priority:** P1; implementation governed by ADR-040.
-- **Status:** Implemented in `feature/p1-safe-project-deletion`; pending PR review, merge, and release.
+- **Status:** Merged into `main` via PR #4 (`d29253c`) and deployed to Vercel.
 - **P0 baseline:** Create, Edit, Archive and Restore; no permanent-delete action.
 - **User problem:** Test/demo projects and obsolete records cannot be permanently removed from the local workspace. Archiving hides/locks them but retains their data.
 - **User story:** As a workspace owner, I want to permanently remove an unwanted project after reviewing the consequences, so that my portfolio and its associated data stay accurate.
@@ -38,8 +38,24 @@ Scope owner: Project roadmap (separate from P0.1 CSS Validation Closure)
 - Production preview startup and hard reload passed. Light/Dark/System, keyboard (Tab/Shift+Tab/Escape), Archived Grid/List responsive layouts, and post-contrast-adjustment visual regression were manually reviewed. These checks are not a comprehensive automated accessibility audit.
 - W3C Nu validated the production `dist/index.html` entry point with 0 errors and 0 warnings. Dynamically rendered SPA routes were not independently HTML-validated.
 - Manual Reduced Motion smoke review covered Portfolio, Project Overview/Radar, Governance, mobile navigation and Reports. The review does not certify every JavaScript animation.
-- Remaining before release: final warning-risk adjudication and release sign-off under ADR-042, any required dynamic-route accessibility/HTML checks, CI/PR review, merge and deployment verification.
+- Post-release follow-up: formal warning-risk adjudication and ADR-042 sign-off, any required dynamic-route accessibility/HTML checks, and final release-evidence documentation.
 - CSS validation (ADR-042): 27/27 production CSS assets verified in both profiles, 0 errors, 0 unverified and 0 pending. W3C CSS Error Gate: PASS. Strict raw 0/0 target: NOT MET (39 Normal / 2,833 Extended warnings). Deployment Gate: PENDING FINAL SIGN-OFF. Warning classification and limitations are recorded in `docs/W3C_BATCH_AUDIT.md`.
+
+### Post-merge verification (2026-10-13)
+
+- GitHub PR #4 merged into `main`; merge commit: `d29253c`.
+- GitHub CI passed; local `main` synchronized with `origin/main`.
+- Vercel Preview application load and console checks passed.
+- Vercel Preview: Create → Archive → exact-name safeguard →
+  permanent deletion → reload persistence passed.
+- Production (`helmsight.vercel.app`): application load and
+  deletion/reload scenario confirmed by the project owner.
+- Lighthouse on the production Archived Projects page reported
+  Accessibility 100 in Desktop mode; this is not a full WCAG audit.
+- W3C CSS Error Gate: PASS (0 errors). Strict raw 0/0: NOT MET
+  (39 Normal and 2,833 Extended warnings).
+- ADR-042 warning-risk adjudication and formal sign-off were
+  not completed before deployment and remain open for review.
 
 ### P1 acceptance / test cases
 
@@ -61,12 +77,18 @@ Scope owner: Project roadmap (separate from P0.1 CSS Validation Closure)
 - **Adopted:** archive-only deletion, with persisted-state revalidation (ADR-040).
 - **Adopted:** exact-name confirmation; no Trash or undo window in this P1 implementation.
 - **Implemented:** project-owned collections, EVM data and drafts are removed through a journaled cascade; Atlas uses an anti-reseed marker.
-- Does the teacher's final-project rubric/deadline permit this enhancement in P1? Confirm before locking scope.
+- Final-project rubric alignment and instructor requirements remain subject to independent confirmation; deployment does not itself establish rubric compliance.
 
 ## Scope discipline
 
-P1 Safe Project Deletion is isolated in `feature/p1-safe-project-deletion`.
-It must not be merged into `main` until the remaining release checks and
-PR review are completed. P0.1 CSS validation reporting remains separate;
-unresolved validator warnings must not be represented as a passing raw 0/0 gate. ADR-042 permits release with reviewed, documented noncritical warnings only after the other required release checks are satisfied.
+P1 Safe Project Deletion was merged into `main` via PR #4
+on 2026-10-12 and deployed to Vercel. The feature is no longer
+confined to its development branch.
+
+P0.1 CSS validation reporting remains separate. Outstanding
+warnings must not be presented as raw W3C 0/0 compliance.
+The ADR-042 warning-risk review and formal sign-off remain
+open as post-release follow-up. Deployment does not constitute
+retroactive approval.
+
 Other P1 backlog items remain outside this feature's scope.
