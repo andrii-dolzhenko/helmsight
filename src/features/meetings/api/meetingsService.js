@@ -1,6 +1,7 @@
 import { storageAdapter } from '../../../shared/services/storage/storageAdapter.js'
 import {
   isValidDateKey,
+  localTodayDateKey,
   meetingNoteContent,
   MEETING_NOTE_LIMITS,
   MEETING_NOTE_MIN_TEXT_LENGTH,
@@ -118,6 +119,9 @@ function normalizeList(values, label, maxLength, maxItems = MEETING_NOTE_LIMITS.
 function normalizeInput(input) {
   if (!input?.projectId) throw new MeetingsServiceError('Project is required.')
   if (!isValidDateKey(input.meetingDate)) throw new MeetingsServiceError('Choose a valid meeting date.')
+  if (input.meetingDate > localTodayDateKey()) {
+    throw new MeetingsServiceError('Meeting date cannot be in the future.')
+  }
 
   return {
     projectId: input.projectId,
@@ -140,6 +144,25 @@ function ensureMeeting(items, meetingId) {
   const index = items.findIndex((item) => item.id === meetingId)
   if (index === -1) throw new MeetingsServiceError('Meeting note not found.')
   return index
+}
+
+function changeArchiveState(meetingId, archive) {
+  const items = readMeetings()
+  const index = ensureMeeting(items, meetingId)
+  const existing = items[index]
+
+  if (Boolean(existing.archivedAt) === archive) {
+    return clone(existing)
+  }
+
+  const updated = {
+    ...existing,
+    archivedAt: archive ? new Date().toISOString() : null,
+  }
+  const next = [...items]
+  next[index] = updated
+  writeMeetings(next)
+  return clone(updated)
 }
 
 export const meetingsService = {
@@ -174,6 +197,9 @@ export const meetingsService = {
     const items = readMeetings()
     const index = ensureMeeting(items, meetingId)
     const existing = items[index]
+    if (existing.archivedAt) {
+      throw new MeetingsServiceError('Archived meeting notes must be restored before editing.')
+    }
     const normalized = normalizeInput(input)
 
     if (JSON.stringify(meetingNoteContent(existing)) === JSON.stringify(meetingNoteContent(normalized))) {
@@ -192,9 +218,20 @@ export const meetingsService = {
     return clone(updated)
   },
 
+  async archive(meetingId) {
+    return changeArchiveState(meetingId, true)
+  },
+
+  async restore(meetingId) {
+    return changeArchiveState(meetingId, false)
+  },
+
   async remove(meetingId) {
     const items = readMeetings()
-    ensureMeeting(items, meetingId)
+    const index = ensureMeeting(items, meetingId)
+    if (items[index].archivedAt) {
+      throw new MeetingsServiceError('Archived meeting notes must be restored before deletion.')
+    }
     writeMeetings(items.filter((item) => item.id !== meetingId))
     return meetingId
   },

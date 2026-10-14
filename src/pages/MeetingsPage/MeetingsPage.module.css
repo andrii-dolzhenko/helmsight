@@ -235,15 +235,195 @@
   gap: 1rem;
 }
 
+.sortControls {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 11.5rem;
+}
+
+.sortControls label {
+  color: var(--color-text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.selectWrap {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.sortControls select {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 2.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  background-image: none;
+  background-repeat: no-repeat;
+  color: var(--color-text);
+  padding: 0.5rem 2.5rem 0.5rem 0.65rem;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+
+.selectChevron {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  width: 1rem;
+  height: 1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-text-muted);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+:global(:root[data-theme='dark']) .sortControls select {
+  background-image: none;
+}
+
+.sortControls select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.pagination {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 0.9rem;
+}
+
+.paginationSummary {
+  grid-column: 1;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.paginationControls {
+  grid-column: 2;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.paginationControls button {
+  min-width: 2.35rem;
+  min-height: 2.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.4rem 0.65rem;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.paginationControls button:hover:not(:disabled) {
+  background: var(--color-surface-elevated);
+}
+
+.paginationControls button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.paginationControls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.paginationControls .currentPage {
+  border-color: var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+  color: var(--color-accent);
+}
+
 .listHeader h3 {
   margin: 0.25rem 0 0;
   font-size: 1.35rem;
 }
 
-.historyCount {
+.historyControls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.viewTabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface-elevated);
+  padding: 0.25rem;
+}
+
+.viewTabs button {
+  min-height: 2.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
   color: var(--color-text-muted);
-  font-size: 0.72rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 0.78rem;
   font-weight: 800;
+}
+
+.viewTabs button:hover {
+  color: var(--color-text);
+}
+
+.viewTabs button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.viewTabs button strong {
+  min-width: 1.5rem;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-text) 7%, transparent);
+  padding: 0.15rem 0.4rem;
+  font-size: 0.68rem;
+}
+
+.viewTabs .activeTab {
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 0.35rem 1rem rgb(20 27 23 / 8%);
+}
+
+.viewTabs .activeTab strong {
+  background: color-mix(in srgb, var(--color-accent) 13%, transparent);
+  color: var(--color-accent);
+}
+
+.mobileCellLabel {
+  display: none;
 }
 
 .meetingTable {
@@ -536,7 +716,7 @@
   }
 
   .meetingRow {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.65rem 0.8rem;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -551,7 +731,22 @@
   .dateCell,
   .metaCell,
   .updatedCell {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+    min-width: 0;
     padding-top: 0.2rem;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileCellLabel {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.65rem;
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .viewCell {
@@ -578,6 +773,12 @@
   .pageHeader .actionButton {
     width: 100%;
   }
+
+  .sortControls {
+    width: 100%;
+    min-width: 0;
+  }
+
 
   .editorHeader > :last-child {
     align-self: flex-end;
@@ -612,6 +813,30 @@
 
   .noteDocument {
     padding: 0.85rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .historyControls,
+  .viewTabs {
+    width: 100%;
+  }
+
+  .viewTabs button {
+    flex: 1 1 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 980px) {
+  .pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .paginationControls {
+    justify-content: center;
   }
 }
 

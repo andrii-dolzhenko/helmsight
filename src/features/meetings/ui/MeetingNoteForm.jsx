@@ -7,6 +7,8 @@ import {
   MEETING_NOTE_LIMITS,
   MEETING_NOTE_MIN_TEXT_LENGTH,
   meetingTextLength,
+  isValidDateKey,
+  localTodayDateKey,
 } from '../lib/meetingNotes.js'
 import styles from './MeetingNoteForm.module.css'
 
@@ -308,9 +310,16 @@ export function MeetingNoteForm({
             <span>Meeting date <b aria-hidden="true">*</b></span>
             <input
               type="date"
+              max={localTodayDateKey()}
               aria-required="true"
               aria-invalid={Boolean(errors.meetingDate)}
-              {...register('meetingDate', { required: 'Meeting date is required.' })}
+              {...register('meetingDate', {
+                validate: (value) => {
+                  if (!value) return 'Meeting date is required.'
+                  if (!isValidDateKey(value)) return 'Choose a valid meeting date.'
+                  return value <= localTodayDateKey() || 'Meeting date cannot be in the future.'
+                },
+              })}
             />
             {errors.meetingDate ? <small className={styles.error}>{errors.meetingDate.message}</small> : null}
           </label>

@@ -11,6 +11,14 @@ export const MEETING_NOTE_LIMITS = Object.freeze({
 
 export const MEETING_NOTE_MIN_TEXT_LENGTH = 2
 
+export function localTodayDateKey(now = new Date()) {
+  const year = String(now.getFullYear()).padStart(4, '0')
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
 // Meeting Notes normalize surrounding whitespace before validating and saving.
 // Counters must use the same length as the service, not the raw input length.
 export function meetingTextLength(value) {

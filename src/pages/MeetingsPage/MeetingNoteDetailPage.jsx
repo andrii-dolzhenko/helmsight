@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useOutletContext, useParams } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks.js'
 import {
+  archiveMeetingNote,
   deleteMeetingNote,
   loadMeetings,
+  restoreMeetingNote,
   selectMeetingById,
   selectMeetingMutationError,
   selectMeetingMutationStatus,
@@ -59,9 +61,12 @@ export function MeetingNoteDetailPage() {
   const mutationStatus = useAppSelector(selectMeetingMutationStatus)
   const mutationError = useAppSelector(selectMeetingMutationError)
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [confirmArchive, setConfirmArchive] = useState(false)
   const [toast, setToast] = useState(location.state?.toast ?? null)
   const listPath = `/projects/${project.id}/meetings`
   const projectArchived = Boolean(project.archivedAt)
+  const noteArchived = Boolean(meeting?.archivedAt)
+  const canMutate = !projectArchived && !noteArchived
 
   useEffect(() => {
     if (status === 'idle') dispatch(loadMeetings())
@@ -70,6 +75,29 @@ export function MeetingNoteDetailPage() {
   if (status === 'idle' || status === 'loading') return <div className={styles.stateCard}>Loading Meeting Note…</div>
   if (status === 'failed') return <div className={styles.stateCard} role="alert"><strong>Meeting Note could not be loaded.</strong><span>{error}</span></div>
   if (!meeting || meeting.projectId !== project.id) return <div className={styles.stateCard}><strong>Meeting Note not found.</strong><span>The requested note is not available for this project.</span><Link to={listPath}>Return to Meeting Notes</Link></div>
+
+  const handleArchive = async () => {
+    if (!canMutate || mutationStatus === 'loading') return
+
+    try {
+      await dispatch(archiveMeetingNote(meeting.id)).unwrap()
+      setConfirmArchive(false)
+      setToast('Meeting Note archived.')
+    } catch {
+      setConfirmArchive(false)
+    }
+  }
+
+  const handleRestore = async () => {
+    if (projectArchived || !noteArchived || mutationStatus === 'loading') return
+
+    try {
+      await dispatch(restoreMeetingNote(meeting.id)).unwrap()
+      setToast('Meeting Note restored.')
+    } catch {
+      // The existing mutation error alert displays the failure.
+    }
+  }
 
   const handleDelete = async () => {
     try {
@@ -92,6 +120,15 @@ export function MeetingNoteDetailPage() {
         </div>
       ) : null}
 
+      {noteArchived ? (
+        <div className={styles.archiveBanner} data-print-hide="true">
+          <div>
+            <strong>Archived meeting note</strong>
+            <span>This Meeting Note is read-only until restored.</span>
+          </div>
+        </div>
+      ) : null}
+
       <article className={styles.noteDocument}>
         <div className={styles.printMasthead}><span>HelmSight</span><strong>Meeting Note</strong></div>
 
@@ -109,8 +146,18 @@ export function MeetingNoteDetailPage() {
 
         <div className={styles.detailActions} data-print-hide="true">
           <button className={styles.actionButton} data-ui-button="secondary" type="button" onClick={() => window.print()}><PrintIcon /> Print note</button>
-          {!projectArchived ? <Link className={`${styles.actionButton} ${styles.primaryAction}`} data-ui-button="primary" to="edit"><EditIcon /> Edit note</Link> : null}
-          {!projectArchived ? <button className={`${styles.actionButton} ${styles.deleteAction}`} data-ui-button="danger" type="button" onClick={() => setConfirmDelete(true)}><TrashIcon /> Delete</button> : null}
+          {canMutate ? <Link className={`${styles.actionButton} ${styles.primaryAction}`} data-ui-button="primary" to="edit"><EditIcon /> Edit note</Link> : null}
+          {canMutate ? (
+            <button className={styles.actionButton} data-ui-button="secondary" type="button" disabled={mutationStatus === 'loading'} onClick={() => setConfirmArchive(true)}>
+              Archive note
+            </button>
+          ) : null}
+          {!projectArchived && noteArchived ? (
+            <button className={`${styles.actionButton} ${styles.primaryAction}`} data-ui-button="primary" type="button" disabled={mutationStatus === 'loading'} onClick={handleRestore}>
+              {mutationStatus === 'loading' ? 'Restoring…' : 'Restore note'}
+            </button>
+          ) : null}
+          {canMutate ? <button className={`${styles.actionButton} ${styles.deleteAction}`} data-ui-button="danger" type="button" disabled={mutationStatus === 'loading'} onClick={() => setConfirmDelete(true)}><TrashIcon /> Delete</button> : null}
         </div>
 
         <section className={styles.noteSection}>
@@ -146,6 +193,20 @@ export function MeetingNoteDetailPage() {
       </article>
 
       {mutationStatus === 'failed' && mutationError ? <div className={styles.mutationError} role="alert" data-print-hide="true">{mutationError}</div> : null}
+
+      <ConfirmDialog
+        isOpen={confirmArchive}
+        eyebrow="Meeting Note"
+        title="Archive meeting note?"
+        message={`Archive “${meeting.title}”? The note will become read-only and can be restored later.`}
+        confirmLabel={mutationStatus === 'loading' ? 'Archiving…' : 'Archive note'}
+        cancelLabel="Cancel"
+        confirmTone="primary"
+        icon="archive"
+        isPending={mutationStatus === 'loading'}
+        onConfirm={handleArchive}
+        onCancel={() => setConfirmArchive(false)}
+      />
 
       <ConfirmDialog
         isOpen={confirmDelete}

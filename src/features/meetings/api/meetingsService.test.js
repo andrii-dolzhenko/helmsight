@@ -1,6 +1,7 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { storageAdapter } from '../../../shared/services/storage/storageAdapter.js'
 import { meetingsService, MeetingsServiceError } from './meetingsService.js'
-import { MEETING_NOTE_LIMITS } from '../lib/meetingNotes.js'
+import { MEETING_NOTE_LIMITS, localTodayDateKey } from '../lib/meetingNotes.js'
 
 const INPUT = {
   projectId: 'project-1',
@@ -104,4 +105,119 @@ describe('meetingsService', () => {
       notes: `  ${'x'.repeat(MEETING_NOTE_LIMITS.notes + 1)}  `,
     })).rejects.toThrow('5,000 characters or fewer')
   })
+
+  it('accepts past and today dates but rejects future dates on create and update', async () => {
+    const today = new Date()
+    const yesterday = new Date(today)
+    const tomorrow = new Date(today)
+    yesterday.setDate(yesterday.getDate() - 1)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+
+    const pastDate = localTodayDateKey(yesterday)
+    const todayDate = localTodayDateKey(today)
+    const futureDate = localTodayDateKey(tomorrow)
+
+    const created = await meetingsService.create({
+      ...INPUT,
+      meetingDate: pastDate,
+    })
+    expect(created.meetingDate).toBe(pastDate)
+
+    await expect(
+      meetingsService.create({ ...INPUT, meetingDate: futureDate }),
+    ).rejects.toThrow('Meeting date cannot be in the future.')
+
+    await expect(
+      meetingsService.update(created.id, { ...INPUT, meetingDate: futureDate }),
+    ).rejects.toThrow('Meeting date cannot be in the future.')
+
+    const unchanged = (await meetingsService.list())
+      .find((item) => item.id === created.id)
+
+    expect(unchanged.meetingDate).toBe(pastDate)
+    expect(unchanged.version).toBe(1)
+
+    const updated = await meetingsService.update(created.id, {
+      ...INPUT,
+      meetingDate: todayDate,
+    })
+
+    expect(updated.meetingDate).toBe(todayDate)
+    expect(updated.version).toBe(2)
+  })
+
+  it('archives and restores without changing content version or updatedAt', async () => {
+    const created = await meetingsService.create(INPUT)
+    const archived = await meetingsService.archive(created.id)
+
+    expect(archived.archivedAt).toEqual(expect.any(String))
+    expect(Number.isNaN(Date.parse(archived.archivedAt))).toBe(false)
+    expect(archived.version).toBe(created.version)
+    expect(archived.updatedAt).toBe(created.updatedAt)
+
+    const persisted = (await meetingsService.list()).find((item) => item.id === created.id)
+    expect(persisted.archivedAt).toBe(archived.archivedAt)
+
+    const restored = await meetingsService.restore(created.id)
+    expect(restored.archivedAt).toBeNull()
+    expect(restored.version).toBe(created.version)
+    expect(restored.updatedAt).toBe(created.updatedAt)
+  })
+
+  it('prevents editing or deleting archived notes until restored', async () => {
+    const created = await meetingsService.create(INPUT)
+    await meetingsService.archive(created.id)
+
+    await expect(meetingsService.update(created.id, {
+      ...INPUT,
+      title: 'Changed after archive',
+    })).rejects.toThrow(/archived/i)
+
+    await expect(meetingsService.remove(created.id)).rejects.toThrow(/archived/i)
+
+    await meetingsService.restore(created.id)
+    const updated = await meetingsService.update(created.id, {
+      ...INPUT,
+      title: 'Changed after restore',
+    })
+    expect(updated.version).toBe(2)
+
+    await meetingsService.remove(created.id)
+    expect((await meetingsService.list()).some((item) => item.id === created.id)).toBe(false)
+  })
+
+  it('handles legacy notes and repeated lifecycle operations', async () => {
+    const legacy = (await meetingsService.list()).find((item) => item.id === 'demo-meeting-pilot-readiness')
+    expect(legacy.archivedAt ?? null).toBeNull()
+
+    const archived = await meetingsService.archive(legacy.id)
+    const archivedAgain = await meetingsService.archive(legacy.id)
+    expect(archivedAgain).toEqual(archived)
+
+    const restored = await meetingsService.restore(legacy.id)
+    const restoredAgain = await meetingsService.restore(legacy.id)
+    expect(restoredAgain).toEqual(restored)
+    expect(restored.archivedAt).toBeNull()
+    expect(restored.version).toBe(legacy.version)
+  })
+
+  it('rejects missing notes and does not report successful archive after storage failure', async () => {
+    await expect(meetingsService.archive('missing-id')).rejects.toThrow(/not found/i)
+    await expect(meetingsService.restore('missing-id')).rejects.toThrow(/not found/i)
+
+    const created = await meetingsService.create(INPUT)
+    const write = vi.spyOn(storageAdapter, 'write').mockImplementation(() => {
+      throw new Error('Storage unavailable')
+    })
+
+    try {
+      await expect(meetingsService.archive(created.id)).rejects.toThrow('Storage unavailable')
+    } finally {
+      write.mockRestore()
+    }
+
+    const persisted = (await meetingsService.list()).find((item) => item.id === created.id)
+    expect(persisted.archivedAt ?? null).toBeNull()
+  })
+
 })

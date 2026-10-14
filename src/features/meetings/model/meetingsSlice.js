@@ -18,6 +18,14 @@ export const updateMeetingNote = createAsyncThunk('meetings/update', async ({ me
   try { return await meetingsService.update(meetingId, input) } catch (error) { return rejectWithValue(message(error)) }
 })
 
+export const archiveMeetingNote = createAsyncThunk('meetings/archive', async (meetingId, { rejectWithValue }) => {
+  try { return await meetingsService.archive(meetingId) } catch (error) { return rejectWithValue(message(error)) }
+})
+
+export const restoreMeetingNote = createAsyncThunk('meetings/restore', async (meetingId, { rejectWithValue }) => {
+  try { return await meetingsService.restore(meetingId) } catch (error) { return rejectWithValue(message(error)) }
+})
+
 export const deleteMeetingNote = createAsyncThunk('meetings/delete', async (meetingId, { rejectWithValue }) => {
   try { return await meetingsService.remove(meetingId) } catch (error) { return rejectWithValue(message(error)) }
 })
@@ -41,7 +49,7 @@ const slice = createSlice({
       .addCase(loadMeetings.fulfilled, (state, action) => { state.status = 'succeeded'; state.items = action.payload })
       .addCase(loadMeetings.rejected, (state, action) => { state.status = 'failed'; state.error = action.payload ?? 'Unable to load meeting notes.' })
 
-    for (const thunk of [createMeetingNote, updateMeetingNote]) {
+    for (const thunk of [createMeetingNote, updateMeetingNote, archiveMeetingNote, restoreMeetingNote]) {
       builder
         .addCase(thunk.pending, (state) => { state.mutationStatus = 'loading'; state.mutationError = null })
         .addCase(thunk.fulfilled, (state, action) => {
