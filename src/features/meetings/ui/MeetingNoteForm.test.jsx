@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { localTodayDateKey } from '../lib/meetingNotes.js'
 import { MeetingNoteForm } from './MeetingNoteForm.jsx'
 
 const originalScrollHeight = Object.getOwnPropertyDescriptor(
@@ -54,6 +55,46 @@ function renderMeetingForm(onSubmit = vi.fn().mockResolvedValue(true)) {
   )
   return onSubmit
 }
+
+describe('MeetingNoteForm date validation', () => {
+  it('rejects future dates and accepts today before submitting', async () => {
+    const onSubmit = renderMeetingForm()
+
+    const today = new Date()
+    const tomorrow = new Date(today)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+
+    const todayDate = localTodayDateKey(today)
+    const futureDate = localTodayDateKey(tomorrow)
+    const dateInput = screen.getByLabelText(/Meeting date/i)
+
+    expect(dateInput).toHaveAttribute('max', todayDate)
+
+    fireEvent.change(screen.getByRole('textbox', { name: /Title/i }), {
+      target: { value: 'Sprint review' },
+    })
+    fireEvent.change(screen.getByRole('textbox', { name: /Owner/i }), {
+      target: { value: 'Alex Morgan' },
+    })
+    fireEvent.change(screen.getByPlaceholderText(/Capture the key discussion/), {
+      target: { value: 'Reviewed delivery progress and next steps.' },
+    })
+
+    fireEvent.change(dateInput, { target: { value: futureDate } })
+    fireEvent.click(screen.getByRole('button', { name: 'Create note' }))
+
+    expect(await screen.findByText('Meeting date cannot be in the future.'))
+      .toBeInTheDocument()
+    expect(dateInput).toHaveAttribute('aria-invalid', 'true')
+    expect(onSubmit).not.toHaveBeenCalled()
+
+    fireEvent.change(dateInput, { target: { value: todayDate } })
+    fireEvent.click(screen.getByRole('button', { name: 'Create note' }))
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1))
+    expect(onSubmit.mock.calls[0][0].meetingDate).toBe(todayDate)
+  })
+})
 
 describe('MeetingNoteForm character limits', () => {
   it('shows live counts for required fields and optional list rows without truncation', () => {

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useNavigate, useOutletContext, useParams } from 'react-router'
+import { Link, useNavigate, useOutletContext, useParams } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks.js'
 import { MeetingNoteForm } from '../../features/meetings/ui/MeetingNoteForm.jsx'
 import {
@@ -53,6 +53,16 @@ export function MeetingNoteEditorPage() {
 
   if (meeting && meeting.projectId !== project.id) {
     return <div className={styles.stateCard}><strong>Meeting Note not found.</strong><span>The requested note is not available for this project.</span></div>
+  }
+
+  if (isEditing && meeting?.archivedAt) {
+    return (
+      <div className={styles.stateCard}>
+        <strong>Archived Meeting Notes are read-only.</strong>
+        <span>Restore this note before editing its content.</span>
+        <Link to={`${listPath}/${meeting.id}`}>View archived note</Link>
+      </div>
+    )
   }
 
   const handleSubmit = async (values) => {
