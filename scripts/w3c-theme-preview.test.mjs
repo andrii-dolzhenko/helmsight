@@ -343,7 +343,7 @@ test('Stage 10: five hybrid page modules resolve static theme tokens but preserv
   const plugin = w3cApprovedCssPilots()
   const cases = [
     ['ActionsPage', 98, 43, []],
-    ['MeetingsPage', 60, 32, ['color-mix(in srgb, currentColor 4%, transparent)']],
+    ['MeetingsPage', 88, 49, ['color-mix(in srgb, currentColor 4%, transparent)']],
     ['MilestonesPage', 81, 41, ['--roadmap-position', '--roadmap-item-width', '--roadmap-edge-width']],
     ['GovernancePage', 78, 42, ['--charter-grid-gap', '--charter-card-padding']],
     ['ReportsPage', 150, 84, ['color-mix(in srgb, currentColor 4%, transparent)']],
