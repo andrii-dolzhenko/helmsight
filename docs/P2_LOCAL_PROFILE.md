@@ -1,6 +1,6 @@
 # P2-B — Local Profile, Settings & Personalized Greeting
 
-Status: Local implementation and reviewed visual flow accepted (2026-10-13). PR review, CI and deployment verification remain pending; W3C strict 0/0 and ADR-042 sign-off remain open.
+Status: Merged into `main` via PR #6 (`6509f41`); production smoke test accepted on 2026-10-14. Strict W3C CSS 0/0, ADR-042 sign-off and comprehensive accessibility/HTML validation remain open.
 
 ## Contract
 
@@ -30,7 +30,17 @@ Status: Local implementation and reviewed visual flow accepted (2026-10-13). PR 
 - **Production CSS, forced W3C `css3svg`:** 28/28 assets verified, 0 errors, 0 unverified/pending. Normal (`warning=1`): **18/28 raw 0/0**, **76 warnings** affecting 10 chunks. Extended (`warning=2`): **0/28 raw 0/0**, **2,918 warnings** affecting all 28 chunks. No diagnostic suppression or warning-level reduction was used.
 - **Normal warnings:** 43 notices that dynamic CSS custom properties cannot be checked statically, 18 vendor-prefixed mask advisories, and 15 WebKit multiline-clamp advisories. These are classified by type, not proven harmless in every browser/state. Extended warnings primarily concern CSS cascade redefinitions and color/background pair checks; they are not equivalent to 2,918 application defects.
 - **Gate interpretation:** CSS error gate **PASS for this local build**; strict CSS 0/0 **NOT MET**; ADR-042 formal warning adjudication/sign-off **OPEN**. Refer to [`W3C_BATCH_AUDIT.md`](W3C_BATCH_AUDIT.md) and [`CSS_VALIDATION_POLICY.md`](CSS_VALIDATION_POLICY.md).
-- **Before merge/release:** inspect full Git diff including new files, run relevant standalone Node and CSS regression guards if required by the existing release policy, check CI, perform remaining targeted responsive/accessibility QA, and verify deployment after PR merge. Neither a PR nor a deployment is claimed here.
+- **Release follow-up:** the feature was merged via PR #6 and verified in production. Earlier local QA results remain historical evidence, not a claim that every check was rerun after merge. Full cross-browser/accessibility QA and outstanding validation sign-off remain open.
+
+## Post-merge production evidence — 2026-10-14
+
+- Pull request: [#6](https://github.com/andrii-dolzhenko/helmsight/pull/6), merged into `main`.
+- Merge commit: `6509f41`.
+- Production route: https://helmsight.vercel.app/settings.
+- Production smoke test: confirmed by the project owner on 2026-10-14.
+- The 228-test result and W3C CSS counts above belong to the earlier local QA snapshot; no new complete test run or independent CI audit is claimed here.
+- Strict raw W3C CSS 0/0 and ADR-042 formal sign-off remain open.
+- Formal dynamic-route HTML validation and comprehensive accessibility/cross-browser coverage are not established by the production smoke test.
 
 ## Architecture and navigation notes
 
