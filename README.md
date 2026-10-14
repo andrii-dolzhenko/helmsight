@@ -199,9 +199,13 @@ Merged to `main` via PR #4 (`d29253c`), with Vercel functional smoke checks reco
 
 ADR-042 warning-risk adjudication and formal sign-off remain open; deployment did not retroactively close that decision.
 
-### P2-B Local Profile & Settings — implemented on feature branch
+### P2-B Local Profile & Settings — merged and deployed
 
-`feature/p2-local-profile-settings` contains the local profile page, optional cropped image, immediate photo removal, first-name greeting, desktop avatar menu and mobile drawer integration. `Exit workspace` is a navigation action, **not** authentication or session termination. The feature is **not yet merged or verified on public deployments**. See [P2-B acceptance evidence and limitations](docs/P2_LOCAL_PROFILE.md).
+Merged into `main` via [PR #6](https://github.com/andrii-dolzhenko/helmsight/pull/6) (`6509f41`). The `/settings` profile workflow, avatar and personalized greeting are available in production; the project owner confirmed the production smoke test on 2026-10-14. `Exit workspace` remains navigation, not authentication or logout. See [P2-B acceptance evidence and limitations](docs/P2_LOCAL_PROFILE.md).
+
+### P2-C Global Actions — merged and deployed
+
+Merged into `main` via [PR #7](https://github.com/andrii-dolzhenko/helmsight/pull/7) (`c35a314`); release evidence was finalized through [PR #8](https://github.com/andrii-dolzhenko/helmsight/pull/8) (`8323f99`). The read-only portfolio-wide `/actions` register includes filters, KPIs, pagination and responsive layouts. Production smoke testing was accepted on 2026-10-13. See [P2-C release evidence](docs/P2_GLOBAL_ACTIONS.md).
 
 **Other P1–P3 capabilities — planned:** incremental delivery remains governed by the project backlog. Backend/API integration is not part of the current client-side implementation.
 
