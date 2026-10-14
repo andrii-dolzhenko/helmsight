@@ -121,3 +121,39 @@ Local verification on 2026-10-14:
 - Pull request, CI, Preview, merge commit and production smoke test: pending.
 
 This document describes the implemented local feature and open release gates. It does not assert that P2-01 has been merged or deployed.
+
+## P2-01 Release Handoff — 2026-10-14
+
+**Status:** Implementation and local verification completed; PR #10 awaiting merge.
+
+**Scope delivered:** Individual Meeting Notes Archive/Restore lifecycle; read-only protection for archived notes; Current/Archived history views; sorting and pagination; meeting-date validation; responsive UI; regression coverage.
+
+### Final verification evidence
+
+- ESLint: PASS.
+- Vitest: 265 passed across 62 files.
+- W3C tooling unit tests: 74 passed, 0 failed.
+- GitHub Pages production build with `--base=/helmsight/`: PASS.
+- GitHub Actions PR checks: 3 successful; GitHub Pages deployment skipped as expected for a pull request.
+- Vercel Preview deployment: successful for commit `f3bf575`.
+- PR: https://github.com/andrii-dolzhenko/helmsight/pull/10
+- Preview: https://helmsight-git-feature-p2-meeting-notes-8164a4-andrii-dolzhenko1.vercel.app/
+
+### Preview verification scope and accepted exception
+
+Landing Page and the demo project's Meeting Notes page were loaded and visually reviewed on Vercel Preview.
+
+The full Archive/Restore, sorting, pagination, date-validation and persistence scenario was tested locally, but was **not repeated end-to-end on Vercel Preview**. The project owner explicitly accepted skipping this duplicate Preview test because preparing substantial test data would add disproportionate effort.
+
+This is a recorded QA scope exception, **not** a claim that full Preview end-to-end testing passed.
+
+### Validation debt and remaining release checks
+
+- Official W3C CSS Normal audit: 30/30 assets verified; 0 errors, 117 warnings.
+- Official W3C CSS Extended audit: 30/30 assets verified; 0 errors, 3,076 warnings.
+- Strict global W3C 0-error/0-warning sign-off remains OPEN under ADR-042.
+- Formal dynamic-route HTML validation remains OPEN.
+- Production verification after merging PR #10 remains PENDING.
+- Successful CI does not imply closure of these outstanding validation items.
+
+This handoff supersedes earlier pending PR/CI/Preview status notes in this document. It closes the P2-01 implementation evidence, not the outstanding global validation obligations.
