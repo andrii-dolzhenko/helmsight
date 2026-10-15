@@ -35,6 +35,10 @@ export const router = createBrowserRouter([
         lazy: loadPage(() => import('../../pages/GlobalRisksPage/GlobalRisksPage.jsx'), 'GlobalRisksPage'),
       },
       {
+        path: '/metrics',
+        lazy: loadPage(() => import('../../pages/GlobalMetricsPage/GlobalMetricsPage.jsx'), 'GlobalMetricsPage'),
+      },
+      {
         path: '/reports',
         lazy: loadPage(() => import('../../pages/GlobalReportsPage/GlobalReportsPage.jsx'), 'GlobalReportsPage'),
       },
