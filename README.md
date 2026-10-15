@@ -33,6 +33,7 @@ HelmSight is a responsive project-delivery management application for Project Ma
 
 ### Metrics and Earned Value Management
 
+- **Global Metrics:** portfolio-wide read-only SPI/CPI status register with project drill-down, filters and archived-project opt-in (ADR-051; [implementation notes](docs/P2_GLOBAL_METRICS.md)).
 - Work-package baselines, measurement basis, and Budget at Completion (BAC).
 - Planned Value (PV), Earned Value (EV), and Actual Consumption (AC) snapshots.
 - Derived CV, SV, CPI, SPI, EAC, ETC, VAC, and TCPI where meaningful.

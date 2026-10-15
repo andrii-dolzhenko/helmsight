@@ -16,6 +16,7 @@ describe('Stage 28 initial route fallback', () => {
     ['landing page', '/'],
     ['projects list', '/projects'],
     ['global risks', '/risks'],
+    ['global metrics', '/metrics'],
     ['global reports', '/reports'],
     ['workspace settings', '/settings'],
     ['project overview', '/projects/demo-project'],
