@@ -98,25 +98,6 @@
   gap: 1rem;
 }
 
-.sidebarMessage {
-  display: grid;
-  gap: 0.2rem;
-  border-radius: var(--radius-md);
-  background: var(--color-inverse-surface);
-  color: var(--color-inverse-text);
-  padding: 0.95rem;
-}
-
-.sidebarMessage span {
-  opacity: 0.7;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-}
-
-.sidebarMessage strong {
-  font-size: 0.9rem;
-}
-
 .workspace {
   min-width: 0;
   background: var(--color-canvas);
@@ -367,12 +348,27 @@
     padding-top: 0.4rem;
   }
 
+  .mobileNavCloseButton {
+    border-color: color-mix(in srgb, var(--color-accent) 32%, var(--color-border));
+    background: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
+    color: var(--color-accent);
+  }
+
+  .mobileNavCloseButton svg {
+    stroke-width: 2.25;
+  }
+
+  .mobileDecisionLabSlot {
+    margin-top: auto;
+    flex: 0 0 auto;
+  }
+
   .mobileNavLink {
     color: var(--color-text);
   }
 
   .mobileNavFooter {
-    margin-top: auto;
+    margin-top: 0;
     display: grid;
     gap: 1rem;
     border-top: 1px solid var(--color-border);

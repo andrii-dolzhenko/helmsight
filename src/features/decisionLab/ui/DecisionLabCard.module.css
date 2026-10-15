@@ -1,0 +1,72 @@
+/* Shared green palette with PortfolioWelcomeBanner; blue brain remains the HelmSight accent. */
+.card {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 3.15rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.42rem 0.65rem;
+  overflow: hidden;
+  border: 1px solid rgb(111 213 163 / 26%);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 72% 62%, rgb(66 255 148 / 20%), transparent 16rem),
+    radial-gradient(circle at 48% 112%, rgb(36 255 124 / 16%), transparent 19rem),
+    linear-gradient(105deg, #062516 0%, #07351e 45%, #07502c 69%, #082c1a 100%);
+  color: #f5fbf7;
+  padding: 0.78rem;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), 0 0.7rem 1.7rem rgb(9 31 20 / 14%);
+  transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+.card:hover { border-color: #7be7ac; box-shadow: 0 0.9rem 1.7rem rgb(9 31 20 / 22%); transform: translateY(-2px); }
+.card:focus-visible, .mobileCard:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+.card:active { transform: translateY(0); }
+.visual { display: flex; align-items: center; min-width: 0; }
+.brainCircle { display: grid; width: 3.1rem; height: 3.1rem; flex: 0 0 auto; place-items: center; border: 1px solid rgb(48 231 194 / 28%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #086b70, #032d33 70%); }
+.brain { width: 2.8rem; height: 2.8rem; filter: drop-shadow(0 0 6px rgb(27 202 238 / 23%)); }
+/* Match the full 3.1rem brain circle height: tallest bar starts at its top, all bars share its baseline. */
+.bars { position: absolute; right: 0.9rem; top: calc(0.78rem + 1px); display: flex; height: 3.1rem; align-items: flex-end; gap: 0.28rem; opacity: 0.34; pointer-events: none; }
+.bars i { display: block; width: 0.35rem; border-radius: 99px 99px 0 0; background: linear-gradient(#60f4b3, #0c865e); }
+.bars i:nth-child(1) { height: 35%; }
+.bars i:nth-child(2) { height: 58%; }
+.bars i:nth-child(3) { height: 46%; }
+.bars i:nth-child(4) { height: 77%; }
+.bars i:nth-child(5) { height: 100%; }
+/* Keep Decision / Lab on two lines beside the brain and leave the right-hand bars visible. */
+.card strong {
+  position: relative;
+  z-index: 1;
+  width: min-content;
+  max-width: 100%;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  line-height: 1.13;
+}
+.tagline { grid-column: 1 / -1; color: #d3efdf; font-size: 0.76rem; line-height: 1.35; }
+.open { grid-column: 1 / -1; display: flex; min-height: 2.3rem; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid rgb(171 239 212 / 77%); border-radius: 0.7rem; background: rgb(3 16 20 / 19%); font-size: 0.74rem; font-weight: 800; }
+.card:hover .open { background: rgb(31 221 179 / 14%); }
+.mobileCard {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.65rem;
+  border: 1px solid rgb(111 213 163 / 30%);
+  border-radius: var(--radius-md);
+  background:
+    radial-gradient(circle at 75% 50%, rgb(66 255 148 / 14%), transparent 15rem),
+    linear-gradient(105deg, #062516 0%, #07351e 45%, #07502c 69%, #082c1a 100%);
+  color: #f5fbf7;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.mobileCard:hover { border-color: #7be7ac; }
+.mobileCard span:last-child { margin-left: auto; color: #b0f6db; }
+.mobileBrain { width: 2rem; height: 2rem; flex: 0 0 auto; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }

@@ -9,19 +9,14 @@ import { selectProfile } from '../../features/profile/model/profileSlice.js'
 import { getProfileFullName } from '../../features/profile/lib/profile.js'
 import { useAppSelector } from '../../app/store/hooks.js'
 import styles from './AppLayout.module.css'
+import { DecisionLabCard } from '../../features/decisionLab/ui/DecisionLabCard.jsx'
+import { DecisionLabModal } from '../../features/decisionLab/ui/DecisionLabModal.jsx'
+import { CloseIcon } from '../../shared/ui/CloseIcon/CloseIcon.jsx'
 
 function MenuIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M4 7h16M4 12h16M4 17h16" />
-    </svg>
-  )
-}
-
-function CloseIcon() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m6 6 12 12M18 6 6 18" />
     </svg>
   )
 }
@@ -58,6 +53,8 @@ function AccountSummary({ onNavigate }) {
 export function AppLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isDecisionLabOpen, setIsDecisionLabOpen] = useState(false)
+  const decisionLabTriggerRef = useRef(null)
   const searchTriggerRef = useRef(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -117,6 +114,12 @@ export function AppLayout() {
     return () => document.removeEventListener('keydown', handleShortcut)
   }, [])
 
+  const openDecisionLab = (event, { mobile = false } = {}) => {
+    decisionLabTriggerRef.current = mobile ? mobileMenuButtonRef.current : event.currentTarget
+    if (mobile) setIsMobileNavOpen(false)
+    setIsDecisionLabOpen(true)
+  }
+
   const openSearch = (event) => {
     searchTriggerRef.current = event.currentTarget
     setIsSearchOpen(true)
@@ -165,7 +168,7 @@ export function AppLayout() {
   }
 
   return (
-    <div className={styles.shell} data-app-shell="true">
+    <div className={styles.shell} data-app-shell="true" inert={isDecisionLabOpen}>
       <aside className={styles.sidebar} data-print-hide="true">
         <Brand to="/overview" />
 
@@ -214,10 +217,7 @@ export function AppLayout() {
         </nav>
 
         <div className={styles.sidebarFooter}>
-          <div className={styles.sidebarMessage}>
-            <strong>A clearer tomorrow.</strong>
-            <span>Turn complexity into progress.</span>
-          </div>
+          <DecisionLabCard onOpen={openDecisionLab} />
         </div>
       </aside>
 
@@ -259,6 +259,9 @@ export function AppLayout() {
       </div>
 
       {isSearchOpen ? <GlobalSearch isOpen={true} onClose={closeSearch} /> : null}
+      {isDecisionLabOpen ? (
+        <DecisionLabModal onClose={() => setIsDecisionLabOpen(false)} returnFocusRef={decisionLabTriggerRef} />
+      ) : null}
 
       {isMobileNavOpen ? (
         <div className={styles.mobileNavLayer} data-print-hide="true">
@@ -278,7 +281,7 @@ export function AppLayout() {
               <Brand to="/overview" />
               <button
                 ref={mobileCloseButtonRef}
-                className={styles.mobileMenuButton}
+                className={`${styles.mobileMenuButton} ${styles.mobileNavCloseButton}`}
                 type="button"
                 aria-label="Close navigation menu"
                 onClick={() => closeMobileNav({ restoreFocus: true })}
@@ -334,6 +337,10 @@ export function AppLayout() {
                 Reports
               </NavLink>
             </nav>
+
+            <div className={styles.mobileDecisionLabSlot}>
+              <DecisionLabCard mobile onOpen={(event) => openDecisionLab(event, { mobile: true })} />
+            </div>
 
             <div className={styles.mobileNavFooter}>
               <div className={styles.mobileAppearanceRow}>
