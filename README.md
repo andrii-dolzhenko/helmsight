@@ -10,6 +10,8 @@ HelmSight is a responsive project-delivery management application for Project Ma
 
 ## Features
 
+**P2 Decision Lab (feature branch; not yet merged):** a three-question daily PM training session drawn from nine curated scenarios in a repeating three-day cycle. Open it from the bottom sidebar card or mobile navigation; answers and feedback progress persist locally, and the modal supports Escape, focus restoration and answer review. Notifications are deferred to P2-12. See [Decision Lab implementation notes](docs/P2_DECISION_LAB.md).
+
 ### Portfolio and project workspace
 
 - Active and archived projects, restore actions, and persistent **Grid / List** views.
