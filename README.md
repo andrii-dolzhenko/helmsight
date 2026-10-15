@@ -136,6 +136,10 @@ The URLs below are client-side routes; `:projectId` and similar segments are dyn
 ```text
 /
 /projects
+/overview
+/actions
+/risks                            # ADR-049: portfolio-wide Risk Register
+/reports                          # ADR-048: portfolio-wide Weekly Reports discovery
 /settings                         # P2-B: local profile (pending merge)
 /projects/new
 /projects/:projectId
@@ -206,6 +210,14 @@ Merged into `main` via [PR #6](https://github.com/andrii-dolzhenko/helmsight/pul
 ### P2-C Global Actions — merged and deployed
 
 Merged into `main` via [PR #7](https://github.com/andrii-dolzhenko/helmsight/pull/7) (`c35a314`); release evidence was finalized through [PR #8](https://github.com/andrii-dolzhenko/helmsight/pull/8) (`8323f99`). The read-only portfolio-wide `/actions` register includes filters, KPIs, pagination and responsive layouts. Production smoke testing was accepted on 2026-10-13. See [P2-C release evidence](docs/P2_GLOBAL_ACTIONS.md).
+
+### P2 Global Reports — implementation in progress (ADR-048)
+
+Global `/reports` discovers existing Weekly Status Reports across projects, with portfolio KPIs, separate report/archive and project/archive scopes, filtering, ordering, 10-item pagination and responsive rows/cards. It is a read-only portfolio surface: report creation, editing, lifecycle changes and printing remain inside each project. This work is prepared in the uploaded `feature/p2-lessons-learned` snapshot and **is not merged or deployed**. See [implementation and QA notes](docs/P2_GLOBAL_REPORTS.md).
+
+### P2 Global Risks — implementation awaiting final QA (ADR-049)
+
+Global `/risks` is a read-only portfolio risk register using existing Redux/domain services. It includes Active, High/Critical, Needs attention and Closed KPIs; project/status/severity/attention filters; owner search; sorting; 10-item pagination; and responsive cards. Source project Risk Registers own all writes. The tablet layout uses three filters on the first row, two plus Reset on the second; risk cards are 2 columns on tablet and 1 on mobile, with 2×2 KPI cards on mobile. UI review was accepted locally on 2026-10-15. macOS lint, 332 Vitest tests, 74 Node tests and the production build passed; W3C CSS has zero errors but nonzero warnings in both full-asset profiles. HTML and release validation remain open. See the [macOS QA evidence](docs/P2_GLOBAL_REGISTERS_QA_2026-10-15.md). See [ADR-049 implementation and QA notes](docs/P2_GLOBAL_RISKS.md).
 
 **Other P1–P3 capabilities — planned:** incremental delivery remains governed by the project backlog. Backend/API integration is not part of the current client-side implementation.
 

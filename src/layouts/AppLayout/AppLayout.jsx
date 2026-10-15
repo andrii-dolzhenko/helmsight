@@ -195,6 +195,22 @@ export function AppLayout() {
           >
             Actions
           </NavLink>
+          <NavLink
+            to="/risks"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            Risks
+          </NavLink>
+          <NavLink
+            to="/reports"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            Reports
+          </NavLink>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -298,6 +314,24 @@ export function AppLayout() {
                 onClick={() => closeMobileNav()}
               >
                 Actions
+              </NavLink>
+              <NavLink
+                to="/risks"
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
+                }
+                onClick={() => closeMobileNav()}
+              >
+                Risks
+              </NavLink>
+              <NavLink
+                to="/reports"
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
+                }
+                onClick={() => closeMobileNav()}
+              >
+                Reports
               </NavLink>
             </nav>
 
