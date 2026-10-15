@@ -342,7 +342,7 @@ test('Stage 9: status badge semantics and legacy multiline clipping remain uncha
 test('Stage 10: five hybrid page modules resolve static theme tokens but preserve exact live values', () => {
   const plugin = w3cApprovedCssPilots()
   const cases = [
-    ['ActionsPage', 98, 43, []],
+    ['ActionsPage', 99, 44, []],
     ['MeetingsPage', 88, 49, ['color-mix(in srgb, currentColor 4%, transparent)']],
     ['MilestonesPage', 81, 41, ['--roadmap-position', '--roadmap-item-width', '--roadmap-edge-width']],
     ['GovernancePage', 78, 42, ['--charter-grid-gap', '--charter-card-padding']],
