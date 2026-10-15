@@ -26,6 +26,7 @@ HelmSight is a responsive project-delivery management application for Project Ma
 - **Risks:** probability × impact scoring, severity levels, risk matrix, and Grid / List views.
 - **Milestones:** lifecycle management, progress, due-soon/overdue indicators, and roadmap.
 - **Management Actions:** owners, priorities, progress, and attention states.
+- **Lessons Learned (P2):** project-scoped knowledge register with validated create/edit, search, category filter, sorting, detail, draft recovery, and confirmed deletion. See [Lessons Learned](docs/P2_LESSONS_LEARNED.md).
 - Archived projects remain **read-only** until restored.
 
 ### Metrics and Earned Value Management

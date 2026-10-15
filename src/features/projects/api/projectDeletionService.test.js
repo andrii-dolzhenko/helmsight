@@ -58,7 +58,9 @@ describe('projectDeletionService', () => {
     const [project] = await projectsService.list()
     const archived = await projectsService.archive(project.id)
     const risks = [{ id: 'target-risk', projectId: project.id }]
+    const lessons = [{ id: 'target-lesson', projectId: project.id }]
     storageAdapter.write('risks', risks)
+    storageAdapter.write('lessonsLearned', lessons)
 
     const originalWrite = storageAdapter.write.bind(storageAdapter)
     const writeSpy = vi.spyOn(storageAdapter, 'write').mockImplementation((key, value) => {
@@ -82,6 +84,7 @@ describe('projectDeletionService', () => {
       )
       expect(await projectsService.getById(project.id)).toEqual(archived)
       expect(storageAdapter.read('risks')).toEqual(risks)
+      expect(storageAdapter.read('lessonsLearned')).toEqual(lessons)
       expect(storageAdapter.read('pendingProjectDeletion')).toBeNull()
     } finally {
       writeSpy.mockRestore()
@@ -114,6 +117,23 @@ describe('projectDeletionService', () => {
     expect(await projectsService.getById(target.id)).toBeNull()
     expect(await projectsService.getById(demoProject.id)).not.toBeNull()
     expect(storageAdapter.read('risks')).toEqual([risks[1]])
+    expect(storageAdapter.read('pendingProjectDeletion')).toBeNull()
+  })
+
+  it('rejects invalid lessons storage before writing a deletion journal', async () => {
+    const [project] = await projectsService.list()
+    const archived = await projectsService.archive(project.id)
+    storageAdapter.write('lessonsLearned', { invalid: true })
+
+    await expect(
+      projectDeletionService.deleteArchivedProject({
+        projectId: project.id,
+        confirmationName: project.name,
+      }),
+    ).rejects.toThrow('Invalid stored collection: lessonsLearned')
+
+    expect(await projectsService.getById(project.id)).toEqual(archived)
+    expect(storageAdapter.read('lessonsLearned')).toEqual({ invalid: true })
     expect(storageAdapter.read('pendingProjectDeletion')).toBeNull()
   })
 
@@ -169,6 +189,7 @@ describe('projectDeletionService', () => {
         'evmMetrics',
         'weeklyReports',
         'meetingNotes',
+        'lessonsLearned',
       ])
 
       const firstDestructiveIndex = changes.findIndex(
@@ -214,17 +235,27 @@ describe('projectDeletionService', () => {
     ]
     storageAdapter.write('risks', risks)
 
+    const lessons = [
+      { id: 'target-lesson', projectId: target.id },
+      { id: 'demo-lesson', projectId: demoProject.id },
+    ]
+    storageAdapter.write('lessonsLearned', lessons)
+
     const removedDraft = `draft:risk:${target.id}:old`
     const remainingDraft = `draft:risk:${target.id}:new`
+    const lessonDraft = `draft:lesson-learned:${target.id}:new`
+    const otherLessonDraft = `draft:lesson-learned:${demoProject.id}:new`
 
     storageAdapter.write(remainingDraft, { title: 'Unsaved risk' })
+    storageAdapter.write(lessonDraft, { title: 'Unsaved lesson' })
+    storageAdapter.write(otherLessonDraft, { title: 'Other lesson' })
     storageAdapter.write('draft:project:new', { name: 'Global draft' })
 
     storageAdapter.write('pendingProjectDeletion', {
       version: 1,
       projectId: target.id,
       projectName: target.name,
-      draftKeys: [removedDraft, remainingDraft],
+      draftKeys: [removedDraft, remainingDraft, lessonDraft],
       createdAt: new Date().toISOString(),
     })
 
@@ -233,7 +264,10 @@ describe('projectDeletionService', () => {
     expect(await projectsService.getById(target.id)).toBeNull()
     expect(await projectsService.getById(demoProject.id)).not.toBeNull()
     expect(storageAdapter.read('risks')).toEqual([risks[1]])
+    expect(storageAdapter.read('lessonsLearned')).toEqual([lessons[1]])
     expect(storageAdapter.read(remainingDraft)).toBeNull()
+    expect(storageAdapter.read(lessonDraft)).toBeNull()
+    expect(storageAdapter.read(otherLessonDraft)).toEqual({ title: 'Other lesson' })
     expect(storageAdapter.read('draft:project:new')).toEqual({
       name: 'Global draft',
     })
@@ -345,6 +379,61 @@ describe('projectDeletionService', () => {
     expect(storageAdapter.read('risks')).toEqual([risks[1]])
   })
 
+  it('recovers if the lessons collection fails during the cascade', async () => {
+    const [project] = await projectsService.list()
+    const archived = await projectsService.archive(project.id)
+    const lessons = [
+      { id: 'target-lesson', projectId: project.id },
+      { id: 'other-lesson', projectId: 'other-project' },
+    ]
+    storageAdapter.write('lessonsLearned', lessons)
+    const lessonDraft = `draft:lesson-learned:${project.id}:new`
+    storageAdapter.write(lessonDraft, { title: 'Draft lesson' })
+
+    const originalWrite = storageAdapter.write.bind(storageAdapter)
+    let failOnce = true
+    const writeSpy = vi.spyOn(storageAdapter, 'write').mockImplementation(
+      (key, value) => {
+        if (key === 'lessonsLearned' && failOnce) {
+          failOnce = false
+          throw new Error('Lesson storage write failed')
+        }
+        return originalWrite(key, value)
+      },
+    )
+
+    try {
+      await expect(
+        projectDeletionService.deleteArchivedProject({
+          projectId: project.id,
+          confirmationName: project.name,
+        }),
+      ).rejects.toThrow('Lesson storage write failed')
+
+      expect(await projectsService.getById(project.id)).toEqual(archived)
+      expect(storageAdapter.read('lessonsLearned')).toEqual(lessons)
+      expect(storageAdapter.read(lessonDraft)).not.toBeNull()
+      expect(storageAdapter.read('pendingProjectDeletion')).toEqual(
+        expect.objectContaining({
+          projectId: project.id,
+          draftKeys: [lessonDraft],
+        }),
+      )
+    } finally {
+      writeSpy.mockRestore()
+    }
+
+    await projectDeletionService.recoverPendingDeletion()
+
+    expect(await projectsService.getById(project.id)).toBeNull()
+    expect(storageAdapter.read('lessonsLearned')).toEqual([lessons[1]])
+    expect(storageAdapter.read(lessonDraft)).toBeNull()
+    expect(storageAdapter.read('pendingProjectDeletion')).toBeNull()
+
+    await projectDeletionService.recoverPendingDeletion()
+    expect(storageAdapter.read('lessonsLearned')).toEqual([lessons[1]])
+  })
+
   it('deletes every owned collection and draft without affecting unrelated data', async () => {
     const [atlas] = await projectsService.list()
     const otherProject = {
@@ -363,6 +452,7 @@ describe('projectDeletionService', () => {
       'managementActions',
       'weeklyReports',
       'meetingNotes',
+      'lessonsLearned',
     ]
 
     for (const key of collectionKeys) {
@@ -394,6 +484,8 @@ describe('projectDeletionService', () => {
       `draft:meeting-note:${atlas.id}:m1`,
       `draft:weekly-report:${atlas.id}:report-1`,
       `draft:weekly-report:${atlas.id}:new:2026-10-09`,
+      `draft:lesson-learned:${atlas.id}:new`,
+      `draft:lesson-learned:${atlas.id}:lesson-1`,
     ]
 
     for (const key of ownedDrafts) {
@@ -403,6 +495,7 @@ describe('projectDeletionService', () => {
     const preservedDrafts = [
       'draft:project:new',
       `draft:risk:${otherProject.id}:new`,
+      `draft:lesson-learned:${otherProject.id}:new`,
       `draft:unknown:${atlas.id}:new`,
     ]
 
@@ -533,6 +626,9 @@ describe('projectDeletionService', () => {
     ['unsupported version', { version: 99 }],
     ['foreign project draft', {
       draftKeys: ['draft:risk:other-project:new'],
+    }],
+    ['foreign lesson draft', {
+      draftKeys: ['draft:lesson-learned:other-project:new'],
     }],
   ])('rejects an invalid journal without modifying project data: %s', async (_, override) => {
     const [project] = await projectsService.list()

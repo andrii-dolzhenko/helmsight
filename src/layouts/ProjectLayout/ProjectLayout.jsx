@@ -20,6 +20,7 @@ const sections = [
   { label: 'Reports', path: 'reports' },
   { label: 'Actions', path: 'actions' },
   { label: 'Meetings', path: 'meetings' },
+  { label: 'Lessons Learned', path: 'lessons' },
 ]
 
 export function ProjectLayout() {
