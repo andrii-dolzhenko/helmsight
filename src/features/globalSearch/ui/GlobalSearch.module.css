@@ -1,0 +1,36 @@
+.layer { position: fixed; inset: 0; z-index: 120; display: grid; align-items: start; justify-items: center; padding: min(11vh, 6rem) 1rem 1rem; }
+.backdrop { position: absolute; inset: 0; border: 0; background: rgb(5 19 13 / 65%); cursor: default; }
+.panel { position: relative; width: min(42rem, 100%); max-height: min(78dvh, 42rem); display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: 0 2rem 6rem rgb(0 0 0 / 32%); color: var(--color-text); }
+.header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.25rem 1.4rem 0.75rem; }
+.eyebrow { color: var(--color-accent); font-size: 0.67rem; font-weight: 850; text-transform: uppercase; letter-spacing: 0.12em; }
+.header h2 { margin: 0.25rem 0 0; font-family: var(--font-display); font-size: 1.8rem; }
+.close { width: 2.4rem; height: 2.4rem; display: grid; place-items: center; flex: 0 0 auto; border: 1px solid var(--color-border); border-radius: 50%; background: var(--color-surface-elevated); color: var(--color-text); cursor: pointer; padding: 0; }
+.close svg { display: block; width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.close:hover { border-color: var(--color-accent); background: var(--color-surface); }
+.close:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.recentToolbar { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.6rem 1.45rem 0; color: var(--color-text-muted); font-size: 0.75rem; }
+.recentToolbar button { border: 0; background: transparent; color: var(--color-accent); font: inherit; font-weight: 800; cursor: pointer; padding: 0.35rem 0; }
+.recentToolbar button:hover { text-decoration: underline; }
+.recentToolbar button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.field { display: flex; align-items: center; gap: 0.65rem; margin: 0 1.25rem 0.65rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-elevated); padding: 0.35rem 0.85rem; }
+.field:focus-within { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.field input { min-width: 0; flex: 1; min-height: 2.6rem; border: 0; background: transparent; color: var(--color-text); outline: none; font: inherit; font-size: 0.93rem; }
+.field input::placeholder { color: var(--color-text-muted); }
+.searchSymbol { font-size: 1.5rem; color: var(--color-text-muted); }
+.shortcut { flex: 0 0 auto; color: var(--color-text-muted); font-size: 0.68rem; font-weight: 800; }
+.results { overflow-y: auto; min-height: 7rem; padding: 0.4rem 0.9rem 1rem; }
+.group { display: grid; gap: 0.1rem; padding-top: 0.6rem; }
+.group h3 { margin: 0 0 0.2rem; padding: 0.3rem 0.65rem; color: var(--color-text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; }
+.result { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.4rem; border-radius: var(--radius-md); padding: 0.6rem 0.7rem; color: var(--color-text); text-decoration: none; }
+.result:hover, .result.selected, .result:focus-visible { outline: none; background: var(--color-surface-elevated); }
+.result:focus-visible { box-shadow: inset 0 0 0 2px var(--color-accent); }
+.result > span:first-child { min-width: 0; display: grid; gap: 0.25rem; }
+.result strong { font-size: 0.88rem; overflow-wrap: anywhere; }
+.result small { color: var(--color-text-muted); font-size: 0.75rem; overflow-wrap: anywhere; }
+.result > span:last-child { color: var(--color-accent); font-weight: 850; }
+.message { margin: 0; padding: 1.5rem 0.7rem; color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.5; }
+.message button { border: none; background: transparent; color: var(--color-accent); font: inherit; cursor: pointer; text-decoration: underline; }
+.warning { margin: 0.2rem 0; padding: 0.7rem; border-radius: var(--radius-md); background: var(--color-surface-elevated); color: var(--color-text); font-size: 0.78rem; }
+.footer { display: flex; justify-content: center; gap: 0.5rem; border-top: 1px solid var(--color-border); padding: 0.75rem; color: var(--color-text-muted); font-size: 0.7rem; }
+@media (max-width: 520px) { .layer { padding: 0; } .panel { width: 100%; max-height: 90dvh; border-radius: 0 0 var(--radius-lg) var(--radius-lg); } .header { padding: 1rem; } .field { margin: 0 0.8rem 0.5rem; } .footer { font-size: 0.63rem; } }
+@media (prefers-reduced-motion: reduce) { .panel { scroll-behavior: auto; } }

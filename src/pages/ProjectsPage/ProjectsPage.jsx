@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/store/hooks.js'
-import { selectProfileFirstName } from '../../features/profile/model/profileSlice.js'
 import {
   selectProjectsViewMode,
   selectProjectsViewModeError,
@@ -59,7 +58,7 @@ import {
 import { DeleteProjectDialog } from '../../features/projects/ui/DeleteProjectDialog.jsx'
 import { storageAdapter } from '../../shared/services/storage/storageAdapter.js'
 import { StatusToast } from '../../shared/ui/StatusToast/StatusToast.jsx'
-import { getDailyInsight } from './dailyInsights.js'
+import { ProjectsWorkspaceBanner } from '../../features/projects/ui/ProjectsWorkspaceBanner.jsx'
 import styles from './ProjectsPage.module.css'
 
 const DELETION_TOAST_KEY = 'helmsight:project-deleted-toast'
@@ -93,56 +92,6 @@ function ListIcon() {
       <circle cx="4" cy="12" r="1" />
       <circle cx="4" cy="18" r="1" />
     </svg>
-  )
-}
-
-function getPortfolioGreeting() {
-  const hour = new Date().getHours()
-
-  if (hour < 12) return 'Good morning'
-  if (hour < 18) return 'Good afternoon'
-  return 'Good evening'
-}
-
-function ProjectsHeroBanner({ activeProjectsCount, onViewProjects }) {
-  const activeProjectLabel = activeProjectsCount === 1 ? 'active project' : 'active projects'
-  const firstName = useAppSelector(selectProfileFirstName)
-  const greeting = getPortfolioGreeting()
-  const greetingText = `${greeting}${firstName ? `, ${firstName}` : ''}.`
-  const dailyInsight = getDailyInsight()
-
-  return (
-    <section className={styles.projectsHero} aria-labelledby="projects-hero-title">
-      <div className={styles.heroRibs} aria-hidden="true" />
-      <div className={styles.heroSwoop} aria-hidden="true" />
-      <div className={styles.heroGlow} aria-hidden="true" />
-
-      <div className={styles.projectsHeroMain}>
-        <span className={styles.projectsHeroEyebrow}>Portfolio briefing</span>
-        <h2 id="projects-hero-title">{greetingText}</h2>
-        <p>
-          You have <strong>{activeProjectsCount}</strong> {activeProjectLabel} in the portfolio.
-          Keep delivery context visible and move from signal to decision with less noise.
-        </p>
-
-        <div className={styles.projectsHeroActions}>
-          <button
-            className={styles.projectsHeroPrimary}
-            type="button"
-            aria-controls="projects-portfolio"
-            onClick={onViewProjects}
-          >
-            View projects <span aria-hidden="true">→</span>
-          </button>
-        </div>
-      </div>
-
-      <aside className={styles.dailyInsight} aria-label="Daily insight">
-        <span>Daily insight</span>
-        <blockquote>“{dailyInsight.quote}”</blockquote>
-        <p>— {dailyInsight.author}</p>
-      </aside>
-    </section>
   )
 }
 
@@ -194,9 +143,14 @@ function ProjectActions({ project, archived, onRestore, onDelete }) {
           data-ui-button="danger"
           data-ui-size="sm"
           type="button"
+          aria-label="Delete permanently"
+          title="Delete permanently"
           onClick={() => onDelete(project)}
         >
-          Delete permanently
+          <span className={styles.deleteLabel}>Delete permanently</span>
+          <svg className={styles.deleteIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 7h16M10 4h4M6.5 7l.8 13h9.4l.8-13M10 11v5M14 11v5" />
+          </svg>
         </button>
       ) : null}
     </div>
@@ -602,10 +556,7 @@ export function ProjectsPage() {
         message={deletionToast}
         onDismiss={() => setDeletionToast(null)}
       />
-      <ProjectsHeroBanner
-        activeProjectsCount={activeProjects.length}
-        onViewProjects={handleViewProjects}
-      />
+      <ProjectsWorkspaceBanner onViewProjects={handleViewProjects} />
 
       <header className={styles.header} data-ui-page-header id="projects-portfolio">
         <span className={styles.eyebrow}>Portfolio</span>

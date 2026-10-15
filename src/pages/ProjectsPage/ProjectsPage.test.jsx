@@ -30,22 +30,12 @@ describe('ProjectsPage view modes', () => {
     window.scrollTo = vi.fn()
   })
 
-  it('greets with first name only and migrates old saved display names', async () => {
-    const first = renderProjectsPage()
-    await screen.findByText('Atlas Modernization')
-    expect(screen.getByRole('heading', { name: /Good (morning|afternoon|evening), Andrii\./ })).toBeInTheDocument()
-
-    first.unmount()
-    storageAdapter.write('profile', { displayName: 'Alex Morgan' })
+  it('shows the dedicated projects banner without duplicating the Overview welcome', async () => {
     renderProjectsPage()
-    await screen.findByText('Atlas Modernization')
-    expect(screen.getByRole('heading', { name: /Good (morning|afternoon|evening), Alex\./ })).toBeInTheDocument()
-  })
-
-  it('uses the generic greeting for an explicitly cleared name', () => {
-    storageAdapter.write('profile', { displayName: '' })
-    renderProjectsPage()
-    expect(screen.getByRole('heading', { name: /^Good (morning|afternoon|evening)\.$/ })).toBeInTheDocument()
+    expect(await screen.findByText('Every project. One clear view.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /view projects/i })).toBeInTheDocument()
+    expect(screen.queryByText(/Good (morning|afternoon|evening)/)).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Daily insight')).not.toBeInTheDocument()
   })
 
   it('switches to list view and persists the presentation preference', async () => {

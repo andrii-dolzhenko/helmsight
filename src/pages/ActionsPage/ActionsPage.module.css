@@ -725,3 +725,46 @@
 .lifecycleSecondary:not(:disabled):hover,.editButton:hover { border-color:var(--color-accent); background:color-mix(in srgb,var(--color-accent) 14%,transparent); transform:translateY(-1px); }
 .deleteButton:not(:disabled):hover { border-color:color-mix(in srgb,var(--color-danger) 42%,var(--color-border)); background:color-mix(in srgb,var(--color-danger) 7%,transparent); color:var(--color-danger); transform:translateY(-1px); }
 .primaryButton:active,.lifecyclePrimary:not(:disabled):active,.lifecycleSecondary:not(:disabled):active,.editButton:active,.deleteButton:not(:disabled):active { transform:translateY(0); }
+
+/* Laptop list view: reclaim room for readable metadata before collapsing to one column. */
+.deleteIcon { display: none; width: 1.15rem; height: 1.15rem; }
+@media (min-width: 1181px) and (max-width: 1650px) {
+  .listRow {
+    /* Reserve the same action space for 2, 3 or 4 buttons so metadata stays aligned. */
+    grid-template-columns: minmax(8rem, 0.95fr) minmax(28rem, 2.2fr) 18.25rem;
+    gap: 0.6rem;
+  }
+  /* Reserve space for all four actions, but return the unused width to metadata.
+     Keep the action group right-aligned and metadata identical across rows. */
+  .listRow .actions { width: 100%; min-width: 0; gap: 0.4rem; }
+  .listMeta { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr) minmax(6rem, 1.15fr) minmax(0, 1fr); }
+  .listMeta div { padding-inline: 0.5rem; }
+}
+@media (min-width: 761px) and (max-width: 1650px) {
+  .listRow .deleteButton {
+    display: grid;
+    place-items: center;
+    flex: 0 0 2.35rem;
+    width: 2.35rem;
+    min-width: 2.35rem;
+    height: 2.35rem;
+    padding: 0;
+    border-radius: 50%;
+  }
+  .listRow .deleteLabel { display: none; }
+  .listRow .deleteIcon { display: block; }
+}
+
+/* Icon-only deletion keeps keyboard focus and press feedback as visible as the text action. */
+.deleteButton:focus-visible {
+  outline: 2px solid var(--color-danger);
+  outline-offset: 3px;
+}
+@media (min-width: 1181px) and (max-width: 1380px) {
+  /* A narrower workspace should stack instead of squeezing the five metadata cells. */
+  .listRow { grid-template-columns: minmax(0, 1fr); }
+  .listRow .actions { width: 100%; min-width: 0; justify-content: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deleteButton { transition: none; }
+}

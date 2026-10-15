@@ -685,8 +685,48 @@
     padding: 1rem;
   }
 
+  /* Give the heading its icon track, then let the action and description
+     span the entire card instead of inheriting the heading's left inset. */
   .sectionTitleGroup {
-    gap: 0.65rem;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    column-gap: 0.65rem;
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .sectionTitleGroup > div,
+  :root .sectionTitleGroup [data-ui-section-title-row] {
+    display: contents;
+  }
+
+  .sectionTitleGroup > .sectionIcon {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .sectionTitleGroup .sectionEyebrow {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sectionTitleGroup h3 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  :root .sectionTitleGroup [data-ui-section-title-row] > button {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    width: 100%;
+    justify-self: stretch;
+    margin-top: 0.7rem;
+  }
+
+  .sectionTitleGroup > div > p {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    margin-top: 0.45rem;
   }
 
   .sectionIcon {

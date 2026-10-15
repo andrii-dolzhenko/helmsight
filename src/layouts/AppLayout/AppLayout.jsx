@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { Brand } from '../../shared/ui/Brand/Brand.jsx'
 import { ThemeControl } from '../../features/preferences/ui/ThemeControl.jsx'
+import { GlobalSearch } from '../../features/globalSearch/ui/GlobalSearch.jsx'
 import { ProfileAvatar } from '../../features/profile/ui/ProfileAvatar.jsx'
 import { ProfileMenu } from '../../features/profile/ui/ProfileMenu.jsx'
 import { selectProfile } from '../../features/profile/model/profileSlice.js'
@@ -21,6 +22,15 @@ function CloseIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="m6 6 12 12M18 6 6 18" />
+    </svg>
+  )
+}
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m16 16 5 5" />
     </svg>
   )
 }
@@ -47,6 +57,8 @@ function AccountSummary({ onNavigate }) {
 
 export function AppLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const searchTriggerRef = useRef(null)
   const location = useLocation()
   const navigate = useNavigate()
   const { pathname } = location
@@ -94,6 +106,27 @@ export function AppLayout() {
     }
   }, [isMobileNavOpen])
 
+  useEffect(() => {
+    const handleShortcut = (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+    document.addEventListener('keydown', handleShortcut)
+    return () => document.removeEventListener('keydown', handleShortcut)
+  }, [])
+
+  const openSearch = (event) => {
+    searchTriggerRef.current = event.currentTarget
+    setIsSearchOpen(true)
+  }
+
+  const closeSearch = () => {
+    setIsSearchOpen(false)
+    searchTriggerRef.current?.focus()
+  }
+
   const closeMobileNav = ({ restoreFocus = false } = {}) => {
     setIsMobileNavOpen(false)
 
@@ -134,9 +167,17 @@ export function AppLayout() {
   return (
     <div className={styles.shell} data-app-shell="true">
       <aside className={styles.sidebar} data-print-hide="true">
-        <Brand to="/projects" />
+        <Brand to="/overview" />
 
         <nav className={styles.navigation} aria-label="Main navigation">
+          <NavLink
+            to="/overview"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            Overview
+          </NavLink>
           <NavLink
             to="/projects"
             className={({ isActive }) =>
@@ -166,8 +207,11 @@ export function AppLayout() {
 
       <div className={styles.workspace}>
         <header className={styles.mobileHeader} data-print-hide="true">
-          <Brand to="/projects" />
+          <Brand to="/overview" />
           <div className={styles.mobileActions}>
+            <button type="button" className={styles.searchIconButton} aria-label="Search portfolio" onClick={openSearch} title="Search portfolio">
+              <SearchIcon />
+            </button>
             <button
               ref={mobileMenuButtonRef}
               className={styles.mobileMenuButton}
@@ -183,7 +227,9 @@ export function AppLayout() {
         </header>
 
         <header className={styles.topbar} data-print-hide="true">
-          <div className={styles.topbarSpacer} aria-hidden="true" />
+          <button type="button" className={styles.searchTrigger} aria-label="Search portfolio" onClick={openSearch} aria-keyshortcuts="Control+K Meta+K">
+            <SearchIcon /> <span>Search portfolio</span> <kbd>⌘ K</kbd>
+          </button>
 
           <div className={styles.accountArea}>
             <ThemeControl />
@@ -195,6 +241,8 @@ export function AppLayout() {
           <Outlet />
         </main>
       </div>
+
+      {isSearchOpen ? <GlobalSearch isOpen={true} onClose={closeSearch} /> : null}
 
       {isMobileNavOpen ? (
         <div className={styles.mobileNavLayer} data-print-hide="true">
@@ -211,7 +259,7 @@ export function AppLayout() {
             aria-label="Mobile navigation"
           >
             <div className={styles.mobileNavHeader}>
-              <Brand to="/projects" />
+              <Brand to="/overview" />
               <button
                 ref={mobileCloseButtonRef}
                 className={styles.mobileMenuButton}
@@ -224,6 +272,15 @@ export function AppLayout() {
             </div>
 
             <nav className={styles.mobileNavigation} aria-label="Mobile main navigation">
+              <NavLink
+                to="/overview"
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
+                }
+                onClick={() => closeMobileNav()}
+              >
+                Overview
+              </NavLink>
               <NavLink
                 to="/projects"
                 className={({ isActive }) =>

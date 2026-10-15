@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { LandingPage } from './LandingPage.jsx'
 
 describe('LandingPage', () => {
-  it('renders the HelmSight product landing and routes all primary actions to Projects', () => {
+  it('renders the HelmSight product landing and routes workspace actions to Global Overview', () => {
     render(
       <MemoryRouter>
         <LandingPage />
@@ -23,11 +23,11 @@ describe('LandingPage', () => {
     expect(screen.getByText('© 2026 HelmSight. All rights reserved.')).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'HelmSight home' })).toHaveLength(1)
 
-    expect(screen.getByRole('link', { name: /sign in/i })).toHaveAttribute('href', '/projects')
-    expect(screen.getByRole('link', { name: /get started/i })).toHaveAttribute('href', '/projects')
+    expect(screen.getByRole('link', { name: /sign in/i })).toHaveAttribute('href', '/overview')
+    expect(screen.getByRole('link', { name: /get started/i })).toHaveAttribute('href', '/overview')
     expect(screen.getByRole('link', { name: /open demo workspace/i })).toHaveAttribute(
       'href',
-      '/projects',
+      '/overview',
     )
   })
 })
