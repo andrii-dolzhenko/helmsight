@@ -8,6 +8,7 @@ const PROJECT_DRAFT_TYPES = [
   'evm-snapshot',
   'meeting-note',
   'weekly-report',
+  'lesson-learned',
 ]
 
 export function collectProjectDraftKeys(projectId) {

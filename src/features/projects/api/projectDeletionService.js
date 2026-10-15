@@ -12,6 +12,7 @@ const COLLECTION_KEYS = [
   'managementActions',
   'weeklyReports',
   'meetingNotes',
+  'lessonsLearned',
 ]
 
 const DRAFT_TYPES = [
@@ -22,6 +23,7 @@ const DRAFT_TYPES = [
   'evm-snapshot',
   'meeting-note',
   'weekly-report',
+  'lesson-learned',
 ]
 
 function isOwnedDraftKey(key, projectId) {

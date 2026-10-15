@@ -19,6 +19,8 @@ describe('collectProjectDraftKeys', () => {
       'meeting-note:p1:m1',
       'weekly-report:p1:report-1',
       'weekly-report:p1:new:2026-10-11',
+      'lesson-learned:p1:new',
+      'lesson-learned:p1:lesson-1',
     ]
 
     keys.forEach((key) => {
@@ -37,6 +39,8 @@ describe('collectProjectDraftKeys', () => {
       'risk:p10:new',
       'evm-baseline:p10',
       'weekly-report:p10:new:2026-10-11',
+      'lesson-learned:p10:new',
+      'lesson-learned:p1-other:new',
       'unknown:p1:new',
     ]
 
