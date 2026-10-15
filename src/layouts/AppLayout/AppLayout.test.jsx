@@ -51,7 +51,7 @@ describe('AppLayout mobile navigation', () => {
     expect(within(menu).getByRole('menuitem', { name: 'Exit workspace' })).toHaveAttribute('href', '/')
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('menu', { name: 'Profile actions' })).not.toBeInTheDocument()
-    expect(screen.getAllByRole('link', { name: 'HelmSight home' }).every((link) => link.getAttribute('href') === '/projects')).toBe(true)
+    expect(screen.getAllByRole('link', { name: 'HelmSight home' }).every((link) => link.getAttribute('href') === '/overview')).toBe(true)
   })
 
   afterEach(() => {

@@ -70,12 +70,12 @@ function SectionIcon({ type }) {
   )
 }
 
-function TextList({ items, emptyText = 'Not defined yet.', columned = false }) {
+export function TextList({ items, emptyText = 'Not defined yet.', columned = false }) {
   if (!items?.length) return <p className={styles.emptyValue}>{emptyText}</p>
 
   return (
     <ul className={`${styles.valueList} ${columned ? styles.columnedValueList : ''}`}>
-      {items.map((item) => <li key={item}>{item}</li>)}
+      {items.map((item, index) => <li key={`${index}:${item}`}>{item}</li>)}
     </ul>
   )
 }

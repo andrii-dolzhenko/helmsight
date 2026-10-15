@@ -1,0 +1,71 @@
+.root { min-width: 0; display: grid; gap: 1.4rem; }
+.header { display: grid; gap: 0.4rem; }
+.eyebrow { color: var(--color-accent); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; }
+.headingRow { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.header h1 { color: var(--color-text); text-align: left; }
+.header p { max-width: 42rem; margin: 0.8rem 0 0; color: var(--color-text-muted); line-height: 1.5; }
+.headerLink, .panelFooter { color: var(--color-accent); text-decoration: none; font-size: 0.84rem; font-weight: 800; }
+.headerLink { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; white-space: nowrap; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface); color: var(--color-text); padding: 0.65rem 0.9rem; transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease; }
+.headerLink:hover { border-color: var(--color-accent); background: var(--color-surface-elevated); transform: translateY(-1px); }
+.headerLink:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+.panelFooter:hover { text-decoration: underline; }
+.metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.metric, .panel, .state { min-width: 0; border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-card); }
+.metric { display: grid; gap: 0.6rem; padding: 1.25rem 1.4rem; border-top: 3px solid var(--color-border); }
+.metric.attention { border-top-color: #c85d50; }
+.metric.watch { border-top-color: #cc992e; }
+.metric.neutral { border-top-color: var(--color-accent); }
+.metric > span { color: var(--color-text-muted); font-size: 0.85rem; font-weight: 700; }
+.metric strong { font-family: var(--font-display); font-size: clamp(2.25rem, 3.5vw, 3rem); line-height: 1; color: var(--color-text); }
+.metric small { color: var(--color-text-muted); }
+.panel { padding: clamp(1.1rem, 2vw, 1.6rem); display: grid; align-content: start; gap: 1rem; }
+.sectionHeading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.sectionHeading h2 { margin: 0.3rem 0 0; font-family: var(--font-display); font-size: clamp(1.55rem, 2.7vw, 2rem); letter-spacing: -0.035em; }
+.sectionHeading p { margin: 0.35rem 0 0; color: var(--color-text-muted); font-size: 0.84rem; }
+.counter { flex: 0 0 auto; border-radius: 999px; background: var(--color-surface-elevated); padding: 0.45rem 0.75rem; color: var(--color-text-muted); font-size: 0.75rem; font-weight: 700; }
+.signalList, .projectList { list-style: none; display: grid; gap: 0; padding: 0; margin: 0; }
+.signalList li + li, .projectList li + li { border-top: 1px solid var(--color-border); }
+.signalLink, .projectLink { min-width: 0; display: flex; align-items: center; gap: 1rem; padding: 0.85rem 0.8rem; margin-block: 0.35rem; border-radius: var(--radius-md); color: var(--color-text); text-decoration: none; transition: background-color 150ms ease; }
+.signalLink:hover, .projectLink:hover { background: var(--color-surface-elevated); }
+.signalLink:focus-visible, .projectLink:focus-visible, .moreButton:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.signalBody, .projectLink > span:first-child { flex: 1; min-width: 0; display: grid; gap: 0.3rem; }
+.signalBody strong, .projectLink strong { font-size: 0.93rem; overflow-wrap: anywhere; }
+.signalBody small, .projectLink small { color: var(--color-text-muted); font-size: 0.78rem; line-height: 1.35; }
+.signalMeta { color: var(--color-accent); font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.status { flex: 0 0 auto; border-radius: 999px; border: 1px solid var(--color-border); padding: 0.35rem 0.6rem; font-size: 0.72rem; font-weight: 800; }
+.status.attention { border-color: color-mix(in srgb, #c45f54 45%, var(--color-border)); background: color-mix(in srgb, #c45f54 10%, var(--color-surface)); color: var(--color-text); }
+.status.watch { border-color: color-mix(in srgb, #c99a38 50%, var(--color-border)); background: color-mix(in srgb, #c99a38 11%, var(--color-surface)); color: var(--color-text); }
+.arrow { color: var(--color-accent); font-weight: 800; }
+.insightGrid, .lowerGrid { min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+.insightGrid > .panel, .lowerGrid > .panel { align-self: start; }
+.driverLegend { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; color: var(--color-text-muted); font-size: 0.77rem; }
+.driverLegend > span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.driverLegend i { width: 0.65rem; height: 0.65rem; border-radius: 0.2rem; display: inline-block; }
+.legendAttention, .driverAttention { background: #c45f54; }
+.legendWatch, .driverWatch { background: #d4a13d; }
+.driverList { display: grid; gap: 0.45rem; }
+.driverRow { display: grid; width: 100%; gap: 0.45rem; padding: 0.75rem; border: 1px solid transparent; border-radius: var(--radius-md); background: transparent; color: var(--color-text); font: inherit; cursor: pointer; text-align: left; transition: border-color 140ms ease, background-color 140ms ease; }
+.driverRow:hover:not(:disabled), .driverSelected { background: color-mix(in srgb, var(--color-accent) 6%, var(--color-surface)); border-color: color-mix(in srgb, var(--color-accent) 23%, var(--color-border)); }
+.driverRow:focus-visible, .clearFilter:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.driverRow:disabled { opacity: 0.52; cursor: default; }
+.driverHeading { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; font-size: 0.87rem; font-weight: 700; }
+.driverHeading strong { font-variant-numeric: tabular-nums; }
+.driverTrack { display: flex; width: 100%; height: 0.65rem; overflow: hidden; border-radius: 999px; background: var(--color-surface-elevated); }
+.driverTrack > span { display: block; height: 100%; transition: width 180ms ease; }
+.driverDetails { color: var(--color-text-muted); font-size: 0.72rem; }
+.clearFilter { justify-self: start; border: 0; background: none; color: var(--color-accent); padding: 0.5rem; font: inherit; font-size: 0.8rem; font-weight: 800; cursor: pointer; }
+.clearFilter:hover { text-decoration: underline; }
+.metric, .panel { transition: border-color 160ms ease, box-shadow 160ms ease; }
+.panel:hover, .metric:hover { border-color: color-mix(in srgb, var(--color-accent) 17%, var(--color-border)); box-shadow: 0 0.85rem 2.25rem rgb(0 0 0 / 5%); }
+.signalLink:hover, .projectLink:hover { background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface-elevated)); }
+.projectLink time { color: var(--color-text-muted); font-size: 0.78rem; white-space: nowrap; }
+.panelFooter { margin-top: auto; padding: 0.4rem; }
+.empty { margin: 0; color: var(--color-text-muted); line-height: 1.5; }
+.moreButton, .state button, .state a { justify-self: start; border: 1px solid var(--color-border); border-radius: 999px; background: var(--color-surface-elevated); color: var(--color-text); padding: 0.7rem 1rem; font: inherit; font-size: 0.83rem; font-weight: 800; cursor: pointer; text-decoration: none; }
+.state { display: grid; justify-items: start; gap: 0.7rem; padding: 1.5rem; }
+.state h2, .state p { margin: 0; }
+.state p { color: var(--color-text-muted); }
+@media (max-width: 1050px) { .insightGrid, .lowerGrid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .headingRow { align-items: start; flex-direction: column; } .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .metric:last-child { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .metrics { gap: 0.6rem; } .metric { padding: 1rem; } .signalLink { flex-wrap: wrap; } .signalBody { flex-basis: 100%; } .sectionHeading { flex-wrap: wrap; } .projectLink { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { .signalLink, .projectLink, .metric, .panel, .driverRow, .headerLink, .driverTrack > span { transition: none; } }

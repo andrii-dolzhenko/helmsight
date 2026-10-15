@@ -54,10 +54,10 @@ export function LandingPage() {
       <header className={styles.header}>
         <Brand />
         <nav className={styles.headerActions} aria-label="Landing actions">
-          <Link className={styles.signIn} to="/projects">
+          <Link className={styles.signIn} to="/overview">
             Sign in
           </Link>
-          <Link className={styles.getStarted} to="/projects">
+          <Link className={styles.getStarted} to="/overview">
             Get started
           </Link>
         </nav>
@@ -76,7 +76,7 @@ export function LandingPage() {
             decisions — so you can move with confidence.
           </p>
 
-          <Link className={styles.primaryCta} to="/projects">
+          <Link className={styles.primaryCta} to="/overview">
             Open Demo Workspace
             <span aria-hidden="true">→</span>
           </Link>

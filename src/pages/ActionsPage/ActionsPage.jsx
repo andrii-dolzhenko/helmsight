@@ -68,7 +68,12 @@ function ActionControls({ action, archived, disabled, onDelete, onStatusChange }
   return <div className={styles.actions}>
     <LifecycleButtons action={action} disabled={disabled} onStatusChange={onStatusChange}/>
     <Link className={styles.editButton} data-ui-button="secondary" data-ui-size="sm" to={`${action.id}/edit`}>Edit</Link>
-    <button className={styles.deleteButton} data-ui-button="danger" data-ui-size="sm" type="button" disabled={disabled} onClick={() => onDelete(action)}>Delete</button>
+    <button className={styles.deleteButton} data-ui-button="danger" data-ui-size="sm" type="button" disabled={disabled} aria-label="Delete" title="Delete" onClick={() => onDelete(action)}>
+      <span className={styles.deleteLabel}>Delete</span>
+      <svg className={styles.deleteIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M4 7h16M10 4h4M6.5 7l.8 13h9.4l.8-13M10 11v5M14 11v5" />
+      </svg>
+    </button>
   </div>
 }
 
@@ -85,7 +90,7 @@ function ActionCard({ action, archived, disabled, onDelete, onStatusChange, hash
   </article>
 }
 
-function ActionListRow({ action, archived, disabled, onDelete, onStatusChange, hashTargetId }) {
+export function ActionListRow({ action, archived, disabled, onDelete, onStatusChange, hashTargetId }) {
   const attention = getActionAttentionState(action)
   return <article className={styles.listRow} id={`action-${action.id}`} data-hash-target={hashTargetId === `action-${action.id}` ? 'true' : undefined} tabIndex={-1}>
     <div className={styles.listIdentity}>
@@ -93,11 +98,11 @@ function ActionListRow({ action, archived, disabled, onDelete, onStatusChange, h
       <p>{action.description || 'No additional description.'}</p>
     </div>
     <dl className={styles.listMeta}>
-      <div><dt>Owner</dt><dd>{action.owner}</dd></div>
-      <div><dt>Due</dt><dd>{formatDate(action.dueDate)}</dd></div>
-      <div><dt>Status</dt><dd>{getActionStatusLabel(action.status)}</dd></div>
-      <div><dt>Attention</dt><dd className={attention === ACTION_ATTENTION.OVERDUE ? styles.dueDanger : attention === ACTION_ATTENTION.DUE_SOON ? styles.dueWarning : ''}>{getActionAttentionLabel(attention)}</dd></div>
-      <div><dt>Source</dt><dd>{getActionSourceLabel(action.source)}</dd></div>
+      <div><dt>Owner</dt><dd title={action.owner}>{action.owner}</dd></div>
+      <div><dt>Due</dt><dd title={formatDate(action.dueDate)}>{formatDate(action.dueDate)}</dd></div>
+      <div><dt>Status</dt><dd title={getActionStatusLabel(action.status)}>{getActionStatusLabel(action.status)}</dd></div>
+      <div><dt>Attention</dt><dd title={getActionAttentionLabel(attention)} className={attention === ACTION_ATTENTION.OVERDUE ? styles.dueDanger : attention === ACTION_ATTENTION.DUE_SOON ? styles.dueWarning : ''}>{getActionAttentionLabel(attention)}</dd></div>
+      <div><dt>Source</dt><dd title={getActionSourceLabel(action.source)}>{getActionSourceLabel(action.source)}</dd></div>
     </dl>
     <ActionControls action={action} archived={archived} disabled={disabled} onDelete={onDelete} onStatusChange={onStatusChange}/>
   </article>

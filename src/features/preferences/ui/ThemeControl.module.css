@@ -64,9 +64,8 @@
   gap: 0.25rem;
   border: 1px solid var(--color-border);
   border-radius: 0.9rem;
-  background: color-mix(in srgb, var(--color-surface) 96%, transparent);
+  background: var(--color-surface);
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(20px);
   padding: 0.45rem;
 }
 
