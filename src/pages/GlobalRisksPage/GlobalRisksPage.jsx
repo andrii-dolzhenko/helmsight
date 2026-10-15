@@ -48,7 +48,7 @@ export function GlobalRisksPage() {
   if (failed) return <div className={styles.state} role="alert"><strong>Global Risks could not be loaded.</strong><p>{projectsError || risksError}</p><button type="button" onClick={() => { if (projectsStatus === 'failed') dispatch(loadProjects()); if (risksStatus === 'failed') dispatch(loadRisks()) }}>Try again</button></div>
   return <section className={styles.root} aria-labelledby="global-risks-title">
     <header className={styles.header}><span className={styles.eyebrow}>Portfolio oversight</span><h1 id="global-risks-title">Global Risks</h1><p>Project risks across your portfolio, prioritized by exposure and deadlines.</p></header>
-    <div className={styles.summary} aria-label="Portfolio risk summary">
+    <div className={styles.summary} role="group" aria-label="Portfolio risk summary">
       {[["Active risks", view.summary.active, 'active'], ['High / Critical', view.summary.critical, 'critical'], ['Needs attention', view.summary.attention, 'attention'], ['Closed', view.summary.closed, 'closed']].map(([label, number, tone]) => <div className={styles.metric} data-tone={tone} key={label}><span>{label}</span><strong>{number}</strong></div>)}
     </div>
     <section className={styles.filterPanel} aria-labelledby="global-risk-filters"><div className={styles.filtersHeader}><span className={styles.eyebrow}>Portfolio filters</span><h2 id="global-risk-filters">Filters</h2></div>
@@ -74,7 +74,7 @@ export function GlobalRisksPage() {
           <div className={styles.ownerCell}><span className={styles.cellLabel}>Owner</span><span className={styles.ownerContent}><span className={styles.initials} aria-hidden="true">{initials(risk.owner)}</span>{risk.owner || 'Unassigned'}</span></div>
           <div className={styles.severityCell}><span className={styles.cellLabel}>Severity / score</span><span className={styles.badge} data-severity={level}>{getRiskSeverityLabel(level)} · {score ?? '—'}</span></div>
           <div className={styles.statusCell}><span className={styles.cellLabel}>Status</span><span className={styles.badge} data-status={risk.status}>{getRiskStatusLabel(risk.status)}</span></div>
-          <div className={styles.dueCell}><span className={styles.cellLabel}>Due date</span><time>{formatDate(risk.dueDate)}</time>{[RISK_ATTENTION.DUE_SOON,RISK_ATTENTION.OVERDUE].includes(attentionState) ? <span className={styles.attentionText} data-attention={attentionState}>{attentionLabels[attentionState]}</span> : null}</div>
+          <div className={styles.dueCell}><span className={styles.cellLabel}>Due date</span>{risk.dueDate ? <time dateTime={risk.dueDate}>{formatDate(risk.dueDate)}</time> : <span>No due date</span>}{[RISK_ATTENTION.DUE_SOON,RISK_ATTENTION.OVERDUE].includes(attentionState) ? <span className={styles.attentionText} data-attention={attentionState}>{attentionLabels[attentionState]}</span> : null}</div>
           <div className={styles.openCell}><Link className={styles.openLink} data-ui-button="secondary" data-ui-size="sm" to={`/projects/${encodeURIComponent(project.id)}/risks/${encodeURIComponent(risk.id)}`}>Open risk <span aria-hidden="true">↗</span></Link></div>
         </li>
       })}</ul></div>}

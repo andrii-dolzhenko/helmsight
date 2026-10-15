@@ -48,6 +48,7 @@ describe('GlobalReportsPage', () => {
     expectKpi('Draft', 1)
     expectKpi('Final', 1)
     expectKpi('Archived reports', 1)
+    expect(screen.getByRole('group', { name: 'Portfolio report summary' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Open Weekly Status Report guide' })).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /Open report/ })).toHaveLength(2)
     expect(screen.queryByText('Orion Launch')).not.toBeInTheDocument()

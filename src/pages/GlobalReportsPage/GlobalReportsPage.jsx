@@ -135,7 +135,7 @@ export function GlobalReportsPage() {
       <p>Weekly reporting across your project portfolio.</p>
     </header>
 
-    <div className={styles.summary} aria-label="Portfolio report summary">
+    <div className={styles.summary} role="group" aria-label="Portfolio report summary">
       {[
         ['Current reports', summary.current, 'current'],
         ['Draft', summary.draft, 'draft'],
