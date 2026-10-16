@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router'
 import { Brand } from '../../shared/ui/Brand/Brand.jsx'
 import { ThemeControl } from '../../features/preferences/ui/ThemeControl.jsx'
@@ -12,6 +12,10 @@ import styles from './AppLayout.module.css'
 import { DecisionLabCard } from '../../features/decisionLab/ui/DecisionLabCard.jsx'
 import { DecisionLabModal } from '../../features/decisionLab/ui/DecisionLabModal.jsx'
 import { CloseIcon } from '../../shared/ui/CloseIcon/CloseIcon.jsx'
+import { NotificationBell } from '../../features/notifications/ui/NotificationBell.jsx'
+import { StatusToast } from '../../shared/ui/StatusToast/StatusToast.jsx'
+import { NavigationIcon } from './NavigationIcon.jsx'
+import { useHeaderNotifications } from '../../features/notifications/ui/useHeaderNotifications.js'
 
 function MenuIcon() {
   return (
@@ -53,7 +57,11 @@ function AccountSummary({ onNavigate }) {
 export function AppLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isHelpNoticeVisible, setIsHelpNoticeVisible] = useState(false)
   const [isDecisionLabOpen, setIsDecisionLabOpen] = useState(false)
+  const [notificationPanel, setNotificationPanel] = useState(null)
+  const [labRefreshKey, setLabRefreshKey] = useState(0)
+  const notifications = useHeaderNotifications(labRefreshKey)
   const decisionLabTriggerRef = useRef(null)
   const searchTriggerRef = useRef(null)
   const location = useLocation()
@@ -62,6 +70,13 @@ export function AppLayout() {
   const mobileMenuButtonRef = useRef(null)
   const mobileCloseButtonRef = useRef(null)
   const previousPathnameRef = useRef(pathname)
+  const showHelpNotice = () => setIsHelpNoticeVisible(true)
+  const showMobileHelpNotice = () => {
+    closeMobileNav({ restoreFocus: true })
+    setIsHelpNoticeVisible(true)
+  }
+  const openDesktopNotifications = useCallback((open) => setNotificationPanel(open ? 'desktop' : null), [])
+  const openMobileNotifications = useCallback((open) => setNotificationPanel(open ? 'mobile' : null), [])
 
   useLayoutEffect(() => {
     if (previousPathnameRef.current === pathname) {
@@ -113,6 +128,12 @@ export function AppLayout() {
     document.addEventListener('keydown', handleShortcut)
     return () => document.removeEventListener('keydown', handleShortcut)
   }, [])
+
+  const openLabFromNotification = (trigger) => {
+    decisionLabTriggerRef.current = trigger
+    setNotificationPanel(null)
+    setIsDecisionLabOpen(true)
+  }
 
   const openDecisionLab = (event, { mobile = false } = {}) => {
     decisionLabTriggerRef.current = mobile ? mobileMenuButtonRef.current : event.currentTarget
@@ -179,6 +200,7 @@ export function AppLayout() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
+            <NavigationIcon name="overview" />
             Overview
           </NavLink>
           <NavLink
@@ -188,6 +210,7 @@ export function AppLayout() {
             }
             onClick={handleProjectsNavigation}
           >
+            <NavigationIcon name="projects" />
             Projects
           </NavLink>
           <NavLink
@@ -196,6 +219,7 @@ export function AppLayout() {
               `${styles.navLink} ${isActive ? styles.active : ""}`
             }
           >
+            <NavigationIcon name="actions" />
             Actions
           </NavLink>
           <NavLink
@@ -204,6 +228,7 @@ export function AppLayout() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
+            <NavigationIcon name="risks" />
             Risks
           </NavLink>
           <NavLink
@@ -212,6 +237,7 @@ export function AppLayout() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
+            <NavigationIcon name="metrics" />
             Metrics
           </NavLink>
           <NavLink
@@ -220,8 +246,15 @@ export function AppLayout() {
               `${styles.navLink} ${isActive ? styles.active : ''}`
             }
           >
+            <NavigationIcon name="reports" />
             Reports
           </NavLink>
+          <div className={styles.navSecondary}>
+            <button type="button" className={`${styles.navLink} ${styles.navHelpButton}`} onClick={showHelpNotice}>
+              <NavigationIcon name="help" />
+              Help
+            </button>
+          </div>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -236,6 +269,7 @@ export function AppLayout() {
             <button type="button" className={styles.searchIconButton} aria-label="Search portfolio" onClick={openSearch} title="Search portfolio">
               <SearchIcon />
             </button>
+            <NotificationBell model={notifications} mobile isOpen={notificationPanel === 'mobile'} onOpenChange={openMobileNotifications} onOpenLab={openLabFromNotification} />
             <button
               ref={mobileMenuButtonRef}
               className={styles.mobileMenuButton}
@@ -256,6 +290,7 @@ export function AppLayout() {
           </button>
 
           <div className={styles.accountArea}>
+            <NotificationBell model={notifications} isOpen={notificationPanel === 'desktop'} onOpenChange={openDesktopNotifications} onOpenLab={openLabFromNotification} />
             <ThemeControl />
             <ProfileMenu />
           </div>
@@ -268,8 +303,14 @@ export function AppLayout() {
 
       {isSearchOpen ? <GlobalSearch isOpen={true} onClose={closeSearch} /> : null}
       {isDecisionLabOpen ? (
-        <DecisionLabModal onClose={() => setIsDecisionLabOpen(false)} returnFocusRef={decisionLabTriggerRef} />
+        <DecisionLabModal onClose={() => { setIsDecisionLabOpen(false); setLabRefreshKey((key) => key + 1) }} returnFocusRef={decisionLabTriggerRef} />
       ) : null}
+
+      <StatusToast
+        message={isHelpNoticeVisible ? 'Help center is coming soon. Page-level guides are available in the workspace.' : ''}
+        onDismiss={() => setIsHelpNoticeVisible(false)}
+        duration={4000}
+      />
 
       {isMobileNavOpen ? (
         <div className={styles.mobileNavLayer} data-print-hide="true">
@@ -306,6 +347,7 @@ export function AppLayout() {
                 }
                 onClick={() => closeMobileNav()}
               >
+                <NavigationIcon name="overview" />
                 Overview
               </NavLink>
               <NavLink
@@ -315,6 +357,7 @@ export function AppLayout() {
                 }
                 onClick={(event) => handleProjectsNavigation(event, { closeMobile: true })}
               >
+                <NavigationIcon name="projects" />
                 Projects
               </NavLink>
               <NavLink
@@ -324,6 +367,7 @@ export function AppLayout() {
                 }
                 onClick={() => closeMobileNav()}
               >
+                <NavigationIcon name="actions" />
                 Actions
               </NavLink>
               <NavLink
@@ -333,6 +377,7 @@ export function AppLayout() {
                 }
                 onClick={() => closeMobileNav()}
               >
+                <NavigationIcon name="risks" />
                 Risks
               </NavLink>
               <NavLink
@@ -342,6 +387,7 @@ export function AppLayout() {
                 }
                 onClick={() => closeMobileNav()}
               >
+                <NavigationIcon name="metrics" />
                 Metrics
               </NavLink>
               <NavLink
@@ -351,8 +397,15 @@ export function AppLayout() {
                 }
                 onClick={() => closeMobileNav()}
               >
+                <NavigationIcon name="reports" />
                 Reports
               </NavLink>
+              <div className={styles.navSecondary}>
+                <button type="button" className={`${styles.mobileNavLink} ${styles.navHelpButton}`} onClick={showMobileHelpNotice}>
+                  <NavigationIcon name="help" />
+                  Help
+                </button>
+              </div>
             </nav>
 
             <div className={styles.mobileDecisionLabSlot}>

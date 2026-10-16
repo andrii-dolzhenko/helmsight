@@ -42,6 +42,9 @@ describe('AppLayout mobile navigation', () => {
     const user = userEvent.setup()
     const { container } = renderLayout()
     const desktopHeader = container.querySelectorAll('header')[1]
+    const notificationButton = within(desktopHeader).getByRole('button', { name: /^Notifications, .* unread$/ })
+    const themeButton = within(desktopHeader).getByRole('button', { name: /^Theme:/ })
+    expect(notificationButton.compareDocumentPosition(themeButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(within(desktopHeader).queryByRole('link', { name: 'Profile settings' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Settings' })).not.toBeInTheDocument()
     await user.click(screen.getByRole('button', { name: 'Open profile menu' }))
@@ -52,6 +55,41 @@ describe('AppLayout mobile navigation', () => {
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('menu', { name: 'Profile actions' })).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: 'HelmSight home' }).every((link) => link.getAttribute('href') === '/overview')).toBe(true)
+  })
+
+  it('renders theme-aware decorative icons for all six global destinations and a Help placeholder', async () => {
+    const user = userEvent.setup()
+    renderLayout()
+    const desktopNav = screen.getByRole('navigation', { name: 'Main navigation' })
+    const links = within(desktopNav).getAllByRole('link')
+    expect(links.map((link) => link.textContent.trim())).toEqual([
+      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports',
+    ])
+    expect(links.every((link) => link.querySelector('svg[aria-hidden="true"]'))).toBe(true)
+
+    const reports = within(desktopNav).getByRole('link', { name: 'Reports' })
+    const help = within(desktopNav).getByRole('button', { name: 'Help' })
+    expect(help.querySelector('svg[aria-hidden="true"]')).toBeInTheDocument()
+    expect(reports.compareDocumentPosition(help) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    await user.click(help)
+    expect(screen.getByRole('status')).toHaveTextContent(/Help center is coming soon/)
+  })
+
+  it('keeps icons and the Help placeholder available in the mobile drawer', async () => {
+    const user = userEvent.setup()
+    const { container } = renderLayout()
+    const mobileHeader = container.querySelector('header')
+    await user.click(within(mobileHeader).getByRole('button', { name: 'Open navigation menu', hidden: true }))
+    const drawer = screen.getByRole('complementary', { name: 'Mobile navigation', hidden: true })
+    const nav = within(drawer).getByRole('navigation', { name: 'Mobile main navigation', hidden: true })
+    const links = within(nav).getAllByRole('link', { hidden: true })
+    expect(links.map((link) => link.textContent.trim())).toEqual([
+      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports',
+    ])
+    expect(links.every((link) => link.querySelector('svg[aria-hidden="true"]'))).toBe(true)
+    await user.click(within(nav).getByRole('button', { name: 'Help', hidden: true }))
+    expect(screen.queryByRole('complementary', { name: 'Mobile navigation', hidden: true })).not.toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent(/Help center is coming soon/)
   })
 
   afterEach(() => {
