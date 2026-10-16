@@ -24,6 +24,8 @@ export function NavigationIcon({ name }) {
       return <svg {...shared}><path d="M3 21h18M5 18v-6h3v6m3 0V6h3v12m3 0v-9h3v9" /></svg>
     case 'reports':
       return <svg {...shared}><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" /><path d="M15 2v6h5M8 13h8M8 17h6" /></svg>
+    case 'meetings':
+      return <svg {...shared}><circle cx="9" cy="8" r="3" /><path d="M3.8 19v-1.5a5.2 5.2 0 0 1 10.4 0V19H3.8Z" /><path d="M17 5.5a3 3 0 0 1 0 5.8M17 13.2a4.6 4.6 0 0 1 3.2 4.4V19h-3.2" /></svg>
     case 'help':
       return <svg {...shared}><circle cx="12" cy="12" r="9" /><path d="M9.3 9a2.8 2.8 0 0 1 5.4.9c0 1.8-2.7 2.3-2.7 4.3M12 17.5h.01" /></svg>
     default:

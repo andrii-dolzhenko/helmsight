@@ -24,6 +24,8 @@ function renderLayout() {
         { index: true, element: <div>Workspace content</div> },
         { path: 'next', element: <div>Next content</div> },
         { path: 'projects', element: <div>Projects content</div> },
+        { path: 'meetings', element: <div>Global Meetings content</div> },
+        { path: 'help', element: <div>Help Center content</div> },
       ],
     },
   ])
@@ -57,25 +59,39 @@ describe('AppLayout mobile navigation', () => {
     expect(screen.getAllByRole('link', { name: 'HelmSight home' }).every((link) => link.getAttribute('href') === '/overview')).toBe(true)
   })
 
-  it('renders theme-aware decorative icons for all six global destinations and a Help placeholder', async () => {
+  it('renders theme-aware decorative icons for global destinations and the Help route', async () => {
     const user = userEvent.setup()
     renderLayout()
     const desktopNav = screen.getByRole('navigation', { name: 'Main navigation' })
     const links = within(desktopNav).getAllByRole('link')
     expect(links.map((link) => link.textContent.trim())).toEqual([
-      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports',
+      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports', 'Meetings', 'Help',
     ])
     expect(links.every((link) => link.querySelector('svg[aria-hidden="true"]'))).toBe(true)
 
     const reports = within(desktopNav).getByRole('link', { name: 'Reports' })
-    const help = within(desktopNav).getByRole('button', { name: 'Help' })
+    const help = within(desktopNav).getByRole('link', { name: 'Help' })
     expect(help.querySelector('svg[aria-hidden="true"]')).toBeInTheDocument()
     expect(reports.compareDocumentPosition(help) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(help).toHaveAttribute('href', '/help')
     await user.click(help)
-    expect(screen.getByRole('status')).toHaveTextContent(/Help center is coming soon/)
+    expect(help).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByText('Help Center content')).toBeInTheDocument()
   })
 
-  it('keeps icons and the Help placeholder available in the mobile drawer', async () => {
+  it('navigates to Global Meetings from the sidebar without confusing project notes', async () => {
+    const user = userEvent.setup()
+    const { router } = renderLayout()
+    const nav = screen.getByRole('navigation', { name: 'Main navigation' })
+    const link = within(nav).getByRole('link', { name: 'Meetings' })
+    expect(link).toHaveAttribute('href', '/meetings')
+    await user.click(link)
+    expect(router.state.location.pathname).toBe('/meetings')
+    expect(link).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByText('Global Meetings content')).toBeInTheDocument()
+  })
+
+  it('keeps icons and navigates to Help from the mobile drawer', async () => {
     const user = userEvent.setup()
     const { container } = renderLayout()
     const mobileHeader = container.querySelector('header')
@@ -84,12 +100,14 @@ describe('AppLayout mobile navigation', () => {
     const nav = within(drawer).getByRole('navigation', { name: 'Mobile main navigation', hidden: true })
     const links = within(nav).getAllByRole('link', { hidden: true })
     expect(links.map((link) => link.textContent.trim())).toEqual([
-      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports',
+      'Overview', 'Projects', 'Actions', 'Risks', 'Metrics', 'Reports', 'Meetings', 'Help',
     ])
     expect(links.every((link) => link.querySelector('svg[aria-hidden="true"]'))).toBe(true)
-    await user.click(within(nav).getByRole('button', { name: 'Help', hidden: true }))
+    const help = within(nav).getByRole('link', { name: 'Help', hidden: true })
+    expect(help).toHaveAttribute('href', '/help')
+    await user.click(help)
     expect(screen.queryByRole('complementary', { name: 'Mobile navigation', hidden: true })).not.toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent(/Help center is coming soon/)
+    expect(screen.getByText('Help Center content')).toBeInTheDocument()
   })
 
   afterEach(() => {

@@ -13,7 +13,6 @@ import { DecisionLabCard } from '../../features/decisionLab/ui/DecisionLabCard.j
 import { DecisionLabModal } from '../../features/decisionLab/ui/DecisionLabModal.jsx'
 import { CloseIcon } from '../../shared/ui/CloseIcon/CloseIcon.jsx'
 import { NotificationBell } from '../../features/notifications/ui/NotificationBell.jsx'
-import { StatusToast } from '../../shared/ui/StatusToast/StatusToast.jsx'
 import { NavigationIcon } from './NavigationIcon.jsx'
 import { useHeaderNotifications } from '../../features/notifications/ui/useHeaderNotifications.js'
 
@@ -57,7 +56,6 @@ function AccountSummary({ onNavigate }) {
 export function AppLayout() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [isHelpNoticeVisible, setIsHelpNoticeVisible] = useState(false)
   const [isDecisionLabOpen, setIsDecisionLabOpen] = useState(false)
   const [notificationPanel, setNotificationPanel] = useState(null)
   const [labRefreshKey, setLabRefreshKey] = useState(0)
@@ -70,11 +68,6 @@ export function AppLayout() {
   const mobileMenuButtonRef = useRef(null)
   const mobileCloseButtonRef = useRef(null)
   const previousPathnameRef = useRef(pathname)
-  const showHelpNotice = () => setIsHelpNoticeVisible(true)
-  const showMobileHelpNotice = () => {
-    closeMobileNav({ restoreFocus: true })
-    setIsHelpNoticeVisible(true)
-  }
   const openDesktopNotifications = useCallback((open) => setNotificationPanel(open ? 'desktop' : null), [])
   const openMobileNotifications = useCallback((open) => setNotificationPanel(open ? 'mobile' : null), [])
 
@@ -249,11 +242,22 @@ export function AppLayout() {
             <NavigationIcon name="reports" />
             Reports
           </NavLink>
+          <NavLink
+            to="/meetings"
+            className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }
+          >
+            <NavigationIcon name="meetings" />
+            Meetings
+          </NavLink>
           <div className={styles.navSecondary}>
-            <button type="button" className={`${styles.navLink} ${styles.navHelpButton}`} onClick={showHelpNotice}>
+            <NavLink to="/help" className={({ isActive }) =>
+              `${styles.navLink} ${isActive ? styles.active : ''}`
+            }>
               <NavigationIcon name="help" />
               Help
-            </button>
+            </NavLink>
           </div>
         </nav>
 
@@ -305,12 +309,6 @@ export function AppLayout() {
       {isDecisionLabOpen ? (
         <DecisionLabModal onClose={() => { setIsDecisionLabOpen(false); setLabRefreshKey((key) => key + 1) }} returnFocusRef={decisionLabTriggerRef} />
       ) : null}
-
-      <StatusToast
-        message={isHelpNoticeVisible ? 'Help center is coming soon. Page-level guides are available in the workspace.' : ''}
-        onDismiss={() => setIsHelpNoticeVisible(false)}
-        duration={4000}
-      />
 
       {isMobileNavOpen ? (
         <div className={styles.mobileNavLayer} data-print-hide="true">
@@ -400,11 +398,27 @@ export function AppLayout() {
                 <NavigationIcon name="reports" />
                 Reports
               </NavLink>
+              <NavLink
+                to="/meetings"
+                className={({ isActive }) =>
+                  `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
+                }
+                onClick={() => closeMobileNav()}
+              >
+                <NavigationIcon name="meetings" />
+                Meetings
+              </NavLink>
               <div className={styles.navSecondary}>
-                <button type="button" className={`${styles.mobileNavLink} ${styles.navHelpButton}`} onClick={showMobileHelpNotice}>
+                <NavLink
+                  to="/help"
+                  className={({ isActive }) =>
+                    `${styles.mobileNavLink} ${isActive ? styles.active : ''}`
+                  }
+                  onClick={() => closeMobileNav()}
+                >
                   <NavigationIcon name="help" />
                   Help
-                </button>
+                </NavLink>
               </div>
             </nav>
 

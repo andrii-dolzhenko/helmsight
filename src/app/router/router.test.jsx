@@ -18,6 +18,8 @@ describe('Stage 28 initial route fallback', () => {
     ['global risks', '/risks'],
     ['global metrics', '/metrics'],
     ['global reports', '/reports'],
+    ['global meetings', '/meetings'],
+    ['help center', '/help'],
     ['workspace settings', '/settings'],
     ['project overview', '/projects/demo-project'],
     ['nested metrics page', '/projects/demo-project/metrics'],
