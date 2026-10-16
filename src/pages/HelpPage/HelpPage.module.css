@@ -1,0 +1,64 @@
+.root { display: grid; gap: 2rem; min-width: 0; padding-bottom: 2rem; }
+.root h1, .root h2, .root h3, .root p { margin: 0; }
+.eyebrow { display: block; color: var(--color-accent); font-size: 0.74rem; font-weight: 750; letter-spacing: 0.1em; }
+.hero { position: relative; isolation: isolate; display: flex; justify-content: space-between; align-items: center; gap: 2rem; overflow: hidden; border: 1px solid color-mix(in srgb, var(--color-accent) 22%, var(--color-border)); border-radius: var(--radius-md); background-color: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface)); background-image: linear-gradient(120deg, transparent 0%, var(--color-surface) 68%); padding: clamp(1.5rem, 4vw, 2.6rem); }
+.hero::before { content: ''; position: absolute; z-index: -1; inset: 0 0 auto auto; width: min(32rem, 65%); height: 100%; background: radial-gradient(circle at 80% 50%, var(--color-accent), transparent 70%); opacity: 0.15; pointer-events: none; }
+.heroCopy { display: grid; gap: 0.75rem; min-width: 0; max-width: 40rem; }
+.hero h1 { color: var(--color-text); font: 750 clamp(2rem, 3.6vw, 3.1rem)/1.1 var(--font-display); letter-spacing: -0.035em; }
+.hero p { color: var(--color-text-muted); max-width: 36rem; line-height: 1.6; }
+.heroLink { display: inline-flex; align-items: center; justify-content: center; gap: 0.65rem; justify-self: start; min-height: 2.65rem; margin-top: 0.3rem; padding: 0.65rem 1rem; border-radius: var(--radius-md); background: var(--color-accent); color: var(--color-surface); font-size: 0.85rem; font-weight: 800; text-decoration: none; }
+.heroLink:hover { background: color-mix(in srgb, var(--color-accent) 80%, var(--color-text)); }
+/* The original five-second Lottie fits to the right; it is not a full-bleed hero overlay. */
+.heroSymbol { position: relative; display: grid; place-items: center; flex: 0 0 clamp(11rem, 23vw, 17rem); width: clamp(11rem, 23vw, 17rem); aspect-ratio: 1086 / 696; margin-inline: 0; pointer-events: none; }
+.heroLottie { position: absolute; inset: 0; width: 100%; height: 100%; }
+.heroLottie svg { display: block; width: 100%; height: 100%; }
+:global([data-theme="dark"]) .heroLottie { filter: brightness(1.14) saturate(1.08); }
+.heroFallback { position: relative; display: grid; place-items: center; width: 4rem; height: 4rem; border: 2px solid var(--color-accent); border-radius: 50%; color: var(--color-accent); font: 800 2.7rem/1 var(--font-display); opacity: 0.7; }
+.heroFallbackHidden { visibility: hidden; }
+.sectionHeading { display: flex; justify-content: space-between; align-items: end; gap: 1rem; }
+.sectionHeading > div { display: grid; gap: 0.4rem; }
+.sectionHeading h2, .guideHeading h2 { color: var(--color-text); font-family: var(--font-display); font-size: clamp(1.4rem, 2.5vw, 1.85rem); }
+.smallMeta { color: var(--color-text-muted); font-size: 0.8rem; }
+.topicsSection { display: grid; gap: 1rem; scroll-margin-top: 6rem; }
+.topicGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
+.topicCard { display: grid; align-content: start; justify-items: start; gap: 0.65rem; min-width: 0; min-height: 12.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); color: var(--color-text); padding: 1.15rem; text-decoration: none; transition: border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
+.topicCard:hover { border-color: color-mix(in srgb, var(--color-accent) 50%, var(--color-border)); background: var(--color-surface-elevated); transform: translateY(-2px); }
+.topicCard strong { font-size: 1rem; }
+.topicIcon, .noticeIcon { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border: 1px solid color-mix(in srgb, var(--color-accent) 20%, var(--color-border)); border-radius: 0.85rem; background: color-mix(in srgb, var(--color-accent) 9%, var(--color-surface)); color: var(--color-accent); }
+.topicIcon svg, .noticeIcon svg { width: 1.45rem; height: 1.45rem; }
+.topicSummary { color: var(--color-text-muted); font-size: 0.84rem; line-height: 1.5; }
+.topicAction { display: inline-flex; gap: 0.55rem; align-items: center; margin-top: auto; padding-top: 0.35rem; color: var(--color-accent); font-size: 0.82rem; font-weight: 750; }
+.guideSections { display: grid; gap: 1.35rem; }
+.guideSection { display: grid; gap: 1rem; padding: 1.35rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); scroll-margin-top: 6rem; }
+.guideHeading { display: flex; align-items: start; gap: 0.9rem; }
+.guideHeading > div { display: grid; gap: 0.25rem; }
+.guideHeading p { color: var(--color-text-muted); font-size: 0.87rem; line-height: 1.5; }
+.guideGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem; }
+.guideCard { display: flex; flex-direction: column; align-items: start; min-width: 0; gap: 0.8rem; border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface-elevated); padding: 1.15rem; }
+.guideCard h3 { color: var(--color-text); font-size: 1.03rem; line-height: 1.4; }
+.guideCard p, .guideCard li { color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.65; }
+.guideCard ol { display: grid; gap: 0.65rem; margin: 0; padding-inline-start: 1.45rem; }
+.guideCard li { padding-inline-start: 0.15rem; }
+.guideCard li::marker { color: var(--color-accent); font-weight: 800; }
+.inlineLink { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.4rem; margin-top: auto; padding-top: 0.2rem; color: var(--color-accent); font-size: 0.85rem; font-weight: 750; text-decoration: none; }
+.inlineLink:hover, .topicCard:hover .topicAction { text-decoration: underline; text-underline-offset: 3px; }
+.faqSection { display: grid; gap: 1rem; scroll-margin-top: 6rem; }
+.faqList { display: grid; gap: 0.6rem; }
+.faqItem { border: 1px solid var(--color-border); border-radius: var(--radius-md); background: var(--color-surface); }
+.faqItem[open] { border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-border)); }
+.faqItem summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.6rem; padding: 0.9rem 1.1rem; color: var(--color-text); font-weight: 700; font-size: 0.92rem; cursor: pointer; list-style: none; }
+.faqItem summary::-webkit-details-marker { display: none; }
+.faqItem summary::marker { content: ''; }
+.faqChevron { display: grid; place-items: center; flex: 0 0 1.9rem; width: 1.9rem; height: 1.9rem; border-radius: 50%; background: var(--color-surface-elevated); color: var(--color-accent); }
+.faqChevron svg { display: block; width: 1rem; height: 1rem; transform-origin: center; transition: transform 160ms ease; }
+.faqItem[open] .faqChevron svg { transform: rotate(180deg); }
+.faqItem p { padding: 0 1.1rem 1.15rem; max-width: 62rem; color: var(--color-text-muted); font-size: 0.88rem; line-height: 1.7; }
+.dataNotice { display: flex; gap: 1rem; padding: 1.15rem; border: 1px solid color-mix(in srgb, var(--color-accent) 25%, var(--color-border)); border-radius: var(--radius-md); background: color-mix(in srgb, var(--color-accent) 7%, var(--color-surface)); }
+.dataNotice > div { display: grid; gap: 0.45rem; }
+.dataNotice h2 { color: var(--color-text); font-size: 1rem; }
+.dataNotice p { color: var(--color-text-muted); font-size: 0.86rem; line-height: 1.6; }
+.root a:focus-visible, .root summary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+@media (max-width: 1100px) { .topicGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 740px) { .heroSymbol { display: none; } .guideGrid { grid-template-columns: minmax(0, 1fr); } .guideSection { padding: 1rem; } .smallMeta { display: none; } }
+@media (max-width: 540px) { .root { gap: 1.4rem; } .topicGrid { grid-template-columns: minmax(0, 1fr); gap: 0.7rem; } .topicCard { min-height: 0; padding: 1rem; } .hero { padding: 1.35rem; } .guideHeading { align-items: center; } .guideHeading .topicIcon { flex: 0 0 2.8rem; } .guideCard { padding: 1rem; } .dataNotice { align-items: start; } .noticeIcon { flex: 0 0 2.8rem; } }
+@media (prefers-reduced-motion: reduce) { .topicCard, .faqChevron svg { transition: none; } .topicCard:hover { transform: none; }  }

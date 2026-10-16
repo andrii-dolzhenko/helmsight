@@ -48,7 +48,10 @@ HelmSight is a responsive project-delivery management application for Project Ma
 - Live character counters and validation for meeting-note inputs (see [text-input limits](docs/TEXT_INPUT_LIMITS.md)).
 - Recoverable drafts where implemented, plus browser-native **Print / Save as PDF**.
 
+- **P2 Global Meetings:** read-only, cross-project Meeting Notes index at `/meetings` with lifecycle/project filters, search, sorting, pagination and direct links to existing note details (ADR-054; [feature notes](docs/P2_GLOBAL_MEETINGS.md)).
+
 - **P2-12 Header Notifications:** a browser-local bell beside the theme switch for critical risks, overdue actions/milestones and daily Decision Lab. Includes All/Unread, read/dismiss, bounded scrolling and links to source records (ADR-052; [feature notes](docs/P2_HEADER_NOTIFICATIONS.md)).
+- **Help Center (P2):** the global Help navigation entry opens `/help` with user-focused getting-started, project management, EVM interpretation, data handling, notifications, Decision Lab and FAQ guidance. Copy reflects current functionality and highlights browser-local data limitations. See [Help Center implementation notes](docs/P2_HELP_CENTER.md).
 
 ### Interface and accessibility
 

@@ -69,14 +69,6 @@
   border-top: 1px solid var(--color-border);
 }
 
-.navHelpButton {
-  width: 100%;
-  text-align: left;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-}
-
 .navLink:hover,
 .mobileNavLink:hover {
   border-color: color-mix(in srgb, var(--color-accent) 16%, transparent);
