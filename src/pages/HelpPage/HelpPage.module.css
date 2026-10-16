@@ -1,8 +1,8 @@
 .root { display: grid; gap: 2rem; min-width: 0; padding-bottom: 2rem; }
 .root h1, .root h2, .root h3, .root p { margin: 0; }
 .eyebrow { display: block; color: var(--color-accent); font-size: 0.74rem; font-weight: 750; letter-spacing: 0.1em; }
-.hero { position: relative; isolation: isolate; display: flex; justify-content: space-between; align-items: center; gap: 2rem; overflow: hidden; border: 1px solid color-mix(in srgb, var(--color-accent) 22%, var(--color-border)); border-radius: var(--radius-md); background: linear-gradient(120deg, color-mix(in srgb, var(--color-accent) 10%, var(--color-surface)) 0%, var(--color-surface) 68%); padding: clamp(1.5rem, 4vw, 2.6rem); }
-.hero::before { content: ''; position: absolute; z-index: -1; inset: 0 0 auto auto; width: min(32rem, 65%); height: 100%; background: radial-gradient(circle at 80% 50%, color-mix(in srgb, var(--color-accent) 15%, transparent), transparent 70%); pointer-events: none; }
+.hero { position: relative; isolation: isolate; display: flex; justify-content: space-between; align-items: center; gap: 2rem; overflow: hidden; border: 1px solid color-mix(in srgb, var(--color-accent) 22%, var(--color-border)); border-radius: var(--radius-md); background-color: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface)); background-image: linear-gradient(120deg, transparent 0%, var(--color-surface) 68%); padding: clamp(1.5rem, 4vw, 2.6rem); }
+.hero::before { content: ''; position: absolute; z-index: -1; inset: 0 0 auto auto; width: min(32rem, 65%); height: 100%; background: radial-gradient(circle at 80% 50%, var(--color-accent), transparent 70%); opacity: 0.15; pointer-events: none; }
 .heroCopy { display: grid; gap: 0.75rem; min-width: 0; max-width: 40rem; }
 .hero h1 { color: var(--color-text); font: 750 clamp(2rem, 3.6vw, 3.1rem)/1.1 var(--font-display); letter-spacing: -0.035em; }
 .hero p { color: var(--color-text-muted); max-width: 36rem; line-height: 1.6; }
