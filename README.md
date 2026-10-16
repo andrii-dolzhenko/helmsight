@@ -10,7 +10,7 @@ HelmSight is a responsive project-delivery management application for Project Ma
 
 ## Features
 
-**P2 Decision Lab (feature branch; not yet merged):** a three-question daily PM training session drawn from nine curated scenarios in a repeating three-day cycle. Open it from the bottom sidebar card or mobile navigation; answers and feedback progress persist locally, and the modal supports Escape, focus restoration and answer review. Notifications are deferred to P2-12. See [Decision Lab implementation notes](docs/P2_DECISION_LAB.md).
+**P2 Decision Lab:** a three-question daily PM training session drawn from nine curated scenarios in a repeating three-day cycle. Open it from the bottom sidebar card or mobile navigation; answers and feedback progress persist locally, and the modal supports Escape, focus restoration and answer review. The P2-12 Header Notifications feature adds a local once-per-day reminder. See [Decision Lab implementation notes](docs/P2_DECISION_LAB.md).
 
 ### Portfolio and project workspace
 
@@ -48,9 +48,12 @@ HelmSight is a responsive project-delivery management application for Project Ma
 - Live character counters and validation for meeting-note inputs (see [text-input limits](docs/TEXT_INPUT_LIMITS.md)).
 - Recoverable drafts where implemented, plus browser-native **Print / Save as PDF**.
 
+- **P2-12 Header Notifications:** a browser-local bell beside the theme switch for critical risks, overdue actions/milestones and daily Decision Lab. Includes All/Unread, read/dismiss, bounded scrolling and links to source records (ADR-052; [feature notes](docs/P2_HEADER_NOTIFICATIONS.md)).
+
 ### Interface and accessibility
 
-- Branded landing page, contextual guidance, responsive navigation, and custom 404 page.
+- Branded landing page, contextual guidance, and icon-labeled global navigation in desktop/mobile layouts; the Help entry is an informational placeholder, not a separate help route.
+- Custom 404 page.
 - Semantic controls, keyboard interactions, visible focus states, and reduced-motion support.
 - Lazy-loaded routes with a loading fallback for initial navigation.
 - **P2-B feature branch:** desktop profile menu; mobile/tablet profile and theme controls in the navigation drawer; `Exit workspace` returns to the landing page without signing out or clearing data.
