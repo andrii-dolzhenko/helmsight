@@ -11,7 +11,7 @@ const mocks = vi.hoisted(() => ({
   removeEventListener: vi.fn(),
 }))
 
-vi.mock('lottie-web', () => ({ default: { loadAnimation: mocks.loadAnimation } }))
+vi.mock('lottie-web/build/player/lottie_light', () => ({ default: { loadAnimation: mocks.loadAnimation } }))
 
 beforeEach(() => {
   mocks.loadAnimation.mockImplementation(() => ({

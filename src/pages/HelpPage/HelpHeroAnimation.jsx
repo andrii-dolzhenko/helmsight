@@ -48,8 +48,8 @@ export function HelpHeroAnimation() {
 
     motionQuery?.addEventListener?.('change', updatePlayback)
 
-    // Keep Lottie out of the main application bundle; it is only needed on /help.
-    import('lottie-web').then(({ default: lottie }) => {
+    // Use the SVG-only light player (no expressions) and load it only on /help.
+    import('lottie-web/build/player/lottie_light').then(({ default: lottie }) => {
       if (disposed) return
       animation = lottie.loadAnimation({
         container,
