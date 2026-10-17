@@ -25,7 +25,9 @@
     "w3c:inventory": "node scripts/w3c-gradient-inventory.mjs",
     "w3c:inventory:test": "node --test scripts/w3c-gradient-inventory.test.mjs",
     "w3c:repro": "node scripts/w3c-css-repro.mjs",
-    "w3c:repro:test": "node --test scripts/w3c-css-repro.test.mjs"
+    "w3c:repro:test": "node --test scripts/w3c-css-repro.test.mjs",
+    "qa:css": "node scripts/qa-css.mjs",
+    "qa:css:test": "node --test scripts/qa-css.test.mjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
