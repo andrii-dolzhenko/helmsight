@@ -1,0 +1,330 @@
+{
+  "source": "Approved regression baseline under ADR-058; not W3C 0/0 compliance or deployment approval",
+  "capturedAt": "2026-10-17T16:40:31.948Z",
+  "profiles": {
+    "1": {
+      "errors": 0,
+      "warnings": 425,
+      "files": {
+        "ActionEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "ActionsPage": {
+          "errors": 0,
+          "warnings": 3
+        },
+        "App": {
+          "errors": 0,
+          "warnings": 86
+        },
+        "AuthForm": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "ConfirmDialog": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "EvmForms": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "EvmHelp": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "GlobalActionsPage": {
+          "errors": 0,
+          "warnings": 41
+        },
+        "GlobalMeetingsPage": {
+          "errors": 0,
+          "warnings": 32
+        },
+        "GlobalMetricsPage": {
+          "errors": 0,
+          "warnings": 27
+        },
+        "GlobalOverviewPage": {
+          "errors": 0,
+          "warnings": 30
+        },
+        "GlobalReportsPage": {
+          "errors": 0,
+          "warnings": 33
+        },
+        "GlobalRisksPage": {
+          "errors": 0,
+          "warnings": 34
+        },
+        "GovernancePage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "HelpPage": {
+          "errors": 0,
+          "warnings": 24
+        },
+        "LandingPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "LessonEditorPage": {
+          "errors": 0,
+          "warnings": 16
+        },
+        "LessonsLearnedPage": {
+          "errors": 0,
+          "warnings": 42
+        },
+        "ManagementActionsHelp": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "MeetingNoteEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "MeetingsPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "MetricsPage": {
+          "errors": 0,
+          "warnings": 2
+        },
+        "MetricsSnapshotEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "MilestoneEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "MilestonesPage": {
+          "errors": 0,
+          "warnings": 4
+        },
+        "NotFoundPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "ProjectEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "ProjectOverviewPage": {
+          "errors": 0,
+          "warnings": 10
+        },
+        "ProjectsPage": {
+          "errors": 0,
+          "warnings": 7
+        },
+        "ReportDetailPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "ReportsPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "RiskDetailPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "RiskEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "RisksPage": {
+          "errors": 0,
+          "warnings": 3
+        },
+        "SettingsPage": {
+          "errors": 0,
+          "warnings": 27
+        },
+        "StatusToast": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "SuccessCriteriaPage": {
+          "errors": 0,
+          "warnings": 3
+        },
+        "SuccessCriterionEditorPage": {
+          "errors": 0,
+          "warnings": 0
+        },
+        "index": {
+          "errors": 0,
+          "warnings": 1
+        }
+      }
+    },
+    "2": {
+      "errors": 0,
+      "warnings": 4256,
+      "files": {
+        "ActionEditorPage": {
+          "errors": 0,
+          "warnings": 72
+        },
+        "ActionsPage": {
+          "errors": 0,
+          "warnings": 131
+        },
+        "App": {
+          "errors": 0,
+          "warnings": 400
+        },
+        "AuthForm": {
+          "errors": 0,
+          "warnings": 75
+        },
+        "ConfirmDialog": {
+          "errors": 0,
+          "warnings": 35
+        },
+        "EvmForms": {
+          "errors": 0,
+          "warnings": 61
+        },
+        "EvmHelp": {
+          "errors": 0,
+          "warnings": 22
+        },
+        "GlobalActionsPage": {
+          "errors": 0,
+          "warnings": 138
+        },
+        "GlobalMeetingsPage": {
+          "errors": 0,
+          "warnings": 125
+        },
+        "GlobalMetricsPage": {
+          "errors": 0,
+          "warnings": 109
+        },
+        "GlobalOverviewPage": {
+          "errors": 0,
+          "warnings": 134
+        },
+        "GlobalReportsPage": {
+          "errors": 0,
+          "warnings": 120
+        },
+        "GlobalRisksPage": {
+          "errors": 0,
+          "warnings": 149
+        },
+        "GovernancePage": {
+          "errors": 0,
+          "warnings": 173
+        },
+        "HelpPage": {
+          "errors": 0,
+          "warnings": 83
+        },
+        "LandingPage": {
+          "errors": 0,
+          "warnings": 139
+        },
+        "LessonEditorPage": {
+          "errors": 0,
+          "warnings": 37
+        },
+        "LessonsLearnedPage": {
+          "errors": 0,
+          "warnings": 95
+        },
+        "ManagementActionsHelp": {
+          "errors": 0,
+          "warnings": 22
+        },
+        "MeetingNoteEditorPage": {
+          "errors": 0,
+          "warnings": 93
+        },
+        "MeetingsPage": {
+          "errors": 0,
+          "warnings": 192
+        },
+        "MetricsPage": {
+          "errors": 0,
+          "warnings": 164
+        },
+        "MetricsSnapshotEditorPage": {
+          "errors": 0,
+          "warnings": 11
+        },
+        "MilestoneEditorPage": {
+          "errors": 0,
+          "warnings": 67
+        },
+        "MilestonesPage": {
+          "errors": 0,
+          "warnings": 139
+        },
+        "NotFoundPage": {
+          "errors": 0,
+          "warnings": 6
+        },
+        "ProjectEditorPage": {
+          "errors": 0,
+          "warnings": 48
+        },
+        "ProjectOverviewPage": {
+          "errors": 0,
+          "warnings": 227
+        },
+        "ProjectsPage": {
+          "errors": 0,
+          "warnings": 175
+        },
+        "ReportDetailPage": {
+          "errors": 0,
+          "warnings": 28
+        },
+        "ReportsPage": {
+          "errors": 0,
+          "warnings": 464
+        },
+        "RiskDetailPage": {
+          "errors": 0,
+          "warnings": 59
+        },
+        "RiskEditorPage": {
+          "errors": 0,
+          "warnings": 53
+        },
+        "RisksPage": {
+          "errors": 0,
+          "warnings": 178
+        },
+        "SettingsPage": {
+          "errors": 0,
+          "warnings": 57
+        },
+        "StatusToast": {
+          "errors": 0,
+          "warnings": 6
+        },
+        "SuccessCriteriaPage": {
+          "errors": 0,
+          "warnings": 76
+        },
+        "SuccessCriterionEditorPage": {
+          "errors": 0,
+          "warnings": 77
+        },
+        "index": {
+          "errors": 0,
+          "warnings": 16
+        }
+      }
+    }
+  }
+}
