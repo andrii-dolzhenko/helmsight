@@ -47,7 +47,6 @@
       /* Visible before the React bundle, storage recovery, or lazy route resolves. */
       .startup-shell {
         display: flex;
-        min-height: 100vh;
         min-height: 100dvh;
         flex-direction: column;
         align-items: center;
@@ -78,42 +77,49 @@
 
       .startup-brand span {
         color: #177a58;
+        background-color: #f5f1e8;
+      }
+
+      html[data-theme='dark'] .startup-brand span {
+        color: #177a58;
+        background-color: #111512;
       }
 
       html[data-public-page='true'] .startup-brand span {
         color: #32ead5;
+        background-color: #02090d;
       }
 
-      .startup-wait {
+      /* Specificity keeps the delay active while global boot animations are disabled. */
+      .startup-wait,
+      html[data-app-booting='true'] .startup-wait {
         display: flex;
         align-items: center;
         gap: 0.65rem;
-        color: inherit;
         font-size: 0.82rem;
         opacity: 0;
-        animation: startup-reveal 1ms step-end 250ms forwards;
+        animation: startup-reveal 1ms step-end 250ms forwards !important;
       }
 
-      .startup-spinner {
+      .startup-spinner,
+      html[data-app-booting='true'] .startup-spinner {
         width: 0.9rem;
         height: 0.9rem;
-        border: 2px solid currentColor;
-        border-top-color: #177a58;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #177a58 currentColor currentColor;
         border-radius: 50%;
-        animation: startup-spin 900ms linear infinite;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .startup-spinner,
+        html[data-app-booting='true'] .startup-spinner {
+          animation: startup-spin 900ms linear infinite !important;
+        }
       }
 
       html[data-public-page='true'] .startup-spinner {
         border-top-color: #32ead5;
-      }
-
-      /* Keep the intentional loading delay even while app entrance animations are disabled. */
-      html[data-app-booting='true'] .startup-wait {
-        animation: startup-reveal 1ms step-end 250ms forwards !important;
-      }
-
-      html[data-app-booting='true'] .startup-spinner {
-        animation: startup-spin 900ms linear infinite !important;
       }
 
       @keyframes startup-reveal {
@@ -124,12 +130,6 @@
         to { transform: rotate(360deg); }
       }
 
-      @media (prefers-reduced-motion: reduce) {
-        .startup-spinner,
-        html[data-app-booting='true'] .startup-spinner {
-          animation: none !important;
-        }
-      }
     </style>
     <script>
       (() => {
