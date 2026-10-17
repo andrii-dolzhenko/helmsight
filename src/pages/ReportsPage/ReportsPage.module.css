@@ -3,9 +3,7 @@
   gap: var(--layout-module-gap);
 }
 
-.reportHeader,
 .toolbar,
-.sectionHeading,
 .footerActions,
 .createActions,
 .archiveBanner,
@@ -611,6 +609,7 @@
 }
 
 .reportHeader {
+  display: flex;
   align-items: flex-start;
   gap: 1rem;
   border-bottom: 1px solid var(--color-border);
@@ -804,6 +803,7 @@
 }
 
 .sectionHeading {
+  display: flex;
   align-items: flex-start;
   gap: 0.75rem;
 }
