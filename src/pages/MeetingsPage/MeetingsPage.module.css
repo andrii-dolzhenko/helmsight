@@ -12,6 +12,12 @@
 .sectionTitle,
 .detailTopline {
   display: flex;
+}
+
+.listHeader,
+.archiveBanner,
+.detailActions,
+.detailTopline {
   align-items: center;
 }
 
