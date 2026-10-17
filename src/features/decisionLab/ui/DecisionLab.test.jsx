@@ -35,6 +35,7 @@ describe('Decision Lab modal', () => {
     await user.click(trigger)
     const dialog = screen.getByRole('dialog', { name: 'Decision Lab' })
     expect(within(dialog).getAllByRole('radio')).toHaveLength(4)
+    expect(within(dialog).getByRole('group', { name: 'Choose one response' })).toBeInTheDocument()
     expect(document.body.style.overflow).toBe('hidden')
     expect(trigger.closest('[data-app-shell]')).toHaveAttribute('inert')
     expect(within(dialog).getByRole('button', { name: 'Close Decision Lab' })).toHaveFocus()
