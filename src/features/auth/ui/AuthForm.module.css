@@ -1,0 +1,363 @@
+.card {
+  width: 100%;
+  padding: clamp(1.25rem, 2.5vw, 1.8rem);
+  border: 1px solid rgb(143 190 210 / 24%);
+  border-radius: 1.1rem;
+  background: #071420;
+  box-shadow: 0 1.6rem 5rem rgb(0 0 0 / 36%);
+  color: #f4f8fc;
+}
+
+.card h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.subtitle {
+  margin: 0.35rem 0 0.95rem;
+  color: #b7c7d2;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.fields {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.field label {
+  color: #eff7fb;
+  font-size: 0.83rem;
+  font-weight: 650;
+}
+
+.field input {
+  display: block;
+  width: 100%;
+  min-height: 2.6rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid #3d5967;
+  border-radius: 0.55rem;
+  background: rgb(16 31 45 / 82%);
+  color: #f7fbff;
+  font-size: 0.9rem;
+}
+
+.field input::placeholder {
+  color: #9bafb9;
+}
+
+.field input:hover {
+  border-color: #7cabbc;
+}
+
+.field input:focus-visible {
+  border-color: #42d2e9;
+  outline: 2px solid #4ad9ee;
+  outline-offset: 2px;
+}
+
+.field input[aria-invalid='true'] {
+  border-color: #f6a6a2;
+}
+
+.passwordWrap {
+  position: relative;
+}
+
+.passwordWrap input {
+  padding-right: 4.4rem;
+}
+
+.visibilityButton {
+  position: absolute;
+  inset-block: 0;
+  right: 0.35rem;
+  min-width: 3.45rem;
+  padding: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: #b8dce8;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.visibilityButton:hover { color: #65eeed; }
+.visibilityButton:focus-visible { outline: 2px solid #4ad9ee; border-radius: 0.4rem; }
+
+.errorSlot {
+  /* Reserve the same line for every field before and after validation. */
+  min-height: 1.05rem;
+}
+
+.error {
+  margin: 0;
+  color: #ffaaa5;
+  font-size: 0.76rem;
+  line-height: 1.3;
+}
+
+.formMeta {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.8rem 0 0;
+}
+
+.formMeta a, .switch a, .notice a {
+  color: #5ce5ff;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.formMeta a { font-size: 0.8rem; }
+
+.submitButton {
+  width: 100%;
+  min-height: 2.7rem;
+  margin-top: 0.95rem;
+  padding: 0.6rem;
+  border: 1px solid #3be7e4;
+  border-radius: 0.6rem;
+  background: linear-gradient(110deg, #1bacf8 0%, #32e9d1 100%);
+  color: #04141d;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.submitButton:hover { filter: brightness(1.09); }
+.submitButton:focus-visible { outline: 2px solid #d0ffff; outline-offset: 3px; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.85rem 0;
+  color: #acc0ca;
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #2d4855;
+}
+
+.socialButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.socialButtons button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.6rem;
+  padding: 0.5rem 0.4rem;
+  border: 1px solid #426778;
+  border-radius: 0.6rem;
+  background: rgb(15 29 42 / 74%);
+  color: #f0f7fa;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.socialButtons button:hover { border-color: #52d7e8; background: #142b3c; }
+.socialButtons button:focus-visible { outline: 2px solid #53e7ed; outline-offset: 2px; }
+.socialButtons svg { flex: 0 0 1rem; width: 1rem; height: 1rem; }
+
+.demoArea { margin-top: 0.75rem; }
+.demoLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.7rem;
+  padding: 0.55rem;
+  border: 1px solid #2fb7ed;
+  border-radius: 0.6rem;
+  color: #f4fbff;
+  font-size: 0.85rem;
+  font-weight: 750;
+  text-align: center;
+  text-decoration: none;
+}
+.demoLink:hover { background: rgb(30 146 198 / 22%); }
+.demoLink:focus-visible { outline: 2px solid #53e7ed; outline-offset: 2px; }
+
+.switch {
+  margin: 0.9rem 0 0;
+  color: #c3d1d8;
+  font-size: 0.82rem;
+  text-align: center;
+  line-height: 1.45;
+}
+
+.notice {
+  position: fixed;
+  z-index: 1000;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  width: min(23rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  padding: 0.9rem 1rem;
+  border: 1px solid #3f9fa8;
+  border-radius: 0.75rem;
+  background: #102f37;
+  box-shadow: 0 0.8rem 2.5rem rgb(0 0 0 / 38%);
+  color: #d6f9ef;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.notice p { margin: 0; }
+
+.noticeActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.65rem;
+}
+
+.notice a {
+  color: #82eaff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.notice button {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid #6dbcc6;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: #eafaff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.notice button:hover { background: #1b4b54; }
+.notice button:focus-visible,
+.notice a:focus-visible { outline: 2px solid #65e7f1; outline-offset: 3px; }
+
+.previewLink {
+  display: block;
+  margin-top: 1rem;
+  color: #6adfeb;
+  font-size: 0.84rem;
+  text-align: center;
+}
+
+/* The artwork stays dark; a lighter form surface acknowledges workspace Light mode. */
+:global(:root[data-theme='light']) .card {
+  background: #f6fbfb;
+  border-color: rgb(117 190 214 / 50%);
+  color: #142734;
+  color-scheme: light;
+}
+:global(:root[data-theme='light']) .card h2,
+:global(:root[data-theme='light']) .field label { color: #142734; }
+:global(:root[data-theme='light']) .subtitle,
+:global(:root[data-theme='light']) .switch { color: #48606d; }
+:global(:root[data-theme='light']) .field input {
+  background: #ffffff;
+  border-color: #9fb9c5;
+  color: #132b39;
+}
+:global(:root[data-theme='light']) .field input::placeholder { color: #647b86; }
+:global(:root[data-theme='light']) .field input:hover { border-color: #2e879d; }
+:global(:root[data-theme='light']) .error { color: #a62e31; }
+:global(:root[data-theme='light']) .visibilityButton,
+:global(:root[data-theme='light']) .formMeta a,
+:global(:root[data-theme='light']) .switch a,
+:global(:root[data-theme='light']) .previewLink { color: #086a81; }
+:global(:root[data-theme='light']) .divider { color: #526c78; }
+:global(:root[data-theme='light']) .divider::before,
+:global(:root[data-theme='light']) .divider::after { background: #bbd1dc; }
+:global(:root[data-theme='light']) .socialButtons button {
+  color: #17303b;
+  border-color: #a2c5d3;
+  background: #eaf5f7;
+}
+:global(:root[data-theme='light']) .socialButtons button:hover { background: #dceef1; }
+:global(:root[data-theme='light']) .demoLink { color: #096b89; }
+:global(:root[data-theme='light']) .demoLink:hover { background: #dff4fb; }
+
+@media (max-width: 540px) {
+  .card { padding: 1.2rem 1rem; }
+  .socialButtons { grid-template-columns: 1fr; }
+}
+
+
+/* Short desktop windows can still scroll: the form is never clipped. */
+@media (min-width: 931px) and (max-height: 800px) {
+  .card { padding: 1.15rem 1.35rem; }
+  .subtitle { margin-bottom: 0.7rem; }
+  .fields { gap: 0.55rem; }
+  .divider { margin-block: 0.65rem; }
+  .switch { margin-top: 0.7rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .error { animation: auth-error-enter 160ms ease-out both; }
+  @keyframes auth-error-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+
+/* On laptop-height desktops, keep a four-field registration preview compact,
+   including field-level validation messages, without shrinking touch targets. */
+@media (min-width: 931px) and (max-height: 960px) {
+  :global([data-auth-screen='sign-up']) .card { padding: 1.15rem 1.4rem; }
+  :global([data-auth-screen='sign-up']) .card h2 { font-size: 1.75rem; }
+  :global([data-auth-screen='sign-up']) .subtitle { margin: 0.2rem 0 0.6rem; line-height: 1.35; }
+  :global([data-auth-screen='sign-up']) .fields { gap: 0.45rem; }
+  :global([data-auth-screen='sign-up']) .field { gap: 0.2rem; }
+  :global([data-auth-screen='sign-up']) .field input { min-height: 2.5rem; padding-block: 0.45rem; }
+  :global([data-auth-screen='sign-up']) .submitButton { margin-top: 0.7rem; min-height: 2.6rem; }
+  :global([data-auth-screen='sign-up']) .divider { margin-block: 0.55rem; }
+  :global([data-auth-screen='sign-up']) .socialButtons button { min-height: 2.5rem; }
+  :global([data-auth-screen='sign-up']) .demoArea { margin-top: 0.55rem; }
+  :global([data-auth-screen='sign-up']) .demoLink { min-height: 2.6rem; }
+  :global([data-auth-screen='sign-up']) .switch { margin-top: 0.65rem; }
+}
+
+/* The full four-field form still fits in a short laptop window with its
+   reserved validation rows; no viewport scrolling just to show errors. */
+@media (min-width: 931px) and (max-height: 820px) {
+  :global([data-auth-screen='sign-up']) .card { padding: 0.85rem 1.3rem; }
+  :global([data-auth-screen='sign-up']) .card h2 { font-size: 1.65rem; }
+  :global([data-auth-screen='sign-up']) .subtitle { margin: 0 0 0.35rem; }
+  :global([data-auth-screen='sign-up']) .fields { gap: 0.28rem; }
+  :global([data-auth-screen='sign-up']) .field { gap: 0.08rem; }
+  :global([data-auth-screen='sign-up']) .submitButton { margin-top: 0.4rem; }
+  :global([data-auth-screen='sign-up']) .divider { margin-block: 0.35rem; }
+  :global([data-auth-screen='sign-up']) .demoArea { margin-top: 0.35rem; }
+  :global([data-auth-screen='sign-up']) .switch { margin-top: 0.35rem; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .notice { animation: auth-notice-enter 180ms ease-out both; }
+  @keyframes auth-notice-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

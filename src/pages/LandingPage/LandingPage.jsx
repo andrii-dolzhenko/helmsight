@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { Brand } from '../../shared/ui/Brand/Brand.jsx'
+import { PublicFooter } from '../../shared/ui/PublicFooter/PublicFooter.jsx'
 import heroVisualUrl from './helmsight-landing-visual.webp'
 import styles from './LandingPage.module.css'
 
@@ -54,10 +55,10 @@ export function LandingPage() {
       <header className={styles.header}>
         <Brand />
         <nav className={styles.headerActions} aria-label="Landing actions">
-          <Link className={styles.signIn} to="/overview">
+          <Link className={styles.signIn} to="/sign-in">
             Sign in
           </Link>
-          <Link className={styles.getStarted} to="/overview">
+          <Link className={styles.getStarted} to="/sign-up">
             Get started
           </Link>
         </nav>
@@ -81,7 +82,7 @@ export function LandingPage() {
             <span aria-hidden="true">→</span>
           </Link>
 
-          <div className={styles.strengths} aria-label="HelmSight strengths">
+          <div className={styles.strengths} role="group" aria-label="HelmSight strengths">
             {strengths.map((item) => (
               <div className={styles.strength} key={item.title}>
                 <span className={styles.strengthIcon}>{item.icon}</span>
@@ -92,10 +93,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <span className={styles.tagline}>From complexity to confident delivery.</span>
-        <small>© 2026 HelmSight. All rights reserved.</small>
-      </footer>
+      <PublicFooter className={styles.footerArtwork} />
     </main>
   )
 }

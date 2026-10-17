@@ -31,6 +31,14 @@
         color-scheme: dark;
       }
 
+      /* Public screens must paint dark before React and the route CSS load. */
+      html[data-public-page='true'],
+      html[data-public-page='true'] body {
+        background: #02090d;
+        color: #f7fafb;
+        color-scheme: dark;
+      }
+
       body,
       #root {
         min-height: 100dvh;
@@ -41,7 +49,23 @@
         const root = document.documentElement
         root.dataset.appBooting = 'true'
 
-        if (window.location.pathname === '/') {
+        // Vite replaces %BASE_URL% for / and nested deployments (e.g. /helmsight/).
+        const basePath = '%BASE_URL%'.replace(/\/+$/, '')
+        const pathname = window.location.pathname
+        const routePath = basePath && (pathname === basePath || pathname.startsWith(`${basePath}/`))
+          ? pathname.slice(basePath.length) || '/'
+          : pathname
+        const normalizedRoute = routePath.replace(/\/+$/, '') || '/'
+        const isLanding = normalizedRoute === '/'
+        const isAuth = ['/sign-in', '/sign-up', '/forgot-password', '/reset-password']
+          .includes(normalizedRoute)
+
+        if (isLanding || isAuth) {
+          root.dataset.publicPage = 'true'
+          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#02090d')
+        }
+
+        if (isLanding) {
           root.dataset.theme = 'light'
           root.dataset.themeMode = 'marketing'
           return
@@ -59,10 +83,12 @@
 
           root.dataset.theme = resolvedTheme
           root.dataset.themeMode = themeMode
-          document.querySelector('meta[name="theme-color"]')?.setAttribute(
-            'content',
-            resolvedTheme === 'dark' ? '#111512' : '#f5f1e8',
-          )
+          if (!isAuth) {
+            document.querySelector('meta[name="theme-color"]')?.setAttribute(
+              'content',
+              resolvedTheme === 'dark' ? '#111512' : '#f5f1e8',
+            )
+          }
         } catch {
           root.dataset.theme = 'light'
           root.dataset.themeMode = 'system'

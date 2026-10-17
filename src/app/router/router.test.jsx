@@ -14,6 +14,10 @@ describe('Stage 28 initial route fallback', () => {
 
   it.each([
     ['landing page', '/'],
+    ['sign in', '/sign-in'],
+    ['sign up', '/sign-up'],
+    ['forgot password', '/forgot-password'],
+    ['reset password', '/reset-password'],
     ['projects list', '/projects'],
     ['global risks', '/risks'],
     ['global metrics', '/metrics'],

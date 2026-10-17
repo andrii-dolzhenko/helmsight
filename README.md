@@ -55,7 +55,8 @@ HelmSight is a responsive project-delivery management application for Project Ma
 
 ### Interface and accessibility
 
-- Branded landing page, contextual guidance, and icon-labeled global navigation in desktop/mobile layouts; the Help entry is an informational placeholder, not a separate help route.
+- Branded landing page, contextual guidance, and icon-labeled global navigation in desktop/mobile layouts; Help Center is available at `/help`.
+- **P2 Auth UI Prototype:** `/sign-in`, `/sign-up`, `/forgot-password`, `/reset-password` with local validation and honest, frontend-only demo states. Google/GitHub are placeholders; Demo remains open without registration. See [auth UI implementation notes](docs/P2_AUTH_UI_PROTOTYPE.md).
 - Custom 404 page.
 - Semantic controls, keyboard interactions, visible focus states, and reduced-motion support.
 - Lazy-loaded routes with a loading fallback for initial navigation.

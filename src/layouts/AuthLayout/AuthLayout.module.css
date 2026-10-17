@@ -1,0 +1,208 @@
+.page {
+  --color-brand-wordmark: #f7fbff;
+  --auth-cyan: #21b8ff;
+  --auth-mint: #32ead5;
+  --auth-muted: #b7c6d0;
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: auto minmax(min-content, 1fr) auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: #02090d;
+  color: #f7fafb;
+  color-scheme: dark;
+}
+
+.visual {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.visual img {
+  position: absolute;
+  right: -10vw;
+  top: -12%;
+  height: 125%;
+  width: auto;
+  max-width: none;
+  opacity: 0.74;
+  /* Keep the Auth artwork crisp without an extra image filter. */
+}
+
+.visual::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background:
+    linear-gradient(90deg, #02090d 0%, rgb(2 9 13 / 93%) 30%, rgb(2 9 13 / 48%) 66%, rgb(2 9 13 / 78%) 100%),
+    linear-gradient(180deg, rgb(2 9 13 / 40%), transparent 20%, rgb(2 9 13 / 80%) 100%);
+}
+
+.header,
+.content {
+  /* Match the Landing Page gutters for a stable logo, story, and footer axis. */
+  width: min(calc(100% - clamp(2.25rem, 12.8vw, 13.5rem)), 100rem);
+  margin-inline: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: clamp(5rem, 10.5vh, 6.3rem);
+}
+
+.header [aria-label='HelmSight home'] img {
+  width: clamp(2.2rem, 2.85vw, 2.7rem);
+  height: clamp(2.2rem, 2.85vw, 2.7rem);
+}
+
+.header [aria-label='HelmSight home'] > span {
+  font-size: clamp(1.45rem, 2.08vw, 2.03rem);
+}
+
+.homeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 0.1rem;
+  color: #e6f3fa;
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.homeLink:hover {
+  color: #70e7f4;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(21.5rem, 27.5rem);
+  align-items: start;
+  gap: clamp(3rem, 8vw, 9rem);
+  padding-block: 0.75rem 0.75rem;
+}
+
+.story {
+  align-self: start;
+  max-width: 32rem;
+  padding-top: clamp(1rem, 5vh, 3rem);
+  animation: auth-content-enter 260ms ease-out both;
+}
+
+.eyebrow {
+  margin: 0 0 1.2rem;
+  color: #8ee4e0;
+  font-size: 0.77rem;
+  font-weight: 750;
+  letter-spacing: 0.27em;
+  text-transform: uppercase;
+}
+
+.story h1 {
+  max-width: 28rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.1rem, 5.3vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.052em;
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 26.5rem;
+  margin: 1.4rem 0 0;
+  color: #c5d0d8;
+  font-size: clamp(1rem, 1.3vw, 1.17rem);
+  line-height: 1.65;
+}
+
+.prototypeNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  max-width: 26rem;
+  margin-top: 2.2rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgb(119 178 205 / 28%);
+  border-radius: 0.8rem;
+  background: rgb(9 24 36 / 79%);
+  color: #b8cbd5;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.prototypeNote strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: #f1f9fc;
+}
+
+.infoIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 1.3rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: 1px solid #48dce8;
+  border-radius: 50%;
+  color: #48dce8;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.formRegion {
+  min-width: 0;
+  width: 100%;
+  animation: auth-content-enter 290ms ease-out both;
+}
+
+@keyframes auth-content-enter {
+  from { opacity: 0; transform: translateY(0.65rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1100px) {
+  .header, .content { width: calc(100% - clamp(2.4rem, 6vw, 4.25rem)); }
+}
+
+@media (max-width: 930px) {
+  .content { grid-template-columns: 1fr; gap: 2rem; padding-block: 1rem 3rem; }
+  .story { max-width: 36rem; padding-top: 0; }
+  .story h1 { font-size: clamp(2.8rem, 6vw, 4rem); }
+  .description { margin-top: 0.7rem; }
+  .prototypeNote { margin-top: 1.2rem; max-width: none; }
+  .visual img { right: -31rem; height: 90%; opacity: 0.53; }
+  .visual::after { background: linear-gradient(180deg, rgb(2 9 13 / 70%), rgb(2 9 13 / 86%) 54%, #02090d 100%); }
+}
+
+@media (max-width: 650px) {
+  .header, .content { width: calc(100% - 2.25rem); }
+  .header { min-height: 4.5rem; }
+  .header [aria-label='HelmSight home'] img { width: 2.1rem; height: 2.1rem; }
+  .header [aria-label='HelmSight home'] > span { font-size: clamp(1.25rem, 4.9vw, 1.55rem); }
+  .homeLink { font-size: 0.78rem; }
+  .content { gap: 1.15rem; padding-block: 0.8rem 2rem; }
+  .story h1 { font-size: clamp(2.45rem, 11vw, 3.3rem); }
+  .eyebrow { font-size: 0.65rem; margin-bottom: 0.6rem; }
+  .description { font-size: 0.89rem; line-height: 1.5; }
+  .prototypeNote { padding: 0.8rem; font-size: 0.75rem; }
+}
+
+@media (max-width: 359px) {
+  .header [aria-label='HelmSight home'] img { width: 1.8rem; height: 1.8rem; }
+  .header [aria-label='HelmSight home'] > span { font-size: 1.16rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story, .formRegion { animation: none; }
+}
