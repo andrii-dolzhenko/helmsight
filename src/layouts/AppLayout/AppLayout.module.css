@@ -459,20 +459,6 @@
 }
 
 .mobileExitLink {
-  min-height: 2.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
-  color: var(--color-text);
-  text-decoration: none;
-  padding: 0.7rem;
-  font-size: 0.84rem;
-  font-weight: 700;
-}
-
-.mobileExitLink {
   justify-content: center;
   margin-top: 0.1rem;
   border-color: color-mix(in srgb, var(--color-accent) 19%, var(--color-border));
