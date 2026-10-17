@@ -3,7 +3,6 @@
   gap: var(--layout-module-gap);
 }
 
-.pageHeader,
 .reportHeader,
 .toolbar,
 .sectionHeading,
@@ -30,6 +29,7 @@
 }
 
 .pageHeader {
+  display: flex;
   align-items: flex-end;
   gap: 1rem;
 }
