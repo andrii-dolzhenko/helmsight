@@ -37,6 +37,8 @@ describe('Stage 28 initial route fallback', () => {
 
   it('provides an accessible loading announcement', () => {
     render(<RouteLoadingFallback />)
-    expect(screen.getByRole('status').textContent).toBe('Loading HelmSight…')
+    expect(screen.getByRole('status', { name: 'Loading HelmSight' })).toBeTruthy()
+    expect(screen.getByText('Loading HelmSight…')).toBeTruthy()
+    expect(screen.getByText('Loading HelmSight…').closest('[aria-hidden="true"]')).toBeTruthy()
   })
 })
