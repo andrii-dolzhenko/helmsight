@@ -87,9 +87,11 @@ html {
   color: var(--color-text);
 }
 
-/* Keep the marketing landing full bleed without altering workspace gutters. */
-html:has([data-landing-page='true']) {
-  scrollbar-gutter: auto;
+/* Match the scrollbar gutter on Landing and Auth routes so the shared Brand
+   never shifts horizontally when switching between these pages. */
+html:has([data-landing-page='true']),
+html:has([data-auth-page='true']) {
+  scrollbar-gutter: stable;
   background: #02090d;
 }
 

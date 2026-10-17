@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 import { AppLayout } from '../../layouts/AppLayout/AppLayout.jsx'
 import { ProjectLayout } from '../../layouts/ProjectLayout/ProjectLayout.jsx'
+import { AuthLayout } from '../../layouts/AuthLayout/AuthLayout.jsx'
 import { RouteLoadingFallback } from './RouteLoadingFallback.jsx'
 
 // Import the matched page only when its route is visited.
@@ -13,6 +14,16 @@ export const router = createBrowserRouter([
     path: '/',
     HydrateFallback: RouteLoadingFallback,
     lazy: loadPage(() => import('../../pages/LandingPage/LandingPage.jsx'), 'LandingPage'),
+  },
+  {
+    element: <AuthLayout />,
+    HydrateFallback: RouteLoadingFallback,
+    children: [
+      { path: '/sign-in', lazy: loadPage(() => import('../../pages/SignInPage/SignInPage.jsx'), 'SignInPage') },
+      { path: '/sign-up', lazy: loadPage(() => import('../../pages/SignUpPage/SignUpPage.jsx'), 'SignUpPage') },
+      { path: '/forgot-password', lazy: loadPage(() => import('../../pages/ForgotPasswordPage/ForgotPasswordPage.jsx'), 'ForgotPasswordPage') },
+      { path: '/reset-password', lazy: loadPage(() => import('../../pages/ResetPasswordPage/ResetPasswordPage.jsx'), 'ResetPasswordPage') },
+    ],
   },
   {
     element: <AppLayout />,
@@ -110,4 +121,24 @@ export const router = createBrowserRouter([
   },
 ], {
   basename: import.meta.env.BASE_URL,
+})
+
+// Keep the first-paint canvas in sync during SPA navigation, not just reloads.
+router.subscribe(({ location }) => {
+  const basePath = import.meta.env.BASE_URL.replace(/\/+$/, '')
+  const pathname = location.pathname
+  const routePath = basePath && (pathname === basePath || pathname.startsWith(`${basePath}/`))
+    ? pathname.slice(basePath.length) || '/'
+    : pathname
+  const route = routePath.replace(/\/+$/, '') || '/'
+  const isPublic = ['/', '/sign-in', '/sign-up', '/forgot-password', '/reset-password'].includes(route)
+  const root = document.documentElement
+
+  if (isPublic) root.dataset.publicPage = 'true'
+  else delete root.dataset.publicPage
+
+  document.querySelector('meta[name="theme-color"]')?.setAttribute(
+    'content',
+    isPublic ? '#02090d' : root.dataset.theme === 'dark' ? '#111512' : '#f5f1e8',
+  )
 })
