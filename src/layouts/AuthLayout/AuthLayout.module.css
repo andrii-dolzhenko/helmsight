@@ -95,7 +95,6 @@
   align-self: start;
   max-width: 32rem;
   padding-top: clamp(1rem, 5vh, 3rem);
-  animation: auth-content-enter 260ms ease-out both;
 }
 
 .eyebrow {
@@ -163,12 +162,6 @@
 .formRegion {
   min-width: 0;
   width: 100%;
-  animation: auth-content-enter 290ms ease-out both;
-}
-
-@keyframes auth-content-enter {
-  from { opacity: 0; transform: translateY(0.65rem); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 1100px) {
@@ -201,8 +194,4 @@
 @media (max-width: 359px) {
   .header [aria-label='HelmSight home'] img { width: 1.8rem; height: 1.8rem; }
   .header [aria-label='HelmSight home'] > span { font-size: 1.16rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .story, .formRegion { animation: none; }
 }

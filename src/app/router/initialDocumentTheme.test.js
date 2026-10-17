@@ -70,3 +70,28 @@ describe('initial document paint', () => {
     expect(result.themeColor).toBe('#111512')
   })
 })
+
+describe('H1 initial startup shell', () => {
+  it('renders a branded accessible status before JavaScript runs', () => {
+    const parsed = new DOMParser().parseFromString(html, 'text/html')
+    const root = parsed.querySelector('#root')
+    const status = root.querySelector('.startup-shell')
+
+    expect(status.getAttribute('role')).toBe('status')
+    expect(status.getAttribute('aria-label')).toBe('Loading HelmSight')
+    expect(status.querySelector('.startup-brand').textContent).toBe('HelmSight')
+    expect(status.querySelector('.startup-wait').textContent).toContain('Loading HelmSight…')
+    expect(status.querySelector('.startup-spinner').getAttribute('aria-hidden')).toBe('true')
+    expect(status.querySelector('.startup-wait').getAttribute('aria-hidden')).toBe('true')
+  })
+
+  it('keeps public, dark and light startup canvases and defers animated progress', () => {
+    const css = new DOMParser().parseFromString(html, 'text/html')
+      .querySelector('style').textContent
+
+    expect(css).toContain("html[data-public-page='true'] .startup-shell")
+    expect(css).toContain("html[data-theme='dark'] .startup-shell")
+    expect(css).toMatch(/\.startup-wait\s*\{[^}]*250ms forwards/s)
+    expect(css).toContain('@media (prefers-reduced-motion: reduce)')
+  })
+})
