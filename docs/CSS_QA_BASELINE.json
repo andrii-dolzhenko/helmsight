@@ -1,5 +1,5 @@
 {
-  "source": "full W3C verification; REVIEW BEFORE APPROVING",
+  "source": "Approved regression baseline under ADR-058; not W3C 0/0 compliance or deployment approval",
   "capturedAt": "2026-10-17T16:40:31.948Z",
   "profiles": {
     "1": {
