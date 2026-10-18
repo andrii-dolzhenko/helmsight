@@ -1,6 +1,7 @@
 # P2 Global Metrics — Portfolio EVM Register
 
-**Status:** Feature implementation candidate for ADR-051; pending local/browser QA, commit, pull request and merge.
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 
 ## Scope
 
@@ -26,4 +27,4 @@ Desktop: hoverable register rows, readable columns and explicit project action. 
 - Production W3C CSS audit on all emitted assets in both warning profiles. Raw diagnostics preserved per ADR-042.
 - Browser Light/Dark/System and responsive checks at 440 px, 768 px and desktop; keyboard, tab/focus, route and history checks; W3C Nu validation of rendered `/metrics` DOM.
 
-**Not a deployment claim:** validation in a user's Mac and Vercel preview, commit/PR, actual warning review, production smoke and instructor review remain pending.
+**Historical pre-release note:** At the time of this draft, local/browser QA, the PR and deployment had not yet been verified. Refer to the current delivery and QA update above for the later release state.

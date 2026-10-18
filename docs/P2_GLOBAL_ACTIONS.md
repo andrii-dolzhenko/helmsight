@@ -1,6 +1,6 @@
 # P2-C — Global Actions
 
-Status: Released to production on 2026-10-13. Outstanding validation items remain open.
+Status: Released to production on 2026-10-13. Repository-wide rendered HTML QA subsequently completed on 2026-10-18 (47/47 routes, 0 errors, 0 warnings); CSS warning debt remains under ADR-042.
 Decision: ADR-044 — P2-C Global Actions: Portfolio Register and Approved UI.
 Feature: HS-027 — Global Actions.
 
@@ -118,7 +118,7 @@ Local verification on 2026-10-13:
 - Deprecated clip declarations were replaced with clip-path; two warnings eliminated.
 - Strict W3C 0 errors / 0 warnings compliance: not achieved. ADR-042 warning adjudication remains open.
 - W3C preview tooling: 40/40 tests passed.
-- HTML validation: no dedicated npm script is configured. Formal W3C HTML validation was not performed; this remains an open QA item. Component tests and manual browser review do not replace formal HTML validation.
+- **Historical QA status at the time of PR #7:** No dedicated HTML script was configured and formal validation was not performed. A later repository-wide Nu validator audit in PR #23 covered 47/47 routes with 0 errors and 0 warnings.
 - Feature commit: `80c7e1d` — portfolio-wide Global Actions register.
 - Laptop layout fix commit: `5e51e2b` — balanced desktop columns and single-line badges.
 - Pull request: [#7](https://github.com/andrii-dolzhenko/helmsight/pull/7), successfully merged into `main`.
@@ -129,4 +129,4 @@ Local verification on 2026-10-13:
 - Production: https://helmsight.vercel.app/actions — smoke test confirmed as Production OK after merge.
 - The extended W3C CSS audit predates the final laptop layout fix. The normal W3C audit was rerun after that fix and remained at 0 errors / 117 warnings overall, with 41 warnings in GlobalActionsPage.
 
-The approved UI was used as design guidance. Production release is confirmed by the merged PR, successful deployment and production smoke test. Strict W3C 0/0 compliance and formal HTML validation remain open QA items.
+The approved UI was used as design guidance. Production release is confirmed by the merged PR, successful deployment and production smoke test. Strict raw CSS 0/0 compliance remains open; formal rendered-HTML validation was subsequently completed in PR #23.

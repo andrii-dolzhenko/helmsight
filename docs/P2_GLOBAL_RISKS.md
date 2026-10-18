@@ -1,6 +1,7 @@
 # P2 Global Risks — ADR-049 Implementation & QA
 
-Status: local implementation and owner-reviewed responsive UX (2026-10-15). **No merge, deployment or final W3C 0/0 claim is established here.**
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 
 ## Product and data boundaries
 

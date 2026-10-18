@@ -1,7 +1,7 @@
 # P2 — Global Overview, Global Search, and UI Refinement
 
-**Implementation status:** Complete; local QA accepted on 2026-10-15.
-**Release status:** Pending pull request, CI, merge, and production smoke test.
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 **Decision reference:** ADR-046 in the canonical `DECISIONS — Final Project` Google Doc (recording pending).
 **Scope:** Frontend only; existing React, Redux Toolkit, React Router, CSS Modules, and local-storage-backed services.
 
@@ -47,9 +47,9 @@
 - Vitest: **284 passed / 68 files**; Vite production build: **198 modules transformed**, completed successfully.
 - New and updated regression coverage includes Overview derivation/filtering, Search indexing/dialog interactions, Projects banner behavior, responsive Actions row semantics, and duplicate-text Governance keys.
 - Owner reviewed and accepted local responsive/light-dark UI, including the final mobile Governance adjustment. Browser inspection is a manual acceptance statement, not a claim of automated cross-browser coverage.
-- Patches were reviewed and integrated locally on `feature/p2-global-overview-search`; these edits are not yet released to production.
+- **Historical (2026-10-15):** Patches were reviewed and integrated locally on `feature/p2-global-overview-search`; production release had not yet been verified at that time. The feature is now included in `main`.
 
-## Release checklist and outstanding quality gates
+## Historical release checklist (2026-10-15) and quality gates
 
 - [x] Scope implemented and visually accepted locally.
 - [x] ESLint, Vitest, and production build passed on the owner's Mac.
@@ -57,7 +57,7 @@
 - [ ] Commit, push, open pull request, and review GitHub Actions / Vercel Preview checks.
 - [ ] Merge to `main`; update local `main`; verify production navigation, Overview, Search, Projects and representative deep links.
 - [ ] Official W3C CSS audits for the final build and strict global 0-error/0-warning sign-off — **OPEN under ADR-042**. Prior P2-01 audit numbers must not be presented as an audit of this build.
-- [ ] Formal HTML validation of dynamic routes — **OPEN**.
+- [x] Formal rendered-HTML validation subsequently completed repository-wide in PR #23: **47/47 routes, 0 errors, 0 warnings**.
 - [ ] Investigate recurring forced-reflow messages only if reproducible profiling demonstrates a meaningful usability/performance regression; occasional ~34–36 ms DevTools warnings alone were not taken as a blocker.
 
-**Release QA note:** Successful lint, tests, build, and local visual acceptance do not close the outstanding global CSS/HTML validation obligations. A separate release exception or completed validation evidence is required before claiming strict compliance.
+**Historical QA note:** Local lint, tests, build and visual acceptance alone did not close the HTML/CSS gates on 2026-10-15. Later repository-wide HTML QA completed; strict raw CSS 0/0 remains unmet (see current status above).

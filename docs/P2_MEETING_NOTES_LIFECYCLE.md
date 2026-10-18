@@ -1,6 +1,7 @@
 # P2-01 — Meeting Notes Lifecycle
 
-Status: Implemented locally on 2026-10-14; release pending.
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 Decision: ADR-045 — P2-01 Meeting Notes Archive/Restore: Lifecycle and Portfolio-Consistent Switcher, including the Sorting and Pagination and Meeting Date: Past and Today Only amendments.
 Decision log: https://docs.google.com/document/d/1DCgkTPbcTCZDG5zeETErmLlRQ8qAgIPpQevcqnfgs_I/edit
 
@@ -96,7 +97,7 @@ Extend project-scoped Meeting Notes with a reversible archive lifecycle and scal
 - Run ESLint, Vitest, production build and applicable CSS/HTML validation.
 - Keep strict W3C 0/0 compliance separate from tests, visual review and ADR-042 warning adjudication.
 
-## QA and release evidence
+## Historical QA and release evidence — 2026-10-14
 
 Local verification on 2026-10-14:
 
@@ -120,11 +121,11 @@ Local verification on 2026-10-14:
 - Strict W3C 0 errors / 0 warnings: not established; ADR-042 warning-risk sign-off remains open.
 - Pull request, CI, Preview, merge commit and production smoke test: pending.
 
-This document describes the implemented local feature and open release gates. It does not assert that P2-01 has been merged or deployed.
+At the time of this 2026-10-14 QA snapshot, merge and deployment had not been verified. The current delivery status is recorded above; historical raw validator counts remain unchanged.
 
 ## P2-01 Release Handoff — 2026-10-14
 
-**Status:** Implementation and local verification completed; PR #10 awaiting merge.
+**Historical PR status (2026-10-14):** Implementation and local verification completed; PR #10 was awaiting merge at the time. The feature is now included in `main`.
 
 **Scope delivered:** Individual Meeting Notes Archive/Restore lifecycle; read-only protection for archived notes; Current/Archived history views; sorting and pagination; meeting-date validation; responsive UI; regression coverage.
 
@@ -156,4 +157,4 @@ This is a recorded QA scope exception, **not** a claim that full Preview end-to-
 - Production verification after merging PR #10 remains PENDING.
 - Successful CI does not imply closure of these outstanding validation items.
 
-This handoff supersedes earlier pending PR/CI/Preview status notes in this document. It closes the P2-01 implementation evidence, not the outstanding global validation obligations.
+This was the final 2026-10-14 feature handoff; its pending PR and HTML-validation statements are historical. HTML QA subsequently completed (47/47, 0 errors, 0 warnings); raw CSS warning debt remains.
