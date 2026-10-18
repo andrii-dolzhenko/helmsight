@@ -98,7 +98,7 @@ export function MetricsPage() {
 
     <div className={styles.basisBar}><div><span>Measurement basis</span><strong>{getMeasurementBasisLabel(baseline.measurementBasis)}{baseline.measurementBasis === 'currency' ? ` · ${baseline.currencyCode}` : ''}</strong></div><div><span>Latest reporting date</span><strong>{formatDate(latest?.snapshotDate)}</strong></div><div><span>Work packages</span><strong>{baseline.workPackages.length}</strong></div></div>
 
-    <div className={styles.metricGrid} aria-label="Current EVM values">
+    <div className={styles.metricGrid} role="group" aria-label="Current EVM values">
       <MetricCard label="BAC · Budget at Completion" value={formatEvmValue(latest?.bac ?? 0, baseline)} detail="Approved total baseline"/>
       <MetricCard label="PV · Planned Value" value={formatEvmValue(latest?.pv ?? 0, baseline)} detail="Planned by reporting cutoff"/>
       <MetricCard label="EV · Earned Value" value={formatEvmValue(latest?.ev ?? 0, baseline)} detail="Completed baseline value"/>
@@ -114,13 +114,13 @@ export function MetricsPage() {
         <IndexCard id="evm-spi" label="SPI · Schedule Performance Index" value={latest?.spi} description="EV / PV"/>
         {fullEvm ? <IndexCard id="evm-cpi" label="CPI · Cost Performance Index" value={latest?.cpi} description="EV / AC"/> : null}
       </div>
-      <div className={styles.varianceGrid} aria-label="EVM variances">
+      <div className={styles.varianceGrid} role="group" aria-label="EVM variances">
         <MetricCard label="SV · Schedule Variance" value={formatEvmValue(latest?.sv ?? 0, baseline)} detail="EV - PV"/>
         {fullEvm ? <MetricCard label="CV · Cost / Effort Variance" value={formatEvmValue(latest?.cv ?? 0, baseline)} detail="EV - AC"/> : null}
       </div>
     </section>
 
-    {fullEvm ? <div className={styles.forecastGrid} aria-label="EVM forecast"><MetricCard label="EAC" value={formatEvmValue(latest?.eac, baseline)} detail="BAC / CPI"/><MetricCard label="ETC" value={formatEvmValue(latest?.etc, baseline)} detail="EAC - AC"/><MetricCard label="VAC" value={formatEvmValue(latest?.vac, baseline)} detail="BAC - EAC"/><MetricCard label="TCPI" value={formatIndex(latest?.tcpi)} detail="(BAC - EV) / (BAC - AC)"/></div> : null}
+    {fullEvm ? <div className={styles.forecastGrid} role="group" aria-label="EVM forecast"><MetricCard label="EAC" value={formatEvmValue(latest?.eac, baseline)} detail="BAC / CPI"/><MetricCard label="ETC" value={formatEvmValue(latest?.etc, baseline)} detail="EAC - AC"/><MetricCard label="VAC" value={formatEvmValue(latest?.vac, baseline)} detail="BAC - EAC"/><MetricCard label="TCPI" value={formatIndex(latest?.tcpi)} detail="(BAC - EV) / (BAC - AC)"/></div> : null}
 
     <section className={styles.panel}>
       <div className={styles.panelHeader}><div><span className={styles.eyebrow}>Cumulative position</span><h3>PV / EV {fullEvm ? '/ AC' : ''}</h3></div><span>{latest?.snapshotDate ? `Through ${formatDate(latest.snapshotDate)}` : 'No weekly snapshots yet'}</span></div>
@@ -139,7 +139,7 @@ export function MetricsPage() {
 
     <section className={styles.panel}>
       <div className={styles.panelHeader}><div><span className={styles.eyebrow}>Weekly monitoring</span><h3>Snapshot history</h3></div><span>{snapshots.length} snapshots</span></div>
-      {snapshotRows.length === 0 ? <div className={styles.inlineEmpty}><strong>No weekly snapshots yet.</strong><span>Record the first reporting cutoff after collecting completed value and actual consumption from the tracking system.</span>{!project.archivedAt ? <Link to="snapshots/new">Create first snapshot</Link> : null}</div> : <div className={styles.snapshotList}>{snapshotRows.map(({ snapshot, metrics }) => <article className={styles.snapshotRow} key={snapshot.id}><div><span className={styles.snapshotDate}>{formatDate(snapshot.snapshotDate)}</span><small>Reporting cutoff</small></div><dl className={!fullEvm ? styles.storyMetrics : ''}><div><dt>PV</dt><dd>{formatEvmValue(metrics.pv, baseline)}</dd></div><div><dt>EV</dt><dd>{formatEvmValue(metrics.ev, baseline)}</dd></div>{fullEvm ? <div><dt>AC</dt><dd>{formatEvmValue(metrics.ac, baseline)}</dd></div> : null}<div><dt>SPI</dt><dd>{formatIndex(metrics.spi)}</dd></div>{fullEvm ? <div><dt>CPI</dt><dd>{formatIndex(metrics.cpi)}</dd></div> : null}</dl>{!project.archivedAt ? <div className={styles.rowActions}><Link to={`snapshots/${snapshot.id}/edit`}>Edit</Link><button type="button" disabled={mutationStatus === 'loading'} onClick={() => setPendingDelete(snapshot)}>Delete</button></div> : null}</article>)}</div>}
+      {snapshotRows.length === 0 ? <div className={styles.inlineEmpty}><strong>No weekly snapshots yet.</strong><span>Record the first reporting cutoff after collecting completed value and actual consumption from the tracking system.</span>{!project.archivedAt ? <Link to="snapshots/new">Create first snapshot</Link> : null}</div> : <div className={styles.snapshotList}>{snapshotRows.map(({ snapshot, metrics }) => <div className={styles.snapshotRow} key={snapshot.id}><div><span className={styles.snapshotDate}>{formatDate(snapshot.snapshotDate)}</span><small>Reporting cutoff</small></div><dl className={!fullEvm ? styles.storyMetrics : ''}><div><dt>PV</dt><dd>{formatEvmValue(metrics.pv, baseline)}</dd></div><div><dt>EV</dt><dd>{formatEvmValue(metrics.ev, baseline)}</dd></div>{fullEvm ? <div><dt>AC</dt><dd>{formatEvmValue(metrics.ac, baseline)}</dd></div> : null}<div><dt>SPI</dt><dd>{formatIndex(metrics.spi)}</dd></div>{fullEvm ? <div><dt>CPI</dt><dd>{formatIndex(metrics.cpi)}</dd></div> : null}</dl>{!project.archivedAt ? <div className={styles.rowActions}><Link to={`snapshots/${snapshot.id}/edit`}>Edit</Link><button type="button" disabled={mutationStatus === 'loading'} onClick={() => setPendingDelete(snapshot)}>Delete</button></div> : null}</div>)}</div>}
     </section>
 
     {mutationError ? <div className={styles.mutationError} role="alert">{mutationError}</div> : null}

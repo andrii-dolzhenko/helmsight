@@ -122,7 +122,7 @@ export function SuccessCriteriaPage() {
         </div>
       ) : null}
 
-      <div className={styles.summary} aria-label="Success Criteria status summary">
+      <div className={styles.summary} role="group" aria-label="Success Criteria status summary">
         {summary.map((item) => (
           <div key={item.status}>
             <span>{item.label}</span>

@@ -265,34 +265,34 @@ function MetricState({ value }) {
 function ReportSummary({ snapshot }) {
   const metrics = snapshot.metrics
   return (
-    <div className={styles.summaryGrid} aria-label="Weekly report summary">
-      <article className={styles.summaryCard}>
+    <div className={styles.summaryGrid} role="group" aria-label="Weekly report summary">
+      <div className={styles.summaryCard}>
         <span>Overall health</span>
         <strong>{snapshot.projectHealth.label}</strong>
         <HealthBadge status={snapshot.projectHealth.status} label={snapshot.projectHealth.label} />
-      </article>
-      <article className={styles.summaryCard}>
+      </div>
+      <div className={styles.summaryCard}>
         <span>SPI</span>
         <strong>{formatIndex(metrics.spi)}</strong>
         <MetricState value={metrics.spi} />
-      </article>
-      <article className={styles.summaryCard}>
+      </div>
+      <div className={styles.summaryCard}>
         <span>CPI</span>
         <strong>{formatIndex(metrics.cpi)}</strong>
         <MetricState value={metrics.cpi} />
-      </article>
-      <article className={styles.summaryCard}>
+      </div>
+      <div className={styles.summaryCard}>
         <span>Open risks</span>
         <strong>{snapshot.risks.totalOpen}</strong>
         <small>{snapshot.risks.critical} critical · {snapshot.risks.high} high</small>
-      </article>
+      </div>
     </div>
   )
 }
 
 function CollapsibleSection({ id, icon, title, meta, open, onToggle, children, className = '' }) {
   return (
-    <section className={`${styles.collapsibleSection} ${open ? styles.expandedSection : ''} ${className}`}>
+    <div className={`${styles.collapsibleSection} ${open ? styles.expandedSection : ''} ${className}`}>
       <button
         className={styles.collapsibleTrigger}
         type="button"
@@ -308,7 +308,7 @@ function CollapsibleSection({ id, icon, title, meta, open, onToggle, children, c
       <div id={`${id}-body`} className={`${styles.collapsibleBody} ${open ? styles.collapsibleBodyOpen : ''}`}>
         {children}
       </div>
-    </section>
+    </div>
   )
 }
 
@@ -393,7 +393,7 @@ function DerivedSections({
           {visibleSignals.length ? (
             <div className={styles.signalGrid}>
               {visibleSignals.map((signal) => (
-                <article className={styles.signalCard} key={signal.id}>
+                <div className={styles.signalCard} key={signal.id}>
                   {!readOnly ? (
                     <button
                       className={styles.dismissSignal}
@@ -409,7 +409,7 @@ function DerivedSections({
                   <span>{signal.module}</span>
                   <strong>{signal.title}</strong>
                   <p>{signal.detail}</p>
-                </article>
+                </div>
               ))}
             </div>
           ) : <EmptyList>No visible deterministic attention signals for this report.</EmptyList>}
@@ -827,7 +827,7 @@ export function ReportDetailPage() {
   }
 
   return (
-    <section className={styles.root} data-report-root="true">
+    <div className={styles.root} data-report-root="true">
       <StatusToast
         message={toast?.message}
         variant={toast?.variant}
@@ -1118,6 +1118,6 @@ export function ReportDetailPage() {
           if (blocker.state === 'blocked') blocker.proceed()
         }}
       />
-    </section>
+    </div>
   )
 }

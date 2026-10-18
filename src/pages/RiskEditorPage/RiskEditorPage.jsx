@@ -55,7 +55,7 @@ export function RiskEditorPage() {
     <section className={styles.root}>
       <header className={styles.header}>
         <span className={styles.eyebrow}>Risk control</span>
-        <h2>{isEditing ? 'Edit risk' : 'New risk'}</h2>
+        {isEditing ? <h2>Edit risk</h2> : <h1>New risk</h1>}
         <p>Assess probability and impact, assign ownership, and make the response plan explicit.</p>
       </header>
       <RiskForm

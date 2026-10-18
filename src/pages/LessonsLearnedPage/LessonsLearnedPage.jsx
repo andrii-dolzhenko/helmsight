@@ -93,7 +93,7 @@ export function LessonsLearnedPage() {
         {isLoading ? <p className={styles.stateCard} role="status">Loading lessons…</p> : loadError ? (
           <div className={styles.stateCard} role="alert"><strong>Lessons could not be loaded.</strong><p>{loadError}</p><button type="button" onClick={() => { setLoading(true); setLoadError(''); setRetry((current) => current + 1) }}>Try again</button></div>
         ) : visible.length ? (
-          <div className={styles.list} aria-label="Lessons Learned records">
+          <div className={styles.list} role="group" aria-label="Lessons Learned records">
             {visible.map((item) => (
               <article key={item.id} className={styles.lessonCard}>
                 <div className={styles.cardTop}><span className={styles.categoryBadge}>{getLessonCategoryLabel(item.category)}</span><span className={styles.timestamp}>Updated {formatDate(item.updatedAt)}</span></div>

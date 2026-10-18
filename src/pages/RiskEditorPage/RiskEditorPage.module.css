@@ -1,7 +1,7 @@
 .root { display:grid; gap:var(--layout-editor-gap); max-width:var(--layout-editor-max-width); }
 .header { display:grid; gap:.6rem; }
 .eyebrow { color:var(--color-accent); font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
-.header h2 { margin:0; font-family:var(--font-display); font-size:clamp(2.2rem,5vw,3.5rem); letter-spacing:-.045em; }
+.header h1, .header h2 { margin:0; font-family:var(--font-display); font-size:clamp(2.2rem,5vw,3.5rem); letter-spacing:-.045em; }
 .header p { width:100%; margin:0; color:var(--color-text-muted); line-height:1.6; }
 .stateCard { display:grid; justify-items:start; gap:.55rem; border:1px solid var(--color-border); border-radius:var(--radius-lg); background:var(--color-surface); padding:1.2rem; }
 .stateCard span { color:var(--color-text-muted); }

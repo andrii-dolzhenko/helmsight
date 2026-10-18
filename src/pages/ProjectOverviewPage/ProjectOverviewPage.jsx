@@ -165,7 +165,7 @@ function SignalGroup({ label, projectId, signals, total }) {
   if (total === 0) return null
 
   return (
-    <section className={styles.signalGroup}>
+    <div className={styles.signalGroup}>
       <div className={styles.signalGroupHeading}>
         <span>{label}</span>
         <b>{total}</b>
@@ -197,7 +197,7 @@ function SignalGroup({ label, projectId, signals, total }) {
           )
         })}
       </div>
-    </section>
+    </div>
   )
 }
 
@@ -494,7 +494,7 @@ export function ProjectOverviewPage() {
         </div>
       </section>
 
-      <div className={styles.summaryGrid} aria-label="Project control summary">
+      <div className={styles.summaryGrid} role="group" aria-label="Project control summary">
         <SummaryCard
           label="Success criteria"
           value={dashboard.successCriteria.total ? `${dashboard.successCriteria.achieved}/${dashboard.successCriteria.total}` : '—'}

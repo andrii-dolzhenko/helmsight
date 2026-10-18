@@ -569,7 +569,7 @@ export function ProjectsPage() {
         <p>Keep delivery context, dates, and project state in one place before adding deeper control signals.</p>
       </header>
 
-      <div className={styles.summaryStrip} aria-label="Project summary">
+      <div className={styles.summaryStrip} role="group" aria-label="Project summary">
         <div>
           <span>Active projects</span>
           <strong>{activeProjects.length}</strong>

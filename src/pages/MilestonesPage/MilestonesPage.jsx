@@ -53,7 +53,7 @@ function MilestoneCard({ milestone, archived, onDelete }) {
           <span>Progress</span>
           <strong>{milestone.progress}%</strong>
         </div>
-        <div className={styles.progressTrack} aria-label={`${milestone.progress}% complete`}>
+        <div className={styles.progressTrack} role="progressbar" aria-label="Milestone completion" aria-valuemin={0} aria-valuemax={100} aria-valuenow={milestone.progress}>
           <span style={{ width: `${milestone.progress}%` }} />
         </div>
       </div>
@@ -127,7 +127,7 @@ export function MilestonesPage() {
 
       {project.archivedAt ? <div className={styles.archiveBanner}><strong>Archived project</strong><span>Milestones remain available for review. Restore the project to edit them.</span></div> : null}
 
-      <div className={styles.summary} aria-label="Milestone summary">
+      <div className={styles.summary} role="group" aria-label="Milestone summary">
         <div><span>Total milestones</span><strong>{summary.total}</strong></div>
         <div><span>Completed</span><strong>{summary.completed}</strong></div>
         <div><span>In progress</span><strong>{summary.inProgress}</strong></div>

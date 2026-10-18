@@ -286,7 +286,7 @@ export function MeetingNoteForm({
         </div>
       ) : null}
 
-      <section className={styles.detailsCard}>
+      <div className={styles.detailsCard}>
         <div className={styles.sectionHeader}>
           <span>Meeting record</span>
           <p>Keep the core context concise; decisions and follow-ups are captured separately below.</p>
@@ -355,7 +355,7 @@ export function MeetingNoteForm({
             <CharacterCount value={watched?.notes} maxLength={MEETING_NOTE_LIMITS.notes} />
           </label>
         </div>
-      </section>
+      </div>
 
       <ListEditor
         title="Participants"

@@ -82,7 +82,7 @@ export function RiskDetailPage() {
       <header className={styles.header}>
         <div className={styles.headingCopy}>
           <span className={styles.eyebrow}>Risk detail</span>
-          <h2>{risk.title}</h2>
+          <h1>{risk.title}</h1>
           <p>{risk.description || 'No additional description.'}</p>
         </div>
         <div className={styles.headerActions}>
@@ -99,19 +99,19 @@ export function RiskDetailPage() {
       </dl>
 
       <div className={styles.contentGrid}>
-        <section className={styles.panel}>
+        <div className={styles.panel}>
           <span className={styles.panelLabel}>Response & ownership</span>
           <dl className={styles.detailList}>
             <div><dt>Owner</dt><dd>{risk.owner}</dd></div>
             <div><dt>Response strategy</dt><dd>{getRiskResponseLabel(risk.responseStrategy)}</dd></div>
             <div><dt>Due date</dt><dd className={overdue ? styles.dueDanger : dueSoon ? styles.dueWarning : ''}>{formatDate(risk.dueDate)}</dd></div>
           </dl>
-        </section>
+        </div>
 
-        <section className={styles.panel}>
+        <div className={styles.panel}>
           <span className={styles.panelLabel}>Mitigation / response plan</span>
           <p>{risk.mitigation}</p>
-        </section>
+        </div>
       </div>
 
       {project.archivedAt ? (

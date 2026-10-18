@@ -109,7 +109,7 @@ export function MeetingNoteDetailPage() {
   }
 
   return (
-    <section className={styles.root}>
+    <div className={styles.root}>
       <div className={styles.detailTopline} data-print-hide="true">
         <Link className={styles.backLink} to={listPath}>← Meeting Notes</Link>
       </div>
@@ -160,28 +160,28 @@ export function MeetingNoteDetailPage() {
           {canMutate ? <button className={`${styles.actionButton} ${styles.deleteAction}`} data-ui-button="danger" type="button" disabled={mutationStatus === 'loading'} onClick={() => setConfirmDelete(true)}><TrashIcon /> Delete</button> : null}
         </div>
 
-        <section className={styles.noteSection}>
+        <div className={styles.noteSection}>
           <div className={styles.sectionTitle}><span>Participants</span><strong>{meeting.participants?.length ?? 0}</strong></div>
           {meeting.participants?.length ? (
             <div className={styles.participantGrid}>{meeting.participants.map((participant) => <span key={participant}>{participant}</span>)}</div>
           ) : <p className={styles.emptyCopy}>No participants recorded.</p>}
-        </section>
+        </div>
 
-        <section className={styles.noteSection}>
+        <div className={styles.noteSection}>
           <div className={styles.sectionTitle}><span>Notes</span></div>
           <p className={styles.notesCopy}>{meeting.notes}</p>
-        </section>
+        </div>
 
         <div className={styles.twoColumnSections}>
-          <section className={styles.noteSection}>
+          <div className={styles.noteSection}>
             <div className={styles.sectionTitle}><span>Decisions</span><strong>{meeting.decisions?.length ?? 0}</strong></div>
             <RecordList items={meeting.decisions} empty="No decisions recorded." />
-          </section>
+          </div>
 
-          <section className={styles.noteSection}>
+          <div className={styles.noteSection}>
             <div className={styles.sectionTitle}><span>Follow-ups</span><strong>{meeting.followUps?.length ?? 0}</strong></div>
             <RecordList items={meeting.followUps} empty="No follow-ups recorded." />
-          </section>
+          </div>
         </div>
 
         <footer className={styles.documentControl}>
@@ -220,6 +220,6 @@ export function MeetingNoteDetailPage() {
       />
 
       <StatusToast message={toast} onDismiss={() => { setToast(null); navigate(location.pathname, { replace: true, state: null }) }} />
-    </section>
+    </div>
   )
 }
