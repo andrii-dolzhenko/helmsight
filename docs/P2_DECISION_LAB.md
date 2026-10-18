@@ -1,6 +1,7 @@
 # P2-03 — Decision Lab (ADR-050)
 
-Status: **Implemented in feature branch; local review, validation and merge pending**. This document describes the intended deliverable, not proof of production availability.
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 
 ## Purpose and entry
 

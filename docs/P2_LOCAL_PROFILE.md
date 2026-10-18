@@ -1,6 +1,6 @@
 # P2-B — Local Profile, Settings & Personalized Greeting
 
-Status: Merged into `main` via PR #6 (`6509f41`); production smoke test accepted on 2026-10-14. Strict W3C CSS 0/0, ADR-042 sign-off and comprehensive accessibility/HTML validation remain open.
+Status: Merged into `main` via PR #6 (`6509f41`); production smoke test accepted on 2026-10-14. Repository-wide HTML Nu validation later completed (47/47 routes, 0 errors, 0 warnings; PR #23). Strict CSS 0/0 and comprehensive accessibility certification are not claimed.
 
 ## Contract
 
@@ -40,7 +40,7 @@ Status: Merged into `main` via PR #6 (`6509f41`); production smoke test accepted
 - Production smoke test: confirmed by the project owner on 2026-10-14.
 - The 228-test result and W3C CSS counts above belong to the earlier local QA snapshot; no new complete test run or independent CI audit is claimed here.
 - Strict raw W3C CSS 0/0 and ADR-042 formal sign-off remain open.
-- Formal dynamic-route HTML validation and comprehensive accessibility/cross-browser coverage are not established by the production smoke test.
+- The 2026-10-14 production smoke test alone did not establish formal rendered HTML validation or comprehensive accessibility/cross-browser coverage. Formal HTML Nu validation was subsequently completed repository-wide in PR #23; comprehensive accessibility/cross-browser certification is not claimed.
 
 ## Architecture and navigation notes
 

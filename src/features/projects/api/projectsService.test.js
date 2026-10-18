@@ -178,6 +178,31 @@ describe('projectsService', () => {
     expect(project.governance.stakeholders[0].organization).toBe('Northstar Telecom')
   })
 
+  it('rejects edits to archived projects without altering persisted data, then allows edits after restore', async () => {
+    const [project] = await projectsService.list()
+    const archived = await projectsService.archive(project.id)
+    const before = window.localStorage.getItem('helmsight:p0:v1:projects')
+
+    await expect(
+      projectsService.update(project.id, {
+        ...project,
+        name: 'Unauthorized archived edit',
+      }),
+    ).rejects.toThrow('Archived projects are read-only')
+
+    expect(window.localStorage.getItem('helmsight:p0:v1:projects')).toBe(before)
+    expect(await projectsService.getById(project.id)).toEqual(archived)
+
+    await projectsService.restore(project.id)
+    const updated = await projectsService.update(project.id, {
+      ...project,
+      name: 'Edited after restore',
+    })
+    expect(updated.name).toBe('Edited after restore')
+    expect(updated.archivedAt).toBeNull()
+    expect((await projectsService.getById(project.id)).name).toBe('Edited after restore')
+  })
+
   it('keeps governance read-only for archived projects', async () => {
     const [project] = await projectsService.list()
     await projectsService.archive(project.id)

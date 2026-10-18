@@ -1,6 +1,6 @@
 # P2 Portfolio Registers — macOS QA Evidence (2026-10-15)
 
-**Scope:** Global Reports (ADR-048), Global Risks (ADR-049), and shared application quality checks. **Source:** owner's terminal output from local Mac build. This is QA evidence for a feature commit, not an approved production release.
+**Scope:** Global Reports (ADR-048), Global Risks (ADR-049), and shared application quality checks. **Source:** owner's terminal output from local Mac build. This is a **dated 2026-10-15 QA snapshot**, not a statement about present release status. Both features are included in `main` as of 2026-10-18; repository-wide HTML Nu validation was subsequently completed in PR #23 (47/47, 0 errors, 0 warnings). The historical CSS counts below remain unchanged; strict raw CSS 0/0 is still unmet.
 
 ## Environment and application checks
 

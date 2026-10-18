@@ -1,6 +1,7 @@
 # P2 Global Reports — ADR-048 Implementation Notes
 
-Status: feature implemented locally with owner-approved UX refinements on 2026-10-15. **Not verified as merged or deployed.**
+**Current delivery and QA (2026-10-18):** The described feature is present in the merged `main` frontend and the deployed HelmSight application. Repository-wide rendered HTML QA later verified **47/47 routes, 0 errors, 0 warnings** (PR #23). Production CSS QA later verified **39/39 assets, 0 errors, no per-asset warning regressions**; raw warnings remain and strict CSS 0/0 is **not** achieved. Earlier feature-branch, checklist and QA statements below are preserved as **dated historical evidence**, not current release blockers.
+
 
 ## Scope and ownership
 
