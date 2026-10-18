@@ -318,7 +318,7 @@ function ensureProject(projects, projectId) {
 
 function ensureProjectEditable(project) {
   if (project.archivedAt) {
-    throw new ProjectsServiceError('Archived projects are read-only. Restore the project to edit governance.')
+    throw new ProjectsServiceError('Archived projects are read-only. Restore the project to make changes.')
   }
 }
 
@@ -364,6 +364,7 @@ export const projectsService = {
   async update(projectId, input) {
     const projects = readProjects()
     const projectIndex = ensureProject(projects, projectId)
+    ensureProjectEditable(projects[projectIndex])
     const updatedProject = {
       ...projects[projectIndex],
       ...normalizeProjectInput(input),

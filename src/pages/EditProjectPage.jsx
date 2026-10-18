@@ -56,6 +56,18 @@ export function EditProjectPage() {
     )
   }
 
+  if (project.archivedAt) {
+    return (
+      <section className={styles.page}>
+        <div className={styles.stateCard} role="status">
+          <strong>This project is archived.</strong>
+          <p>Restore the project before editing its details.</p>
+          <Link to={`/projects/${project.id}`}>Return to project</Link>
+        </div>
+      </section>
+    )
+  }
+
   const handleSubmit = async (input) => {
     try {
       const updatedProject = await dispatch(
