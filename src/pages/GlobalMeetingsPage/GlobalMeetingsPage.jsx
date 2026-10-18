@@ -99,7 +99,7 @@ export function GlobalMeetingsPage() {
       <p>Meeting notes, decisions and follow-ups across your project portfolio.</p>
     </header>
 
-    <div className={styles.summary} aria-label="Portfolio meetings summary">
+    <div className={styles.summary} role="group" aria-label="Portfolio meetings summary">
       {[
         ['Total meetings', summary.total, 'total'],
         ['Current notes', summary.current, 'current'],

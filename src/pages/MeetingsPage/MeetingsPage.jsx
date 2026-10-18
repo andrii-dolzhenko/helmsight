@@ -154,7 +154,7 @@ export function MeetingsPage() {
         </div>
       ) : null}
 
-      <div className={styles.summaryGrid} aria-label="Meeting Notes summary">
+      <div className={styles.summaryGrid} role="group" aria-label="Meeting Notes summary">
         <div><span>Meeting notes</span><strong>{summary.total}</strong></div>
         <div><span>Recorded decisions</span><strong>{summary.decisions}</strong></div>
         <div><span>Named participants</span><strong>{summary.participants}</strong></div>

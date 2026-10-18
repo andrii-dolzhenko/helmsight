@@ -215,12 +215,11 @@ export function ReportsPage() {
             <h3>Reports</h3>
           </div>
           <div className={styles.historyHeaderActions}>
-            <div className={styles.historyTabs} role="tablist" aria-label="Report history view">
+            <div className={styles.historyTabs} role="group" aria-label="Report history view">
               <button
                 className={`${styles.historyTab} ${historyView === 'current' ? styles.historyTabActive : ''}`}
                 type="button"
-                role="tab"
-                aria-selected={historyView === 'current'}
+                aria-pressed={historyView === 'current'}
                 onClick={() => setHistoryView('current')}
               >
                 Current <span>{currentReports.length}</span>
@@ -228,8 +227,7 @@ export function ReportsPage() {
               <button
                 className={`${styles.historyTab} ${historyView === 'archived' ? styles.historyTabActive : ''}`}
                 type="button"
-                role="tab"
-                aria-selected={historyView === 'archived'}
+                aria-pressed={historyView === 'archived'}
                 onClick={() => setHistoryView('archived')}
               >
                 Archived <span>{archivedReports.length}</span>

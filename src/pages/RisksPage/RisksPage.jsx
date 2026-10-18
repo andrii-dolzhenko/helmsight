@@ -67,7 +67,7 @@ function ListIcon() {
 
 function RiskDisplayModes({ mode, onChange }) {
   return (
-    <div className={styles.displayModes} aria-label="Risk register view">
+    <div className={styles.displayModes} role="group" aria-label="Risk register view">
       <button
         type="button"
         className={mode === DISPLAY_MODES.grid ? styles.activeDisplayMode : ''}
@@ -221,7 +221,7 @@ export function RisksPage() {
 
       {project.archivedAt ? <div className={styles.archiveBanner}><strong>Archived project</strong><span>Risks remain available for review. Restore the project to edit them.</span></div> : null}
 
-      <div className={styles.summary} aria-label="Risk summary">
+      <div className={styles.summary} role="group" aria-label="Risk summary">
         <div><span>Open risks</span><strong>{summary.open}</strong></div>
         <div><span>High / Critical</span><strong>{summary.high}</strong></div>
         <div><span>Due soon / overdue</span><strong>{summary.dueSoon}</strong></div>
@@ -241,7 +241,7 @@ export function RisksPage() {
             </tbody>
           </table>
         </div>
-        <div className={styles.matrixLegend} aria-label="Risk matrix scale">
+        <div className={styles.matrixLegend} role="group" aria-label="Risk matrix scale">
           <span><strong>Probability:</strong> 1 Rare · 2 Unlikely · 3 Possible · 4 Likely · 5 Almost certain</span>
           <span><strong>Impact:</strong> 1 Insignificant · 2 Minor · 3 Moderate · 4 Major · 5 Severe</span>
         </div>

@@ -153,7 +153,7 @@ export function GlobalActionsPage() {
       <p>Management commitments and follow-ups across active projects.</p>
     </header>
 
-    <div className={styles.summary} aria-label="Portfolio action summary">
+    <div className={styles.summary} role="group" aria-label="Portfolio action summary">
       {[
         ['Active', summary.active, 'active'],
         ['Critical active', summary.critical, 'critical'],

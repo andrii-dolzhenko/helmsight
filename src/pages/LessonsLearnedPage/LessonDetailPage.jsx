@@ -56,7 +56,7 @@ export function LessonDetailPage() {
   if (!record) return <div className={styles.stateCard}><strong>Lesson not found.</strong><p>The requested lesson is not available in this project.</p><Link to={listPath}>Return to Lessons Learned</Link></div>
 
   return (
-    <section className={styles.root}>
+    <div className={styles.root}>
       <Link to={listPath} className={styles.backLink}>← Lessons Learned</Link>
       {project.archivedAt ? <div className={styles.archiveNotice} role="status"><strong>Archived project</strong><span>This lesson is read-only until the project is restored.</span></div> : null}
       <StatusToast message={toast} onDismiss={() => { setToast(null); navigate(location.pathname, { replace: true, state: null }) }} />
@@ -75,6 +75,6 @@ export function LessonDetailPage() {
         </div>
       </article>
       <ConfirmDialog isOpen={confirmDelete} eyebrow="Lessons Learned" title="Delete lesson?" message={`Delete “${record.title}”? This cannot be undone.`} confirmLabel={deleting ? 'Deleting…' : 'Delete lesson'} icon="trash" isPending={deleting} onConfirm={remove} onCancel={() => setConfirmDelete(false)} />
-    </section>
+    </div>
   )
 }

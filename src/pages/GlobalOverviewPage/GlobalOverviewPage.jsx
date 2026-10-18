@@ -113,13 +113,13 @@ export function GlobalOverviewPage() {
 
       {overview ? (
         <>
-          <div className={styles.metrics} aria-label="Portfolio attention summary">
+          <div className={styles.metrics} role="group" aria-label="Portfolio attention summary">
             {metrics.map(({ label, value, detail, tone }) => (
-              <article className={`${styles.metric} ${styles[tone]}`} key={label}>
+              <div className={`${styles.metric} ${styles[tone]}`} key={label}>
                 <span>{label}</span>
                 <strong>{value}</strong>
                 <small>{detail}</small>
-              </article>
+              </div>
             ))}
           </div>
           {overview.activeCount === 0 ? (
@@ -139,7 +139,7 @@ export function GlobalOverviewPage() {
                       <p>Sources of attention and watch signals across active projects.</p>
                     </div>
                   </div>
-                  <div className={styles.driverLegend} aria-label="Chart legend">
+                  <div className={styles.driverLegend} role="group" aria-label="Chart legend">
                     <span><i className={styles.legendAttention} aria-hidden="true" />Needs action</span>
                     <span><i className={styles.legendWatch} aria-hidden="true" />Watch</span>
                   </div>

@@ -275,7 +275,7 @@ export function GovernancePage() {
         </div>
       ) : null}
 
-      <div className={styles.headerMeta} aria-label="Governance summary">
+      <div className={styles.headerMeta} role="group" aria-label="Governance summary">
         <span>{charterReady ? 'Charter ready' : 'Charter needs setup'}</span>
         <span>{governance.stakeholders.length} stakeholders</span>
         <span>{governance.communications.length} communications</span>
@@ -384,7 +384,7 @@ export function GovernancePage() {
             {governance.stakeholders.map((stakeholder) => {
               const strategy = getStakeholderManagementStrategy(stakeholder.influence, stakeholder.interest)
               return (
-                <article className={`${styles.registerRow} ${styles.stakeholderGrid}`} key={stakeholder.id}>
+                <div className={`${styles.registerRow} ${styles.stakeholderGrid}`} key={stakeholder.id}>
                   <div className={styles.identityCell} data-label="Stakeholder">
                     <strong>{stakeholder.name}</strong>
                     <CompactDetail>{[stakeholder.email, stakeholder.timeZone].filter(Boolean).join(' · ')}</CompactDetail>
@@ -406,7 +406,7 @@ export function GovernancePage() {
                       <button className={styles.deleteAction} data-ui-button="danger" data-ui-size="sm" type="button" disabled={Boolean(editor)} onClick={() => setPendingDelete({ type: 'stakeholder', id: stakeholder.id, label: stakeholder.name })}>Delete</button>
                     </div>
                   ) : <span className={styles.readOnlyLabel}>Read only</span>}
-                </article>
+                </div>
               )
             })}
           </div>
@@ -452,7 +452,7 @@ export function GovernancePage() {
               <span>Audience</span><span>Communication / topic</span><span>Channel</span><span>Frequency</span><span>Owner</span><span>Purpose / deliverable</span><span>Actions</span>
             </div>
             {governance.communications.map((communication) => (
-              <article className={`${styles.registerRow} ${styles.communicationGrid}`} key={communication.id}>
+              <div className={`${styles.registerRow} ${styles.communicationGrid}`} key={communication.id}>
                 <div className={styles.communicationIdentity} data-label="Audience"><strong>{communication.audience}</strong></div>
                 <div className={styles.identityCell} data-label="Communication / topic">
                   <span className={styles.primaryCellText}>{communication.topic}</span>
@@ -473,7 +473,7 @@ export function GovernancePage() {
                     <button className={styles.deleteAction} data-ui-button="danger" data-ui-size="sm" type="button" disabled={Boolean(editor)} onClick={() => setPendingDelete({ type: 'communication', id: communication.id, label: communication.topic })}>Delete</button>
                   </div>
                 ) : <span className={styles.readOnlyLabel}>Read only</span>}
-              </article>
+              </div>
             ))}
           </div>
         )}

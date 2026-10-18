@@ -166,7 +166,7 @@ export function ActionsPage() {
 
     {project.archivedAt ? <div className={styles.archiveBanner}><strong>Archived project</strong><span>Management actions remain available for review. Restore the project to change them.</span></div> : null}
 
-    <div className={styles.summary} aria-label="Management action summary"><div><span>Active actions</span><strong>{summary.active}</strong></div><div><span>Critical active</span><strong>{summary.critical}</strong></div><div><span>Needs attention</span><strong>{summary.attention}</strong></div><div><span>Done</span><strong>{summary.done}</strong></div></div>
+    <div className={styles.summary} role="group" aria-label="Management action summary"><div><span>Active actions</span><strong>{summary.active}</strong></div><div><span>Critical active</span><strong>{summary.critical}</strong></div><div><span>Needs attention</span><strong>{summary.attention}</strong></div><div><span>Done</span><strong>{summary.done}</strong></div></div>
 
     <div className={styles.registerHeading}>
       <div><span className={styles.eyebrow}>Management actions</span><h3>Accountable follow-ups</h3></div>
